@@ -1,22 +1,24 @@
 ---
 title: "Linear Mixed Models"
-author: "Dr Saufi"
+subtitle: "Advanced Numerical Data Analysis"
+author: "Dr Muhammad Saufi"
 date: last-modified
 format: 
-    html:
-      toc: true
-      toc-title: Contents
-      toc-location: left
-      toc-depth: 3
-      toc-expand: 1
-      number-sections: true
-    pdf:
-      toc: true
-      colorlinks: true
-    docx: 
-      toc: true
-      toc-depth: 2
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 3
+    toc-expand: 1
+    number-sections: true
+    code-fold: true
+    code-summary: "Show the code"
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
 editor: visual
+include-after-body: "footer.html"
 ---
 
 # Loading Packages

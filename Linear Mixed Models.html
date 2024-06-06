@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.553">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-<meta name="author" content="Dr Saufi">
+<meta name="author" content="Dr Muhammad Saufi">
 <meta name="dcterms.date" content="2024-06-06">
-
 <title>Linear Mixed Models</title>
 <style>
 code{white-space: pre-wrap;}
@@ -58,22 +55,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="Linear Mixed Models_files/libs/clipboard/clipboard.min.js"></script>
 <script src="Linear Mixed Models_files/libs/quarto-html/quarto.js"></script>
 <script src="Linear Mixed Models_files/libs/quarto-html/popper.min.js"></script>
 <script src="Linear Mixed Models_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Linear Mixed Models_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Linear Mixed Models_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Linear Mixed Models_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Linear Mixed Models_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="Linear Mixed Models_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="Linear Mixed Models_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Linear Mixed Models_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Linear Mixed Models_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
+<link href="Linear Mixed Models_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="Linear Mixed Models_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -99,45 +92,45 @@ window.Quarto = {
   typesetMath
 };
 </script>
-
 </head>
-
 <body>
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
 <div id="quarto-sidebar-toc-left" class="sidebar toc-left">
-  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="1">
-    <h2 id="toc-title">Contents</h2>
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="1"><h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link active" data-scroll-target="#loading-packages"><span class="header-section-number">1</span> Loading Packages</a></li>
-  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset"><span class="header-section-number">2</span> Dataset</a>
+<li><a href="#loading-packages" id="toc-loading-packages" class="nav-link active" data-scroll-target="#loading-packages"><span class="header-section-number">1</span> Loading Packages</a></li>
+  <li>
+<a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset"><span class="header-section-number">2</span> Dataset</a>
   <ul class="collapse">
-  <li><a href="#load-the-dataset" id="toc-load-the-dataset" class="nav-link" data-scroll-target="#load-the-dataset"><span class="header-section-number">2.1</span> Load the Dataset</a></li>
+<li><a href="#load-the-dataset" id="toc-load-the-dataset" class="nav-link" data-scroll-target="#load-the-dataset"><span class="header-section-number">2.1</span> Load the Dataset</a></li>
   <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">2.2</span> Data Wrangling</a></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">2.3</span> Exploratory Data Analysis</a>
+  <li>
+<a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">2.3</span> Exploratory Data Analysis</a>
   <ul class="collapse">
-  <li><a href="#descriptive-table" id="toc-descriptive-table" class="nav-link" data-scroll-target="#descriptive-table"><span class="header-section-number">2.3.1</span> Descriptive Table</a></li>
+<li><a href="#descriptive-table" id="toc-descriptive-table" class="nav-link" data-scroll-target="#descriptive-table"><span class="header-section-number">2.3.1</span> Descriptive Table</a></li>
   <li><a href="#plot-1" id="toc-plot-1" class="nav-link" data-scroll-target="#plot-1"><span class="header-section-number">2.3.2</span> Plot 1</a></li>
   <li><a href="#plot-2" id="toc-plot-2" class="nav-link" data-scroll-target="#plot-2"><span class="header-section-number">2.3.3</span> Plot 2</a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#multilevel-model" id="toc-multilevel-model" class="nav-link" data-scroll-target="#multilevel-model"><span class="header-section-number">3</span> Multilevel Model</a>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#multilevel-model" id="toc-multilevel-model" class="nav-link" data-scroll-target="#multilevel-model"><span class="header-section-number">3</span> Multilevel Model</a>
   <ul class="collapse">
-  <li><a href="#null-model-simplest-model" id="toc-null-model-simplest-model" class="nav-link" data-scroll-target="#null-model-simplest-model"><span class="header-section-number">3.1</span> Null Model (Simplest Model)</a></li>
+<li><a href="#null-model-simplest-model" id="toc-null-model-simplest-model" class="nav-link" data-scroll-target="#null-model-simplest-model"><span class="header-section-number">3.1</span> Null Model (Simplest Model)</a></li>
   <li><a href="#single-level-analysis" id="toc-single-level-analysis" class="nav-link" data-scroll-target="#single-level-analysis"><span class="header-section-number">3.2</span> Single-Level Analysis</a></li>
   <li><a href="#multilevel-analysis" id="toc-multilevel-analysis" class="nav-link" data-scroll-target="#multilevel-analysis"><span class="header-section-number">3.3</span> Multilevel Analysis</a></li>
-  </ul></li>
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Linear-Mixed-Models.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="Linear Mixed Models.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+</li>
+  </ul></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Linear Mixed Models</h1>
+<p class="subtitle lead">Advanced Numerical Data Analysis</p>
 </div>
 
 
@@ -147,7 +140,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Dr Saufi </p>
+             <p>Dr Muhammad Saufi </p>
           </div>
   </div>
     
@@ -163,15 +156,12 @@ window.Quarto = {
   
 
 
-</header>
-
-
-<section id="loading-packages" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Loading Packages</h1>
+</header><section id="loading-packages" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Loading Packages</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://haven.tidyverse.org">haven</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
@@ -183,15 +173,15 @@ window.Quarto = {
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bbolker/broom.mixed">broom.mixed</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
 <pre><code>here() starts at D:/OneDrive/My Education/R Learning Hub/DrPH Epidemiology Revision</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary">gtsummary</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT">DT</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'kableExtra'
 
@@ -199,8 +189,8 @@ The following object is masked from 'package:dplyr':
 
     group_rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: Matrix
 
 Attaching package: 'Matrix'
@@ -209,8 +199,8 @@ The following objects are masked from 'package:tidyr':
 
     expand, pack, unpack</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/runehaubo/lmerTestR">lmerTest</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'lmerTest'
 
@@ -222,36 +212,45 @@ The following object is masked from 'package:stats':
 
     step</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="dataset" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Dataset</h1>
+</section><section id="dataset" class="level1" data-number="2"><h1 data-number="2">
+<span class="header-section-number">2</span> Dataset</h1>
 <p>The dataset is from the Scottish School Leavers Survey (SSLS). It is a longitudinal dataset that captures information on several cohorts of young people over time.</p>
 <p><strong>Hierarchy</strong>: The dataset has a hierarchical structure with students (level 1) nested within schools (level 2).</p>
 <ul>
-<li><strong>Level 1 (Students)</strong>: Individual students identified by <code>caseid</code>.</li>
-<li><strong>Level 2 (Schools)</strong>: Schools identified by <code>schoolid</code>.</li>
+<li>
+<strong>Level 1 (Students)</strong>: Individual students identified by <code>caseid</code>.</li>
+<li>
+<strong>Level 2 (Schools)</strong>: Schools identified by <code>schoolid</code>.</li>
 </ul>
 <p><strong>Dependent Variable</strong>:</p>
 <ul>
-<li><code>score</code>: Total attainment score of the student, ranging from 0 to 75.</li>
+<li>
+<code>score</code>: Total attainment score of the student, ranging from 0 to 75.</li>
 </ul>
 <p><strong>Explanatory Variables</strong>:</p>
 <ul>
-<li><code>cohort90</code>: Year of the cohort, represented by subtracting 1990 from each value. Values range from -6 (1984) to 8 (1998), with 0 representing 1990.</li>
-<li><code>female</code>: Gender of the student (1 = female, 0 = male).</li>
-<li><code>sclass</code>: Social class of the student, defined as the higher class of mother or father (1 = managerial and professional, 2 = intermediate, 3 = working, 4 = unclassified).</li>
-<li><code>schtype</code>: Type of school (1 = independent, 0 = state-funded).</li>
-<li><code>schurban</code>: Urban-rural classification of the school (1 = urban, 0 = town or rural).</li>
-<li><code>schdenom</code>: School denomination (1 = Roman Catholic, 0 = non-denominational).</li>
+<li>
+<code>cohort90</code>: Year of the cohort, represented by subtracting 1990 from each value. Values range from -6 (1984) to 8 (1998), with 0 representing 1990.</li>
+<li>
+<code>female</code>: Gender of the student (1 = female, 0 = male).</li>
+<li>
+<code>sclass</code>: Social class of the student, defined as the higher class of mother or father (1 = managerial and professional, 2 = intermediate, 3 = working, 4 = unclassified).</li>
+<li>
+<code>schtype</code>: Type of school (1 = independent, 0 = state-funded).</li>
+<li>
+<code>schurban</code>: Urban-rural classification of the school (1 = urban, 0 = town or rural).</li>
+<li>
+<code>schdenom</code>: School denomination (1 = Roman Catholic, 0 = non-denominational).</li>
 </ul>
-<section id="load-the-dataset" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="load-the-dataset"><span class="header-section-number">2.1</span> Load the Dataset</h2>
+<section id="load-the-dataset" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="load-the-dataset">
+<span class="header-section-number">2.1</span> Load the Dataset</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>score.sch <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"score.sch_data.dta"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(score.sch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">score.sch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://haven.tidyverse.org/reference/read_dta.html">read_dta</a></span><span class="op">(</span><span class="st">"score.sch_data.dta"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">score.sch</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>Rows: 33,988
 Columns: 9
 $ caseid   &lt;dbl&gt; 18, 17, 19, 20, 21, 13, 16, 14, 15, 12, 12865, 6509, 12866, 1…
@@ -265,20 +264,19 @@ $ schurban &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 $ schdenom &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
 </div>
 </div>
-</section>
-<section id="data-wrangling" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="data-wrangling"><span class="header-section-number">2.2</span> Data Wrangling</h2>
+</section><section id="data-wrangling" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="data-wrangling">
+<span class="header-section-number">2.2</span> Data Wrangling</h2>
 <p>Numerical variables are often converted to factors to facilitate easier analysis and interpretation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>score.sch <span class="ot">&lt;-</span> score.sch <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">female2 =</span> <span class="fu">factor</span>(female, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'male'</span>, <span class="st">'female'</span>)),</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">class2 =</span> <span class="fu">factor</span>(sclass, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'managerial+prof'</span>, <span class="st">'intermediate'</span>, <span class="st">'working'</span>, <span class="st">'unclassified'</span>)),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">schtype2 =</span> <span class="fu">factor</span>(schtype, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'state-funded'</span>, <span class="st">'independent'</span>)),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">schurban2 =</span> <span class="fu">factor</span>(schurban, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'town/rural'</span>, <span class="st">'urban'</span>)),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">schdenom2 =</span> <span class="fu">factor</span>(schdenom, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">'state-funded'</span>, <span class="st">'independent'</span>)))</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(score.sch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">score.sch</span> <span class="op">&lt;-</span> <span class="va">score.sch</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    female2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">female</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'male'</span>, <span class="st">'female'</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    class2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">sclass</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'managerial+prof'</span>, <span class="st">'intermediate'</span>, <span class="st">'working'</span>, <span class="st">'unclassified'</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    schtype2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">schtype</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'state-funded'</span>, <span class="st">'independent'</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    schurban2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">schurban</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'town/rural'</span>, <span class="st">'urban'</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    schdenom2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">schdenom</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'state-funded'</span>, <span class="st">'independent'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">score.sch</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>Rows: 33,988
 Columns: 14
 $ caseid    &lt;dbl&gt; 18, 17, 19, 20, 21, 13, 16, 14, 15, 12, 12865, 6509, 12866, …
@@ -297,33 +295,32 @@ $ schurban2 &lt;fct&gt; urban, urban, urban, urban, urban, urban, urban, urban, 
 $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, stat…</code></pre>
 </div>
 </div>
-</section>
-<section id="exploratory-data-analysis" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">2.3</span> Exploratory Data Analysis</h2>
+</section><section id="exploratory-data-analysis" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="exploratory-data-analysis">
+<span class="header-section-number">2.3</span> Exploratory Data Analysis</h2>
 <p>Summarize the data and create some basic plots.</p>
-<section id="descriptive-table" class="level3" data-number="2.3.1">
-<h3 data-number="2.3.1" class="anchored" data-anchor-id="descriptive-table"><span class="header-section-number">2.3.1</span> Descriptive Table</h3>
+<section id="descriptive-table" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="descriptive-table">
+<span class="header-section-number">2.3.1</span> Descriptive Table</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>score.sch <span class="sc">%&gt;%</span> <span class="fu">tbl_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">score.sch</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html">tbl_summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
 <div>
-<div id="gjlsyrpkpk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gjlsyrpkpk table {
+<div id="qpumnpnftm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qpumnpnftm table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gjlsyrpkpk thead, #gjlsyrpkpk tbody, #gjlsyrpkpk tfoot, #gjlsyrpkpk tr, #gjlsyrpkpk td, #gjlsyrpkpk th {
+#qpumnpnftm thead, #qpumnpnftm tbody, #qpumnpnftm tfoot, #qpumnpnftm tr, #qpumnpnftm td, #qpumnpnftm th {
   border-style: none;
 }
 
-#gjlsyrpkpk p {
+#qpumnpnftm p {
   margin: 0;
   padding: 0;
 }
 
-#gjlsyrpkpk .gt_table {
+#qpumnpnftm .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -349,12 +346,12 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-left-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_caption {
+#qpumnpnftm .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gjlsyrpkpk .gt_title {
+#qpumnpnftm .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -366,7 +363,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-bottom-width: 0;
 }
 
-#gjlsyrpkpk .gt_subtitle {
+#qpumnpnftm .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -378,7 +375,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-top-width: 0;
 }
 
-#gjlsyrpkpk .gt_heading {
+#qpumnpnftm .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -390,13 +387,13 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-right-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_bottom_border {
+#qpumnpnftm .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_col_headings {
+#qpumnpnftm .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -411,7 +408,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-right-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_col_heading {
+#qpumnpnftm .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -431,7 +428,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   overflow-x: hidden;
 }
 
-#gjlsyrpkpk .gt_column_spanner_outer {
+#qpumnpnftm .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -443,15 +440,15 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 4px;
 }
 
-#gjlsyrpkpk .gt_column_spanner_outer:first-child {
+#qpumnpnftm .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gjlsyrpkpk .gt_column_spanner_outer:last-child {
+#qpumnpnftm .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gjlsyrpkpk .gt_column_spanner {
+#qpumnpnftm .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -463,11 +460,11 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   width: 100%;
 }
 
-#gjlsyrpkpk .gt_spanner_row {
+#qpumnpnftm .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gjlsyrpkpk .gt_group_heading {
+#qpumnpnftm .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -493,7 +490,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   text-align: left;
 }
 
-#gjlsyrpkpk .gt_empty_group_heading {
+#qpumnpnftm .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -508,15 +505,15 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   vertical-align: middle;
 }
 
-#gjlsyrpkpk .gt_from_md > :first-child {
+#qpumnpnftm .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gjlsyrpkpk .gt_from_md > :last-child {
+#qpumnpnftm .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gjlsyrpkpk .gt_row {
+#qpumnpnftm .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -535,7 +532,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   overflow-x: hidden;
 }
 
-#gjlsyrpkpk .gt_stub {
+#qpumnpnftm .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -548,7 +545,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#gjlsyrpkpk .gt_stub_row_group {
+#qpumnpnftm .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -562,15 +559,15 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   vertical-align: top;
 }
 
-#gjlsyrpkpk .gt_row_group_first td {
+#qpumnpnftm .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gjlsyrpkpk .gt_row_group_first th {
+#qpumnpnftm .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gjlsyrpkpk .gt_summary_row {
+#qpumnpnftm .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -580,16 +577,16 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#gjlsyrpkpk .gt_first_summary_row {
+#qpumnpnftm .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_first_summary_row.thick {
+#qpumnpnftm .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gjlsyrpkpk .gt_last_summary_row {
+#qpumnpnftm .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -599,7 +596,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-bottom-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_grand_summary_row {
+#qpumnpnftm .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -609,7 +606,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#gjlsyrpkpk .gt_first_grand_summary_row {
+#qpumnpnftm .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -619,7 +616,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-top-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_last_grand_summary_row_top {
+#qpumnpnftm .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -629,11 +626,11 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-bottom-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_striped {
+#qpumnpnftm .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gjlsyrpkpk .gt_table_body {
+#qpumnpnftm .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -642,7 +639,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-bottom-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_footnotes {
+#qpumnpnftm .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -656,7 +653,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-right-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_footnote {
+#qpumnpnftm .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -665,7 +662,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#gjlsyrpkpk .gt_sourcenotes {
+#qpumnpnftm .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -679,7 +676,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-right-color: #D3D3D3;
 }
 
-#gjlsyrpkpk .gt_sourcenote {
+#qpumnpnftm .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -687,78 +684,77 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#gjlsyrpkpk .gt_left {
+#qpumnpnftm .gt_left {
   text-align: left;
 }
 
-#gjlsyrpkpk .gt_center {
+#qpumnpnftm .gt_center {
   text-align: center;
 }
 
-#gjlsyrpkpk .gt_right {
+#qpumnpnftm .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gjlsyrpkpk .gt_font_normal {
+#qpumnpnftm .gt_font_normal {
   font-weight: normal;
 }
 
-#gjlsyrpkpk .gt_font_bold {
+#qpumnpnftm .gt_font_bold {
   font-weight: bold;
 }
 
-#gjlsyrpkpk .gt_font_italic {
+#qpumnpnftm .gt_font_italic {
   font-style: italic;
 }
 
-#gjlsyrpkpk .gt_super {
+#qpumnpnftm .gt_super {
   font-size: 65%;
 }
 
-#gjlsyrpkpk .gt_footnote_marks {
+#qpumnpnftm .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gjlsyrpkpk .gt_asterisk {
+#qpumnpnftm .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gjlsyrpkpk .gt_indent_1 {
+#qpumnpnftm .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gjlsyrpkpk .gt_indent_2 {
+#qpumnpnftm .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gjlsyrpkpk .gt_indent_3 {
+#qpumnpnftm .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gjlsyrpkpk .gt_indent_4 {
+#qpumnpnftm .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gjlsyrpkpk .gt_indent_5 {
+#qpumnpnftm .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-
 <table class="gt_table table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 50%">
 <col style="width: 50%">
 </colgroup>
-<thead>
-<tr class="header gt_col_headings">
+<thead><tr class="header gt_col_headings">
 <th id="<strong>Characteristic</strong>" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
-<th id="<strong>N = 33,988</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>N = 33,988</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
-</tr>
-</thead>
+<th id="<strong>N = 33,988</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<strong>N = 33,988</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+</tr></thead>
 <tbody class="gt_table_body">
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">Case ID</td>
@@ -774,8 +770,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">Cohort</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;-6</td>
@@ -807,8 +802,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">Social class</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;1</td>
@@ -840,8 +834,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">female2</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;male</td>
@@ -853,8 +846,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">class2</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;managerial+prof</td>
@@ -874,8 +866,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">schtype2</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;state-funded</td>
@@ -887,8 +878,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">schurban2</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;town/rural</td>
@@ -900,8 +890,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">schdenom2</td>
-<td class="gt_row gt_center" headers="stat_0"><br>
-</td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;state-funded</td>
@@ -911,84 +900,77 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;independent</td>
 <td class="gt_row gt_center" headers="stat_0">5,358 (16%)</td>
 </tr>
-</tbody><tfoot class="gt_footnotes">
-<tr class="odd">
-<td colspan="2" class="gt_footnote"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Median (IQR); n (%)</td>
-</tr>
-</tfoot>
-
+</tbody>
+<tfoot class="gt_footnotes"><tr class="odd">
+<td colspan="2" class="gt_footnote">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Median (IQR); n (%)</td>
+</tr></tfoot>
 </table>
-
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="plot-1" class="level3" data-number="2.3.2">
-<h3 data-number="2.3.2" class="anchored" data-anchor-id="plot-1"><span class="header-section-number">2.3.2</span> Plot 1</h3>
+</section><section id="plot-1" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="plot-1">
+<span class="header-section-number">2.3.2</span> Plot 1</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>score.sch <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cohort90, <span class="at">y =</span> score)) <span class="sc">+</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">score.sch</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cohort90</span>, y <span class="op">=</span> <span class="va">score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="Linear-Mixed-Models_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="Linear-Mixed-Models_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Comment:</strong> This graph displays the relationship between <code>cohort90</code> and <code>score</code>, along with a fitted linear regression line. The graph suggests that student attainment scores have generally increased over the years from 1984 to 1998. However, there is a substantial amount of variability in the scores within each cohort year. The positive slope of the regression line quantifies the trend of improvement in scores over time.</p>
-</section>
-<section id="plot-2" class="level3" data-number="2.3.3">
-<h3 data-number="2.3.3" class="anchored" data-anchor-id="plot-2"><span class="header-section-number">2.3.3</span> Plot 2</h3>
+</section><section id="plot-2" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="plot-2">
+<span class="header-section-number">2.3.3</span> Plot 2</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>score.sch <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cohort90, <span class="at">y =</span> score, <span class="at">col =</span> female, <span class="at">group =</span> female)) <span class="sc">+</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">score.sch</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cohort90</span>, y <span class="op">=</span> <span class="va">score</span>, col <span class="op">=</span> <span class="va">female</span>, group <span class="op">=</span> <span class="va">female</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="Linear-Mixed-Models_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="Linear-Mixed-Models_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Comment:</strong> This graph shows the relationship between <code>cohort90</code> and <code>score</code>, with a distinction between male and female students. The graph indicates that both male and female students have experienced improvements in attainment scores over the years from 1984 to 1998. The trends for both genders are very similar, suggesting that gender does not play a significant role in the difference in attainment scores within this dataset. The upward slope of both lines quantifies the overall improvement in scores over time, and the color differentiation helps visualize the gender distribution within each cohort.</p>
-</section>
-</section>
-</section>
-<section id="multilevel-model" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Multilevel Model</h1>
+</section></section></section><section id="multilevel-model" class="level1" data-number="3"><h1 data-number="3">
+<span class="header-section-number">3</span> Multilevel Model</h1>
 <p>Multilevel model, also known as a hierarchical linear model or mixed-effects model, accounts for the nested structure of the data. In this dataset, students are nested within schools.</p>
-<section id="null-model-simplest-model" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="null-model-simplest-model"><span class="header-section-number">3.1</span> Null Model (Simplest Model)</h2>
+<section id="null-model-simplest-model" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="null-model-simplest-model">
+<span class="header-section-number">3.1</span> Null Model (Simplest Model)</h2>
 <p>The simplest form of a multilevel model is the null model, which does not include any explanatory variables. It only includes random intercepts for the groups (schools in this case). The null model helps in understanding how much of the total variance in the outcome variable (score) can be attributed to differences between groups (schools).</p>
 <p>The equation for the null model is: <span class="math display">\[
 score_{ij} = \beta_0 + u_{0j} + e_{ij}
 \]</span></p>
 <ul>
-<li><span class="math inline">\(score_{ij}\)</span> is the attainment score of student <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span>.</li>
-<li><span class="math inline">\(\beta_0\)</span> is the overall mean score across all schools.</li>
-<li><span class="math inline">\(u_{0j}\)</span> is the random effect for school <span class="math inline">\(j\)</span>, capturing the deviation of school <span class="math inline">\(j\)</span>’s mean score from the overall mean.</li>
-<li><span class="math inline">\(e_{ij}\)</span> is the residual error term for student <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span>.</li>
-</ul>
-</section>
-<section id="single-level-analysis" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="single-level-analysis"><span class="header-section-number">3.2</span> Single-Level Analysis</h2>
+<li>
+<span class="math inline">\(score_{ij}\)</span> is the attainment score of student <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span>.</li>
+<li>
+<span class="math inline">\(\beta_0\)</span> is the overall mean score across all schools.</li>
+<li>
+<span class="math inline">\(u_{0j}\)</span> is the random effect for school <span class="math inline">\(j\)</span>, capturing the deviation of school <span class="math inline">\(j\)</span>’s mean score from the overall mean.</li>
+<li>
+<span class="math inline">\(e_{ij}\)</span> is the residual error term for student <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span>.</li>
+</ul></section><section id="single-level-analysis" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="single-level-analysis">
+<span class="header-section-number">3.2</span> Single-Level Analysis</h2>
 <p>A single-level analysis uses a standard linear regression model assuming that all data points are independent and the outcome is normally distributed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>m.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(score <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> score.sch)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m.lm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">score.sch</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m.lm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
 lm(formula = score ~ 1, data = score.sch)
@@ -1008,59 +990,81 @@ Residual standard error: 17.31 on 33987 degrees of freedom</code></pre>
 </div>
 <p><strong>Summary of the Output</strong></p>
 <ol type="1">
-<li><p><strong>Call</strong>: <code>lm(formula = score ~ 1, data = score.sch)</code></p>
+<li>
+<p><strong>Call</strong>: <code>lm(formula = score ~ 1, data = score.sch)</code></p>
 <ul>
 <li>This indicates that a linear model is being fitted with <code>score</code> as the response variable and no predictors (only an intercept).</li>
-</ul></li>
-<li><p><strong>Residuals</strong>: The residuals section provides a summary of the distribution of the residuals (differences between observed and predicted values):</p>
+</ul>
+</li>
+<li>
+<p><strong>Residuals</strong>: The residuals section provides a summary of the distribution of the residuals (differences between observed and predicted values):</p>
 <ul>
-<li><strong>Min</strong>: -31.095</li>
-<li><strong>1Q (First Quartile)</strong>: -12.095</li>
-<li><strong>Median</strong>: 1.905</li>
-<li><strong>3Q (Third Quartile)</strong>: 13.905</li>
-<li><strong>Max</strong>: 43.905</li>
-</ul></li>
-<li><p><strong>Coefficients</strong>: The coefficients section provides the estimate of the model’s intercept:</p>
+<li>
+<strong>Min</strong>: -31.095</li>
+<li>
+<strong>1Q (First Quartile)</strong>: -12.095</li>
+<li>
+<strong>Median</strong>: 1.905</li>
+<li>
+<strong>3Q (Third Quartile)</strong>: 13.905</li>
+<li>
+<strong>Max</strong>: 43.905</li>
+</ul>
+</li>
+<li>
+<p><strong>Coefficients</strong>: The coefficients section provides the estimate of the model’s intercept:</p>
 <ul>
-<li><strong>Estimate</strong>: 31.09462 This is the estimated mean score for all students.</li>
-<li><strong>Std. Error</strong>: 0.09392 This is the standard error of the intercept estimate, indicating the precision of the estimate.</li>
-<li><strong>t value</strong>: 331.1 This is the t-statistic for testing whether the intercept is significantly different from zero.</li>
-<li><strong>Pr(&gt;|t|)</strong>: &lt;2e-16 This is the p-value associated with the t-statistic, indicating that the intercept is highly significant (p &lt; 0.001).</li>
-</ul></li>
-<li><p><strong>Residual Standard Error</strong>:</p>
+<li>
+<strong>Estimate</strong>: 31.09462 This is the estimated mean score for all students.</li>
+<li>
+<strong>Std. Error</strong>: 0.09392 This is the standard error of the intercept estimate, indicating the precision of the estimate.</li>
+<li>
+<strong>t value</strong>: 331.1 This is the t-statistic for testing whether the intercept is significantly different from zero.</li>
+<li>
+<strong>Pr(&gt;|t|)</strong>: &lt;2e-16 This is the p-value associated with the t-statistic, indicating that the intercept is highly significant (p &lt; 0.001).</li>
+</ul>
+</li>
+<li>
+<p><strong>Residual Standard Error</strong>:</p>
 <ul>
-<li><strong>Residual standard error</strong>: 17.31 on 33987 degrees of freedom</li>
+<li>
+<strong>Residual standard error</strong>: 17.31 on 33987 degrees of freedom</li>
 <li>This value measures the average distance that the observed scores fall from the regression line (mean score). A lower residual standard error indicates a better fit.</li>
-</ul></li>
-<li><p><strong>Interpretation</strong>:</p>
+</ul>
+</li>
+<li>
+<p><strong>Interpretation</strong>:</p>
 <ol type="i">
 <li><p><strong>Overall Mean Score</strong>: The overall mean score for students is estimated to be 31.09462. This value is statistically significant, as indicated by the extremely small p-value (p &lt; 0.001).</p></li>
 <li><p><strong>Residuals</strong>: The residuals indicate the spread of the differences between observed scores and the estimated mean score. The range of residuals (-31.095 to 43.905) suggests variability in scores around the mean.</p></li>
 <li><p><strong>Model Fit</strong>: The residual standard error of 17.31 suggests that there is considerable variability in student scores around the mean. This model does not account for any grouping structure (such as schools), meaning it assumes all observations are independent.</p></li>
-</ol></li>
-<li><p><strong>Equation</strong>:</p>
+</ol>
+</li>
+<li>
+<p><strong>Equation</strong>:</p>
 <ul>
 <li><span class="math inline">\(\hat{\text{score}} = \beta_0\)</span></li>
 <li><span class="math inline">\(\hat{\text{score}} = 31.09462\)</span></li>
-</ul></li>
+</ul>
+</li>
 <li><p><strong>Conclusion</strong>: The single-level analysis provides an estimate of the overall mean score (31.09462) for all students, which is highly significant. However, the residual standard error and the spread of residuals indicate that there is substantial variability in scores that is not explained by this simple model. This highlights the potential need for a more complex model, such as a multilevel model, to account for the nested structure of the data and potentially explain some of the variability in scores.</p></li>
-</ol>
-</section>
-<section id="multilevel-analysis" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="multilevel-analysis"><span class="header-section-number">3.3</span> Multilevel Analysis</h2>
+</ol></section><section id="multilevel-analysis" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="multilevel-analysis">
+<span class="header-section-number">3.3</span> Multilevel Analysis</h2>
 <p>Multilevel analysis (also known as hierarchical linear modeling or mixed-effects modeling) is used to analyze data that has a nested structure. In this dataset, students are nested within schools. This type of analysis allows us to account for variability at both the student level and the school level, providing more accurate estimates and inferences.</p>
 <ol type="1">
 <li><p><strong>Fixed Effects:</strong> The overall mean score <span class="math inline">\(\beta_0\)</span> is estimated. These are the effects that are assumed to be constant across all groups. For example, the average effect of a variable like cohort90 on score across all students and schools.</p></li>
 <li><p><strong>Random Effects:</strong> These allow for variability between groups. For example, different schools may have different baseline scores (intercepts), and the effect of cohort90 on score may vary between schools.</p></li>
 </ol>
 <ul>
-<li><strong>Between-School Variance</strong>: Variance due to differences between schools <span class="math inline">\(u_{0j}\)</span>.</li>
-<li><strong>Within-School Variance</strong>: Variance due to differences within schools <span class="math inline">\(e_{ij}\)</span>.</li>
+<li>
+<strong>Between-School Variance</strong>: Variance due to differences between schools <span class="math inline">\(u_{0j}\)</span>.</li>
+<li>
+<strong>Within-School Variance</strong>: Variance due to differences within schools <span class="math inline">\(e_{ij}\)</span>.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(score <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> schoolid), <span class="at">data =</span> score.sch, <span class="at">REML =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">schoolid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">score.sch</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
   method [lmerModLmerTest]
 Formula: score ~ 1 + (1 | schoolid)
@@ -1089,25 +1093,33 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><strong>Summary of the Output</strong></p>
 <ol type="1">
 <li><p><strong>Fixed Effects</strong>: The estimated overall mean score across all schools is 30.6006. This value is statistically significant with a very small p-value (&lt; 2e-16), indicating that the mean score is significantly different from zero.</p></li>
-<li><p><strong>Random Effects</strong></p>
+<li>
+<p><strong>Random Effects</strong></p>
 <ul>
 <li>The variance of the school-level intercepts (i.e., the variability in the mean scores between schools) is 61.02, with a standard deviation of 7.812.</li>
 <li>The variance of the residual errors (i.e., the variability in scores within schools) is 258.36, with a standard deviation of 16.073.</li>
-</ul></li>
-<li><p><strong>Model Fit Statistics</strong></p>
+</ul>
+</li>
+<li>
+<p><strong>Model Fit Statistics</strong></p>
 <ul>
-<li><strong>AIC</strong>: 286545.1, <strong>BIC</strong>: 286570.4</li>
+<li>
+<strong>AIC</strong>: 286545.1, <strong>BIC</strong>: 286570.4</li>
 <li>These statistics provide measures of the model fit. Lower AIC and BIC values indicate a better-fitting model.</li>
-</ul></li>
+</ul>
+</li>
 <li><p><strong>Scaled Residuals</strong>: These are the quartiles of the residuals, which provide information about the distribution of the residuals.</p></li>
-<li><p><strong>Interpretation</strong></p>
+<li>
+<p><strong>Interpretation</strong></p>
 <ol type="i">
 <li><p><strong>Overall Mean Score</strong>: The overall mean score for students across all schools is 30.6006, which is statistically significant.</p></li>
-<li><p><strong>Variance Components</strong>:</p>
+<li>
+<p><strong>Variance Components</strong>:</p>
 <ul>
 <li>The between-school variance (61.02) indicates that there is variability in mean scores between different schools.</li>
 <li>The within-school variance (258.36) indicates that there is substantial variability in scores within schools.</li>
-</ul></li>
+</ul>
+</li>
 <li><p><strong>Intraclass Correlation Coefficient (ICC)</strong>: <span class="math display">\[
 \text{ICC} = \frac{\sigma^2_{\text{between}}}{\sigma^2_{\text{between}} + \sigma^2_{\text{within}}} = \frac{61.02}{61.02 + 258.36} \approx 0.191
 \]</span></p></li>
@@ -1115,20 +1127,34 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <ul>
 <li>The ICC can be calculated to understand the proportion of total variance that is attributable to the grouping structure (schools in this case).</li>
 <li>Approximately 19.1% of the total variance in scores is attributable to differences between schools, while the remaining 80.9% is due to differences within schools.</li>
-</ul></li>
-<li><p><strong>Equation</strong> <span class="math inline">\({score}_{ij} = 30.6006 + u_{0j} + e_{ij}\)</span></p>
+</ul>
+</li>
+<li>
+<p><strong>Equation</strong> <span class="math inline">\({score}_{ij} = 30.6006 + u_{0j} + e_{ij}\)</span></p>
 <ul>
-<li><span class="math inline">\(\beta_0 = 30.6006\)</span> is the fixed effect (overall mean score).</li>
-<li><span class="math inline">\(u_{0j} \sim N(0, 61.02)\)</span> is the random effect for school ( j ) with a variance of 61.02.</li>
-<li><span class="math inline">\(e_{ij} \sim N(0, 258.36)\)</span> is the residual error term for student ( i ) in school ( j ) with a variance of 258.36.</li>
-</ul></li>
+<li>
+<span class="math inline">\(\beta_0 = 30.6006\)</span> is the fixed effect (overall mean score).</li>
+<li>
+<span class="math inline">\(u_{0j} \sim N(0, 61.02)\)</span> is the random effect for school ( j ) with a variance of 61.02.</li>
+<li>
+<span class="math inline">\(e_{ij} \sim N(0, 258.36)\)</span> is the residual error term for student ( i ) in school ( j ) with a variance of 258.36.</li>
+</ul>
+</li>
 <li><p><strong>Conclusion</strong>: The multilevel analysis shows that there is significant variability in student scores both within and between schools. The mean score across all schools is estimated to be 30.6006, with substantial variability observed within schools and some variability observed between schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion (19.1%) of the total variance in scores can be attributed to differences between schools. This justifies the use of a multilevel model, as it captures the hierarchical structure of the data and provides a more nuanced understanding of the variability in student scores.</p></li>
-</ol>
-</section>
-</section>
+</ol></section></section></main><!-- /main column -->
+&nbsp;
+<hr>
+<p style="text-align: center;">A dedicated work by Dr Muhammad Saufi</p>
 
-</main>
-<!-- /main column -->
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Add font awesome icons --><p style="text-align: center;">
+    <a href="https://www.facebook.com/drsaufimbbch/" class="fa fa-facebook"></a>
+    <a href="https://github.com/drsaufi" class="fa fa-github"></a>
+    <a href="mailto:drsaufimbbch@gmail.com" class="fa fa-envelope"></a>
+</p>
+
+&nbsp;
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1149,6 +1175,150 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1539,7 +1709,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
 
 
 
