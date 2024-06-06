@@ -8,7 +8,7 @@ format:
     toc: true
     toc-title: Contents
     toc-location: left
-    toc-depth: 3
+    toc-depth: 5
     toc-expand: 1
     number-sections: true
     code-fold: true
@@ -234,3 +234,191 @@ summary(m0)
     -   $e_{ij} \sim N(0, 258.36)$ is the residual error term for student ( i ) in school ( j ) with a variance of 258.36.
 
 7.  **Conclusion**: The multilevel analysis shows that there is significant variability in student scores both within and between schools. The mean score across all schools is estimated to be 30.6006, with substantial variability observed within schools and some variability observed between schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion (19.1%) of the total variance in scores can be attributed to differences between schools. This justifies the use of a multilevel model, as it captures the hierarchical structure of the data and provides a more nuanced understanding of the variability in student scores.
+
+### Random Intercept Models
+
+Random intercept models are a type of multilevel model where each group (e.g., school) has its own intercept but shares the same slope for explanatory variables. This allows the model to account for the fact that different groups may have different baseline levels of the outcome variable.
+
+#### Add an Explanatory Variable
+
+Adding an explanatory variable (predictor) to the random intercept model helps to explain some of the variability in the outcome variable. This allows us to understand how much of the variability is due to the predictor, in addition to the variability captured by the random intercepts.
+
+$$ 
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + e_{ij} 
+$$ This equation represents a random intercept model with one explanatory variable (`cohort90`):
+
+-   $\text{score}_{ij}$: The score for student $i$ in school $j$.
+-   $\beta_0$: The overall intercept, representing the average score when all predictors are zero. This is the fixed effect for the intercept.
+-   $\beta_1 \text{cohort90}_{ij}$: The fixed effect of the explanatory variable `cohort90` on the score. $\beta_1$ is the coefficient that quantifies how much the score changes with each unit change in `cohort90`.
+-   $u_{0j}$: The random effect for school $j$. This term captures the deviation of school $j$'s intercept from the overall intercept $\beta_0$. It accounts for the fact that different schools may have different baseline scores.
+-   $e_{ij}$: The residual error term for student $i$ in school $j$. This term captures the deviation of the individual student's score from their school's mean score, after accounting for the effects of `cohort90` and the school-level random intercept.
+
+```{r}
+# Adding an explanatory variable (cohort90)
+ri_model <- lmer(score ~ cohort90 + (1 | schoolid), data = score.sch, REML = FALSE)
+summary(ri_model)
+```
+
+```{r}
+tidy(ri_model, conf.int = TRUE) %>% kbl %>% kable_styling()
+```
+
+**Summary of the Output**
+
+1.  **Fixed Effects**:
+
+    -   **(Intercept)**: The estimated overall mean score when `cohort90` is zero is 30.56. This value is statistically significant with a very small p-value (\< 2e-16), indicating that the intercept is significantly different from zero.
+    -   **cohort90**: The coefficient for `cohort90` is 1.215. This means that for each unit increase in `cohort90`, the score increases by 1.215 points on average. This effect is also highly significant (p \< 2e-16).
+
+2.  **Random Effects**:
+
+    -   **schoolid (Intercept)**: **Variance**: 45.99, **Std.Dev.**: 6.781. This indicates that the variance of the school-level intercepts (i.e., the variability in the mean scores between schools) is 45.99, with a standard deviation of 6.781.
+    -   **Residual**: **Variance**: 219.29, **Std.Dev.**: 14.808. This indicates the variance of the residual errors (i.e., the variability in scores within schools) is 219.29, with a standard deviation of 14.808.
+    -   **Number of Observations**: 33,988 students
+    -   **Number of Groups (schools)**: 508 schools
+
+3.  **Model Fit Statistics**: These statistics provide measures of the model fit. Lower AIC and BIC values indicate a better-fitting model.
+
+    -   **AIC**: 280921.6, **BIC**: 280955.3
+
+4.  **Scaled Residuals**: These are the quartiles of the residuals, which provide information about the distribution of the residuals.
+
+    -   **Min**: -3.1487, **1Q**: -0.7242, **Median**: 0.0363, **3Q**: 0.7339, **Max**: 3.7097
+
+5.  **Interpretation**:
+
+    i.  **Overall Mean Score**: The overall mean score for students, when `cohort90` is zero, is estimated to be 30.56.
+    ii. **Effect of cohort90**: The score increases by 1.215 points for each unit increase in `cohort90`. This indicates a positive relationship between `cohort90` and `score`.
+    iii. **Variance Components**: The variance of the school-level random intercepts is 45.99, indicating variability in mean scores between schools. The residual variance is 219.29, indicating variability in scores within schools.
+    iv. **Intraclass Correlation Coefficient (ICC)**: Approximately 17.3% of the total variance in scores is attributable to differences between schools, while the remaining 82.7% is due to differences within schools. $$
+        \text{ICC} = \frac{\sigma^2_{\text{between}}}{\sigma^2_{\text{between}} + \sigma^2_{\text{within}}} = \frac{45.99}{45.99 + 219.29} \approx 0.173
+        $$
+    v.  **Model Fit**: The model fit statistics (AIC, BIC, logLik, deviance) suggest that the model fits the data reasonably well. Lower AIC and BIC values compared to other models would indicate a better fit.
+
+6.  **Conclusion**: The random intercept model with `cohort90` as an explanatory variable shows that there is significant variability in student scores both within and between schools. The average score increases with higher values of `cohort90`, suggesting a positive trend over time or across cohorts. The random intercepts capture the variability between schools, and the residual variance captures the variability within schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion of the variance in scores is due to differences between schools, justifying the use of a multilevel model.
+
+#### Prediction
+
+In multilevel modeling, the goal of prediction is to estimate the outcome variable (in this case, `score`) for each individual observation by considering both the fixed effects and the random effects. This allows for more accurate predictions by taking into account the hierarchical structure of the data. The general form of the prediction equation in a random intercept model with one explanatory variable (`cohort90`) is: $$
+ \text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + e_{ij}
+$$
+
+##### Steps for Prediction
+
+1.  Fitting the model - use the random intercept model using the `lmer` function earlier.
+
+2.  Generating Predicted Values To generate predicted values for the outcome variable, use the `fitted` function. This function provides the fitted values (predictions) for each observation in the dataset based on the fixed and random effects:
+
+```{r}
+pred_score <- fitted(ri_model)
+head(pred_score, 10)  # Display the first 10 predicted scores
+```
+
+3.  Extracting Random Effects The random effects (school-specific intercepts) can be extracted using the `ranef` function. This provides the deviations of each school's intercept from the overall intercept:
+
+```{r}
+rand_ef <- ranef(ri_model)
+head(rand_ef$schoolid, 12)  # Display the random intercepts for the first 12 schools
+```
+
+4.  Using `broom.mixed::augment` The `broom.mixed` package's `augment` function creates a data frame that includes the original data, fitted values, and residuals. This can be useful for further analysis and visualization:
+
+```{r}
+ri_fitted <- augment(ri_model)
+ri_fitted %>% slice(1:12)  # Display the first 12 rows of the augmented data frame
+```
+
+##### Explanation
+
+1.  **Fixed Effects**:
+    -   The fixed effects ($\beta_0$ and $\beta_1$) provide the overall intercept and the effect of `cohort90` on `score`.
+    -   These effects are assumed to be the same across all schools.
+2.  **Random Effects**:
+    -   The random effects ($u_{0j}$) represent the school-specific deviations from the overall intercept.
+    -   Each school has its own intercept, which is the sum of the overall intercept ($\beta_0$) and the school's random intercept ($u_{0j}$).
+3.  **Residuals**:
+    -   The residuals ($e_{ij}$) represent the individual-specific deviations from the school's predicted score.
+    -   These capture the within-school variability that is not explained by the model.
+4.  **Combined Prediction**:
+    -   The predicted score for each student is the sum of the overall intercept, the effect of `cohort90`, the school-specific random intercept, and the individual-specific residual.
+    -   This combined approach ensures that the prediction accounts for both the fixed effects (common to all students) and the random effects (specific to each school).
+
+##### Confirmation with Manual Calculation
+
+Manually calculate the fitted values (predicted scores) to confirm the results from the model.
+
+1.  **Intercept (**$\beta_0$): 30.55915. This is the overall average score when `cohort90` is zero.
+
+2.  **Level-2 Residual (school level residual,** $u_{0j}$): For `schoolid = 1`, this is -6.73. This represents the deviation of this school's intercept from the overall intercept.
+
+3.  **Coefficient for `cohort90` (**$\beta_1$): 1.214955. This indicates the average change in score for each unit change in `cohort90`.
+
+4.  **Example**: For the first observation = **cohort90**: -6, **schoolid**: 1
+
+    -   The fitted value (predicted score) can be calculated as: $$ 
+        \text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + e_{ij} 
+        $$
+
+    -   Since $e_{ij}$ (the individual-level residual) is what we are trying to predict, we simplify to: $$ 
+        \text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} 
+        $$
+
+    -   Using the provided values: $$ 
+        \text{score}_{ij} = 30.55915 - 6.728309492 + 1.214955 \times (-6) 
+        $$ $$ 
+        \text{score}_{ij} = 30.55915 - 6.728309492 - 7.28973 
+        $$ $$ 
+        \text{score}_{ij} = 16.54111 
+        $$
+
+    -   This matches the calculated fitted value.
+
+#### Plot
+
+Plotting the model helps to visualize the fitted values from a random intercept model with an explanatory variable, such as `cohort90`. Visualization helps in understanding the model fit and the relationship between the variables.
+
+```{r}
+ggplot(ri_fitted, aes(cohort90, .fitted, group = schoolid)) +
+  geom_point(alpha = 0.3) +
+  geom_line(alpha = 0.3) +
+  ylab('Fitted score attainment') +
+  xlab('Year: where 0 is the year 1990') +
+  ggtitle('The fitted value for random intercept model with covariate cohort90') +
+  theme_bw()
+```
+
+**Comment**: This plot visualizes the fitted values from the random intercept model with cohort90 as the explanatory variable. It provides a visual confirmation of the model's results, showing how the fitted scores vary across different cohort years and schools. The general upward trend indicates improving scores over time, while the variation between schools highlights the importance of accounting for school-specific effects in the model. This visualization helps in understanding the combined impact of fixed and random effects on the predicted scores.
+
+#### Variance
+
+##### Between School Variance
+
+Between-school variance refers to the variation in the outcome variable (score) that is attributed to differences between schools. This variance component is crucial in multilevel modeling as it helps to understand how much of the total variance in scores can be explained by the differences between schools.
+
+1.  **Constant Only Model**:
+    -   In the constant only (null) model, the variance due to differences between schools (random intercept) is 61.02.
+    -   This model does not include any explanatory variables and serves as a baseline to compare other models.
+2.  **Model with Explanatory Variable (cohort90)**:
+    -   When `cohort90` is added as an explanatory variable, the between-school variance reduces to 45.99.
+    -   This reduction indicates that some of the variance between schools is explained by the cohort year.
+3.  **Proportion of Unexplained Variance**:
+    -   After accounting for the cohort effects, the proportion of unexplained variance due to differences between schools is calculated as: $$
+        \frac{45.99}{45.99 + 219.29} = 17\%
+        $$
+    -   This means that 17% of the total unexplained variance in scores is attributable to differences between schools after accounting for the cohort effect.
+
+##### Within School Variance
+
+Within-school variance refers to the variation in the outcome variable (score) within schools. This component captures the differences in scores among students within the same school. Understanding this variance is essential for identifying how much of the total variance is due to individual differences within schools.
+
+1.  **Constant Only Model**:
+    -   In the constant only (null) model, the within-school variance (residual variance) is 258.36.
+    -   This model does not include any explanatory variables and serves as a baseline to compare other models.
+2.  **Model with Explanatory Variable (cohort90)**:
+    -   When `cohort90` is added as an explanatory variable, the within-school variance reduces to 219.29.
+    -   This reduction indicates that some of the variance within schools is explained by the cohort year.
+3.  **Reduction in Variance**:
+    -   The addition of `cohort90` reduces both the between-school and within-school variances.
+    -   The between-school variance reduces from 61.02 to 45.99.
+    -   The within-school variance reduces from 258.36 to 219.29.
+    -   The decrease in within-school variance is expected because `cohort90` is a student-level variable, meaning it explains part of the individual differences within schools.

@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.4.553">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Dr Muhammad Saufi">
-<meta name="dcterms.date" content="2024-06-06">
+<meta name="dcterms.date" content="2024-06-07">
 <title>Linear Mixed Models</title>
 <style>
 code{white-space: pre-wrap;}
@@ -66,7 +66,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="Linear Mixed Models_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Linear Mixed Models_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Linear Mixed Models_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="Linear Mixed Models_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+<link href="Linear Mixed Models_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script src="Linear%20Mixed%20Models_files/libs/kePrint-0.0.1/kePrint.js"></script><link href="Linear%20Mixed%20Models_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -103,12 +104,12 @@ window.Quarto = {
 <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link active" data-scroll-target="#loading-packages"><span class="header-section-number">1</span> Loading Packages</a></li>
   <li>
 <a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset"><span class="header-section-number">2</span> Dataset</a>
-  <ul class="collapse">
+  <ul>
 <li><a href="#load-the-dataset" id="toc-load-the-dataset" class="nav-link" data-scroll-target="#load-the-dataset"><span class="header-section-number">2.1</span> Load the Dataset</a></li>
   <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">2.2</span> Data Wrangling</a></li>
   <li>
 <a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">2.3</span> Exploratory Data Analysis</a>
-  <ul class="collapse">
+  <ul>
 <li><a href="#descriptive-table" id="toc-descriptive-table" class="nav-link" data-scroll-target="#descriptive-table"><span class="header-section-number">2.3.1</span> Descriptive Table</a></li>
   <li><a href="#plot-1" id="toc-plot-1" class="nav-link" data-scroll-target="#plot-1"><span class="header-section-number">2.3.2</span> Plot 1</a></li>
   <li><a href="#plot-2" id="toc-plot-2" class="nav-link" data-scroll-target="#plot-2"><span class="header-section-number">2.3.3</span> Plot 2</a></li>
@@ -118,10 +119,36 @@ window.Quarto = {
 </li>
   <li>
 <a href="#multilevel-model" id="toc-multilevel-model" class="nav-link" data-scroll-target="#multilevel-model"><span class="header-section-number">3</span> Multilevel Model</a>
-  <ul class="collapse">
+  <ul>
 <li><a href="#null-model-simplest-model" id="toc-null-model-simplest-model" class="nav-link" data-scroll-target="#null-model-simplest-model"><span class="header-section-number">3.1</span> Null Model (Simplest Model)</a></li>
   <li><a href="#single-level-analysis" id="toc-single-level-analysis" class="nav-link" data-scroll-target="#single-level-analysis"><span class="header-section-number">3.2</span> Single-Level Analysis</a></li>
-  <li><a href="#multilevel-analysis" id="toc-multilevel-analysis" class="nav-link" data-scroll-target="#multilevel-analysis"><span class="header-section-number">3.3</span> Multilevel Analysis</a></li>
+  <li>
+<a href="#multilevel-analysis" id="toc-multilevel-analysis" class="nav-link" data-scroll-target="#multilevel-analysis"><span class="header-section-number">3.3</span> Multilevel Analysis</a>
+  <ul>
+<li>
+<a href="#random-intercept-models" id="toc-random-intercept-models" class="nav-link" data-scroll-target="#random-intercept-models"><span class="header-section-number">3.3.1</span> Random Intercept Models</a>
+  <ul class="collapse">
+<li><a href="#add-an-explanatory-variable" id="toc-add-an-explanatory-variable" class="nav-link" data-scroll-target="#add-an-explanatory-variable"><span class="header-section-number">3.3.1.1</span> Add an Explanatory Variable</a></li>
+  <li>
+<a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">3.3.1.2</span> Prediction</a>
+  <ul class="collapse">
+<li><a href="#steps-for-prediction" id="toc-steps-for-prediction" class="nav-link" data-scroll-target="#steps-for-prediction"><span class="header-section-number">3.3.1.2.1</span> Steps for Prediction</a></li>
+  <li><a href="#explanation" id="toc-explanation" class="nav-link" data-scroll-target="#explanation"><span class="header-section-number">3.3.1.2.2</span> Explanation</a></li>
+  <li><a href="#confirmation-with-manual-calculation" id="toc-confirmation-with-manual-calculation" class="nav-link" data-scroll-target="#confirmation-with-manual-calculation"><span class="header-section-number">3.3.1.2.3</span> Confirmation with Manual Calculation</a></li>
+  </ul>
+</li>
+  <li><a href="#plot" id="toc-plot" class="nav-link" data-scroll-target="#plot"><span class="header-section-number">3.3.1.3</span> Plot</a></li>
+  <li>
+<a href="#variance" id="toc-variance" class="nav-link" data-scroll-target="#variance"><span class="header-section-number">3.3.1.4</span> Variance</a>
+  <ul class="collapse">
+<li><a href="#between-school-variance" id="toc-between-school-variance" class="nav-link" data-scroll-target="#between-school-variance"><span class="header-section-number">3.3.1.4.1</span> Between School Variance</a></li>
+  <li><a href="#within-school-variance" id="toc-within-school-variance" class="nav-link" data-scroll-target="#within-school-variance"><span class="header-section-number">3.3.1.4.2</span> Within School Variance</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
   </ul>
 </li>
   </ul></nav>
@@ -147,7 +174,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 6, 2024</p>
+      <p class="date">June 7, 2024</p>
     </div>
   </div>
   
@@ -304,23 +331,23 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
 <details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">score.sch</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html">tbl_summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div>
-<div id="qpumnpnftm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qpumnpnftm table {
+<div id="jqakstpklj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jqakstpklj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qpumnpnftm thead, #qpumnpnftm tbody, #qpumnpnftm tfoot, #qpumnpnftm tr, #qpumnpnftm td, #qpumnpnftm th {
+#jqakstpklj thead, #jqakstpklj tbody, #jqakstpklj tfoot, #jqakstpklj tr, #jqakstpklj td, #jqakstpklj th {
   border-style: none;
 }
 
-#qpumnpnftm p {
+#jqakstpklj p {
   margin: 0;
   padding: 0;
 }
 
-#qpumnpnftm .gt_table {
+#jqakstpklj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -346,12 +373,12 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-left-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_caption {
+#jqakstpklj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qpumnpnftm .gt_title {
+#jqakstpklj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -363,7 +390,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-bottom-width: 0;
 }
 
-#qpumnpnftm .gt_subtitle {
+#jqakstpklj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -375,7 +402,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-top-width: 0;
 }
 
-#qpumnpnftm .gt_heading {
+#jqakstpklj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -387,13 +414,13 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-right-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_bottom_border {
+#jqakstpklj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_col_headings {
+#jqakstpklj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -408,7 +435,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-right-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_col_heading {
+#jqakstpklj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -428,7 +455,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   overflow-x: hidden;
 }
 
-#qpumnpnftm .gt_column_spanner_outer {
+#jqakstpklj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -440,15 +467,15 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 4px;
 }
 
-#qpumnpnftm .gt_column_spanner_outer:first-child {
+#jqakstpklj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qpumnpnftm .gt_column_spanner_outer:last-child {
+#jqakstpklj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qpumnpnftm .gt_column_spanner {
+#jqakstpklj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -460,11 +487,11 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   width: 100%;
 }
 
-#qpumnpnftm .gt_spanner_row {
+#jqakstpklj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qpumnpnftm .gt_group_heading {
+#jqakstpklj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -490,7 +517,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   text-align: left;
 }
 
-#qpumnpnftm .gt_empty_group_heading {
+#jqakstpklj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -505,15 +532,15 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   vertical-align: middle;
 }
 
-#qpumnpnftm .gt_from_md > :first-child {
+#jqakstpklj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qpumnpnftm .gt_from_md > :last-child {
+#jqakstpklj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qpumnpnftm .gt_row {
+#jqakstpklj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -532,7 +559,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   overflow-x: hidden;
 }
 
-#qpumnpnftm .gt_stub {
+#jqakstpklj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -545,7 +572,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#qpumnpnftm .gt_stub_row_group {
+#jqakstpklj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -559,15 +586,15 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   vertical-align: top;
 }
 
-#qpumnpnftm .gt_row_group_first td {
+#jqakstpklj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qpumnpnftm .gt_row_group_first th {
+#jqakstpklj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qpumnpnftm .gt_summary_row {
+#jqakstpklj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -577,16 +604,16 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#qpumnpnftm .gt_first_summary_row {
+#jqakstpklj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_first_summary_row.thick {
+#jqakstpklj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qpumnpnftm .gt_last_summary_row {
+#jqakstpklj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -596,7 +623,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-bottom-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_grand_summary_row {
+#jqakstpklj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -606,7 +633,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#qpumnpnftm .gt_first_grand_summary_row {
+#jqakstpklj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -616,7 +643,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-top-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_last_grand_summary_row_top {
+#jqakstpklj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -626,11 +653,11 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-bottom-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_striped {
+#jqakstpklj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qpumnpnftm .gt_table_body {
+#jqakstpklj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -639,7 +666,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-bottom-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_footnotes {
+#jqakstpklj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -653,7 +680,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-right-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_footnote {
+#jqakstpklj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -662,7 +689,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#qpumnpnftm .gt_sourcenotes {
+#jqakstpklj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -676,7 +703,7 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   border-right-color: #D3D3D3;
 }
 
-#qpumnpnftm .gt_sourcenote {
+#jqakstpklj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -684,63 +711,63 @@ $ schdenom2 &lt;fct&gt; state-funded, state-funded, state-funded, state-funded, 
   padding-right: 5px;
 }
 
-#qpumnpnftm .gt_left {
+#jqakstpklj .gt_left {
   text-align: left;
 }
 
-#qpumnpnftm .gt_center {
+#jqakstpklj .gt_center {
   text-align: center;
 }
 
-#qpumnpnftm .gt_right {
+#jqakstpklj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qpumnpnftm .gt_font_normal {
+#jqakstpklj .gt_font_normal {
   font-weight: normal;
 }
 
-#qpumnpnftm .gt_font_bold {
+#jqakstpklj .gt_font_bold {
   font-weight: bold;
 }
 
-#qpumnpnftm .gt_font_italic {
+#jqakstpklj .gt_font_italic {
   font-style: italic;
 }
 
-#qpumnpnftm .gt_super {
+#jqakstpklj .gt_super {
   font-size: 65%;
 }
 
-#qpumnpnftm .gt_footnote_marks {
+#jqakstpklj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qpumnpnftm .gt_asterisk {
+#jqakstpklj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qpumnpnftm .gt_indent_1 {
+#jqakstpklj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qpumnpnftm .gt_indent_2 {
+#jqakstpklj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qpumnpnftm .gt_indent_3 {
+#jqakstpklj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qpumnpnftm .gt_indent_4 {
+#jqakstpklj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qpumnpnftm .gt_indent_5 {
+#jqakstpklj .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1141,7 +1168,394 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul>
 </li>
 <li><p><strong>Conclusion</strong>: The multilevel analysis shows that there is significant variability in student scores both within and between schools. The mean score across all schools is estimated to be 30.6006, with substantial variability observed within schools and some variability observed between schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion (19.1%) of the total variance in scores can be attributed to differences between schools. This justifies the use of a multilevel model, as it captures the hierarchical structure of the data and provides a more nuanced understanding of the variability in student scores.</p></li>
-</ol></section></section></main><!-- /main column -->
+</ol>
+<section id="random-intercept-models" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="random-intercept-models">
+<span class="header-section-number">3.3.1</span> Random Intercept Models</h3>
+<p>Random intercept models are a type of multilevel model where each group (e.g., school) has its own intercept but shares the same slope for explanatory variables. This allows the model to account for the fact that different groups may have different baseline levels of the outcome variable.</p>
+<section id="add-an-explanatory-variable" class="level4" data-number="3.3.1.1"><h4 data-number="3.3.1.1" class="anchored" data-anchor-id="add-an-explanatory-variable">
+<span class="header-section-number">3.3.1.1</span> Add an Explanatory Variable</h4>
+<p>Adding an explanatory variable (predictor) to the random intercept model helps to explain some of the variability in the outcome variable. This allows us to understand how much of the variability is due to the predictor, in addition to the variability captured by the random intercepts.</p>
+<p><span class="math display">\[
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + e_{ij}
+\]</span> This equation represents a random intercept model with one explanatory variable (<code>cohort90</code>):</p>
+<ul>
+<li>
+<span class="math inline">\(\text{score}_{ij}\)</span>: The score for student <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span>.</li>
+<li>
+<span class="math inline">\(\beta_0\)</span>: The overall intercept, representing the average score when all predictors are zero. This is the fixed effect for the intercept.</li>
+<li>
+<span class="math inline">\(\beta_1 \text{cohort90}_{ij}\)</span>: The fixed effect of the explanatory variable <code>cohort90</code> on the score. <span class="math inline">\(\beta_1\)</span> is the coefficient that quantifies how much the score changes with each unit change in <code>cohort90</code>.</li>
+<li>
+<span class="math inline">\(u_{0j}\)</span>: The random effect for school <span class="math inline">\(j\)</span>. This term captures the deviation of school <span class="math inline">\(j\)</span>’s intercept from the overall intercept <span class="math inline">\(\beta_0\)</span>. It accounts for the fact that different schools may have different baseline scores.</li>
+<li>
+<span class="math inline">\(e_{ij}\)</span>: The residual error term for student <span class="math inline">\(i\)</span> in school <span class="math inline">\(j\)</span>. This term captures the deviation of the individual student’s score from their school’s mean score, after accounting for the effects of <code>cohort90</code> and the school-level random intercept.</li>
+</ul>
+<div class="cell">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Adding an explanatory variable (cohort90)</span></span>
+<span><span class="va">ri_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lmerTest/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">score</span> <span class="op">~</span> <span class="va">cohort90</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">schoolid</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">score.sch</span>, REML <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">ri_model</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood . t-tests use Satterthwaite's
+  method [lmerModLmerTest]
+Formula: score ~ cohort90 + (1 | schoolid)
+   Data: score.sch
+
+      AIC       BIC    logLik  deviance  df.resid 
+ 280921.6  280955.3 -140456.8  280913.6     33984 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.1487 -0.7242  0.0363  0.7339  3.7097 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ schoolid (Intercept)  45.99    6.781  
+ Residual             219.29   14.808  
+Number of obs: 33988, groups:  schoolid, 508
+
+Fixed effects:
+             Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept) 3.056e+01  3.225e-01 4.326e+02   94.74   &lt;2e-16 ***
+cohort90    1.215e+00  1.553e-02 3.392e+04   78.24   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+         (Intr)
+cohort90 -0.002</code></pre>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">ri_model</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">kbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_styling.html">kable_styling</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">effect</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">group</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">term</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">estimate</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">std.error</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">statistic</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">df</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">p.value</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">conf.low</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">conf.high</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">fixed</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">30.559151</td>
+<td style="text-align: right;">0.3225430</td>
+<td style="text-align: right;">94.74442</td>
+<td style="text-align: right;">432.5598</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">29.925204</td>
+<td style="text-align: right;">31.193097</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fixed</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">cohort90</td>
+<td style="text-align: right;">1.214954</td>
+<td style="text-align: right;">0.0155293</td>
+<td style="text-align: right;">78.23636</td>
+<td style="text-align: right;">33924.8362</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.184517</td>
+<td style="text-align: right;">1.245392</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ran_pars</td>
+<td style="text-align: left;">schoolid</td>
+<td style="text-align: left;">sd__(Intercept)</td>
+<td style="text-align: right;">6.781462</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ran_pars</td>
+<td style="text-align: left;">Residual</td>
+<td style="text-align: left;">sd__Observation</td>
+<td style="text-align: right;">14.808372</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><strong>Summary of the Output</strong></p>
+<ol type="1">
+<li>
+<p><strong>Fixed Effects</strong>:</p>
+<ul>
+<li>
+<strong>(Intercept)</strong>: The estimated overall mean score when <code>cohort90</code> is zero is 30.56. This value is statistically significant with a very small p-value (&lt; 2e-16), indicating that the intercept is significantly different from zero.</li>
+<li>
+<strong>cohort90</strong>: The coefficient for <code>cohort90</code> is 1.215. This means that for each unit increase in <code>cohort90</code>, the score increases by 1.215 points on average. This effect is also highly significant (p &lt; 2e-16).</li>
+</ul>
+</li>
+<li>
+<p><strong>Random Effects</strong>:</p>
+<ul>
+<li>
+<strong>schoolid (Intercept)</strong>: <strong>Variance</strong>: 45.99, <strong>Std.Dev.</strong>: 6.781. This indicates that the variance of the school-level intercepts (i.e., the variability in the mean scores between schools) is 45.99, with a standard deviation of 6.781.</li>
+<li>
+<strong>Residual</strong>: <strong>Variance</strong>: 219.29, <strong>Std.Dev.</strong>: 14.808. This indicates the variance of the residual errors (i.e., the variability in scores within schools) is 219.29, with a standard deviation of 14.808.</li>
+<li>
+<strong>Number of Observations</strong>: 33,988 students</li>
+<li>
+<strong>Number of Groups (schools)</strong>: 508 schools</li>
+</ul>
+</li>
+<li>
+<p><strong>Model Fit Statistics</strong>: These statistics provide measures of the model fit. Lower AIC and BIC values indicate a better-fitting model.</p>
+<ul>
+<li>
+<strong>AIC</strong>: 280921.6, <strong>BIC</strong>: 280955.3</li>
+</ul>
+</li>
+<li>
+<p><strong>Scaled Residuals</strong>: These are the quartiles of the residuals, which provide information about the distribution of the residuals.</p>
+<ul>
+<li>
+<strong>Min</strong>: -3.1487, <strong>1Q</strong>: -0.7242, <strong>Median</strong>: 0.0363, <strong>3Q</strong>: 0.7339, <strong>Max</strong>: 3.7097</li>
+</ul>
+</li>
+<li>
+<p><strong>Interpretation</strong>:</p>
+<ol type="i">
+<li>
+<strong>Overall Mean Score</strong>: The overall mean score for students, when <code>cohort90</code> is zero, is estimated to be 30.56.</li>
+<li>
+<strong>Effect of cohort90</strong>: The score increases by 1.215 points for each unit increase in <code>cohort90</code>. This indicates a positive relationship between <code>cohort90</code> and <code>score</code>.</li>
+<li>
+<strong>Variance Components</strong>: The variance of the school-level random intercepts is 45.99, indicating variability in mean scores between schools. The residual variance is 219.29, indicating variability in scores within schools.</li>
+<li>
+<strong>Intraclass Correlation Coefficient (ICC)</strong>: Approximately 17.3% of the total variance in scores is attributable to differences between schools, while the remaining 82.7% is due to differences within schools. <span class="math display">\[
+\text{ICC} = \frac{\sigma^2_{\text{between}}}{\sigma^2_{\text{between}} + \sigma^2_{\text{within}}} = \frac{45.99}{45.99 + 219.29} \approx 0.173
+\]</span>
+</li>
+<li>
+<strong>Model Fit</strong>: The model fit statistics (AIC, BIC, logLik, deviance) suggest that the model fits the data reasonably well. Lower AIC and BIC values compared to other models would indicate a better fit.</li>
+</ol>
+</li>
+<li><p><strong>Conclusion</strong>: The random intercept model with <code>cohort90</code> as an explanatory variable shows that there is significant variability in student scores both within and between schools. The average score increases with higher values of <code>cohort90</code>, suggesting a positive trend over time or across cohorts. The random intercepts capture the variability between schools, and the residual variance captures the variability within schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion of the variance in scores is due to differences between schools, justifying the use of a multilevel model.</p></li>
+</ol></section><section id="prediction" class="level4" data-number="3.3.1.2"><h4 data-number="3.3.1.2" class="anchored" data-anchor-id="prediction">
+<span class="header-section-number">3.3.1.2</span> Prediction</h4>
+<p>In multilevel modeling, the goal of prediction is to estimate the outcome variable (in this case, <code>score</code>) for each individual observation by considering both the fixed effects and the random effects. This allows for more accurate predictions by taking into account the hierarchical structure of the data. The general form of the prediction equation in a random intercept model with one explanatory variable (<code>cohort90</code>) is: <span class="math display">\[
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + e_{ij}
+\]</span></p>
+<section id="steps-for-prediction" class="level5" data-number="3.3.1.2.1"><h5 data-number="3.3.1.2.1" class="anchored" data-anchor-id="steps-for-prediction">
+<span class="header-section-number">3.3.1.2.1</span> Steps for Prediction</h5>
+<ol type="1">
+<li><p>Fitting the model - use the random intercept model using the <code>lmer</code> function earlier.</p></li>
+<li><p>Generating Predicted Values To generate predicted values for the outcome variable, use the <code>fitted</code> function. This function provides the fitted values (predictions) for each observation in the dataset based on the fixed and random effects:</p></li>
+</ol>
+<div class="cell">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pred_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">ri_model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">pred_score</span>, <span class="fl">10</span><span class="op">)</span>  <span class="co"># Display the first 10 predicted scores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>       1        2        3        4        5        6        7        8 
+16.54111 16.54111 16.54111 16.54111 16.54111 16.54111 16.54111 16.54111 
+       9       10 
+16.54111 16.54111 </code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Extracting Random Effects The random effects (school-specific intercepts) can be extracted using the <code>ranef</code> function. This provides the deviations of each school’s intercept from the overall intercept:</li>
+</ol>
+<div class="cell">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rand_ef</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/nlme/man/random.effects.html">ranef</a></span><span class="op">(</span><span class="va">ri_model</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">rand_ef</span><span class="op">$</span><span class="va">schoolid</span>, <span class="fl">12</span><span class="op">)</span>  <span class="co"># Display the random intercepts for the first 12 schools</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   (Intercept)
+1    -6.728310
+2     2.789899
+3     2.034756
+4    -7.631468
+5     3.074107
+6    11.833121
+7    -1.604856
+8    17.792799
+9    -7.995792
+10    2.778860
+11   -8.618580
+12   -2.198355</code></pre>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Using <code><a href="https://generics.r-lib.org/reference/augment.html">broom.mixed::augment</a></code> The <code>broom.mixed</code> package’s <code>augment</code> function creates a data frame that includes the original data, fitted values, and residuals. This can be useful for further analysis and visualization:</li>
+</ol>
+<div class="cell">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ri_fitted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">ri_model</span><span class="op">)</span></span>
+<span><span class="va">ri_fitted</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">)</span>  <span class="co"># Display the first 12 rows of the augmented data frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 14
+   score cohort90 schoolid .fitted .resid   .hat  .cooksd .fixed   .mu .offset
+   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+ 1     0       -6        1    16.5 -16.5  0.0219 0.0143     23.3  16.5       0
+ 2    10       -6        1    16.5  -6.54 0.0219 0.00223    23.3  16.5       0
+ 3     0       -6        1    16.5 -16.5  0.0219 0.0143     23.3  16.5       0
+ 4    40       -6        1    16.5  23.5  0.0219 0.0287     23.3  16.5       0
+ 5    42       -6        1    16.5  25.5  0.0219 0.0338     23.3  16.5       0
+ 6     4       -6        1    16.5 -12.5  0.0219 0.00819    23.3  16.5       0
+ 7     0       -6        1    16.5 -16.5  0.0219 0.0143     23.3  16.5       0
+ 8     0       -6        1    16.5 -16.5  0.0219 0.0143     23.3  16.5       0
+ 9    14       -6        1    16.5  -2.54 0.0219 0.000336   23.3  16.5       0
+10    27       -6        1    16.5  10.5  0.0219 0.00570    23.3  16.5       0
+11    18       -2        1    21.4  -3.40 0.0219 0.000603   28.1  21.4       0
+12    23       -4        1    19.0   4.03 0.0219 0.000845   25.7  19.0       0
+# ℹ 4 more variables: .sqrtXwt &lt;dbl&gt;, .sqrtrwt &lt;dbl&gt;, .weights &lt;dbl&gt;,
+#   .wtres &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section><section id="explanation" class="level5" data-number="3.3.1.2.2"><h5 data-number="3.3.1.2.2" class="anchored" data-anchor-id="explanation">
+<span class="header-section-number">3.3.1.2.2</span> Explanation</h5>
+<ol type="1">
+<li>
+<strong>Fixed Effects</strong>:
+<ul>
+<li>The fixed effects (<span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>) provide the overall intercept and the effect of <code>cohort90</code> on <code>score</code>.</li>
+<li>These effects are assumed to be the same across all schools.</li>
+</ul>
+</li>
+<li>
+<strong>Random Effects</strong>:
+<ul>
+<li>The random effects (<span class="math inline">\(u_{0j}\)</span>) represent the school-specific deviations from the overall intercept.</li>
+<li>Each school has its own intercept, which is the sum of the overall intercept (<span class="math inline">\(\beta_0\)</span>) and the school’s random intercept (<span class="math inline">\(u_{0j}\)</span>).</li>
+</ul>
+</li>
+<li>
+<strong>Residuals</strong>:
+<ul>
+<li>The residuals (<span class="math inline">\(e_{ij}\)</span>) represent the individual-specific deviations from the school’s predicted score.</li>
+<li>These capture the within-school variability that is not explained by the model.</li>
+</ul>
+</li>
+<li>
+<strong>Combined Prediction</strong>:
+<ul>
+<li>The predicted score for each student is the sum of the overall intercept, the effect of <code>cohort90</code>, the school-specific random intercept, and the individual-specific residual.</li>
+<li>This combined approach ensures that the prediction accounts for both the fixed effects (common to all students) and the random effects (specific to each school).</li>
+</ul>
+</li>
+</ol></section><section id="confirmation-with-manual-calculation" class="level5" data-number="3.3.1.2.3"><h5 data-number="3.3.1.2.3" class="anchored" data-anchor-id="confirmation-with-manual-calculation">
+<span class="header-section-number">3.3.1.2.3</span> Confirmation with Manual Calculation</h5>
+<p>Manually calculate the fitted values (predicted scores) to confirm the results from the model.</p>
+<ol type="1">
+<li><p><strong>Intercept (</strong><span class="math inline">\(\beta_0\)</span>): 30.55915. This is the overall average score when <code>cohort90</code> is zero.</p></li>
+<li><p><strong>Level-2 Residual (school level residual,</strong> <span class="math inline">\(u_{0j}\)</span>): For <code>schoolid = 1</code>, this is -6.73. This represents the deviation of this school’s intercept from the overall intercept.</p></li>
+<li><p><strong>Coefficient for <code>cohort90</code> (</strong><span class="math inline">\(\beta_1\)</span>): 1.214955. This indicates the average change in score for each unit change in <code>cohort90</code>.</p></li>
+<li>
+<p><strong>Example</strong>: For the first observation = <strong>cohort90</strong>: -6, <strong>schoolid</strong>: 1</p>
+<ul>
+<li><p>The fitted value (predicted score) can be calculated as: <span class="math display">\[
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + e_{ij}
+\]</span></p></li>
+<li><p>Since <span class="math inline">\(e_{ij}\)</span> (the individual-level residual) is what we are trying to predict, we simplify to: <span class="math display">\[
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j}
+\]</span></p></li>
+<li><p>Using the provided values: <span class="math display">\[
+\text{score}_{ij} = 30.55915 - 6.728309492 + 1.214955 \times (-6)
+\]</span> <span class="math display">\[
+\text{score}_{ij} = 30.55915 - 6.728309492 - 7.28973
+\]</span> <span class="math display">\[
+\text{score}_{ij} = 16.54111
+\]</span></p></li>
+<li><p>This matches the calculated fitted value.</p></li>
+</ul>
+</li>
+</ol></section></section><section id="plot" class="level4" data-number="3.3.1.3"><h4 data-number="3.3.1.3" class="anchored" data-anchor-id="plot">
+<span class="header-section-number">3.3.1.3</span> Plot</h4>
+<p>Plotting the model helps to visualize the fitted values from a random intercept model with an explanatory variable, such as <code>cohort90</code>. Visualization helps in understanding the model fit and the relationship between the variables.</p>
+<div class="cell">
+<details class="code-fold"><summary>Show the code</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ri_fitted</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cohort90</span>, <span class="va">.fitted</span>, group <span class="op">=</span> <span class="va">schoolid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">'Fitted score attainment'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">'Year: where 0 is the year 1990'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'The fitted value for random intercept model with covariate cohort90'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="Linear-Mixed-Models_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Comment</strong>: This plot visualizes the fitted values from the random intercept model with cohort90 as the explanatory variable. It provides a visual confirmation of the model’s results, showing how the fitted scores vary across different cohort years and schools. The general upward trend indicates improving scores over time, while the variation between schools highlights the importance of accounting for school-specific effects in the model. This visualization helps in understanding the combined impact of fixed and random effects on the predicted scores.</p>
+</section><section id="variance" class="level4" data-number="3.3.1.4"><h4 data-number="3.3.1.4" class="anchored" data-anchor-id="variance">
+<span class="header-section-number">3.3.1.4</span> Variance</h4>
+<section id="between-school-variance" class="level5" data-number="3.3.1.4.1"><h5 data-number="3.3.1.4.1" class="anchored" data-anchor-id="between-school-variance">
+<span class="header-section-number">3.3.1.4.1</span> Between School Variance</h5>
+<p>Between-school variance refers to the variation in the outcome variable (score) that is attributed to differences between schools. This variance component is crucial in multilevel modeling as it helps to understand how much of the total variance in scores can be explained by the differences between schools.</p>
+<ol type="1">
+<li>
+<strong>Constant Only Model</strong>:
+<ul>
+<li>In the constant only (null) model, the variance due to differences between schools (random intercept) is 61.02.</li>
+<li>This model does not include any explanatory variables and serves as a baseline to compare other models.</li>
+</ul>
+</li>
+<li>
+<strong>Model with Explanatory Variable (cohort90)</strong>:
+<ul>
+<li>When <code>cohort90</code> is added as an explanatory variable, the between-school variance reduces to 45.99.</li>
+<li>This reduction indicates that some of the variance between schools is explained by the cohort year.</li>
+</ul>
+</li>
+<li>
+<strong>Proportion of Unexplained Variance</strong>:
+<ul>
+<li>After accounting for the cohort effects, the proportion of unexplained variance due to differences between schools is calculated as: <span class="math display">\[
+\frac{45.99}{45.99 + 219.29} = 17\%
+\]</span>
+</li>
+<li>This means that 17% of the total unexplained variance in scores is attributable to differences between schools after accounting for the cohort effect.</li>
+</ul>
+</li>
+</ol></section><section id="within-school-variance" class="level5" data-number="3.3.1.4.2"><h5 data-number="3.3.1.4.2" class="anchored" data-anchor-id="within-school-variance">
+<span class="header-section-number">3.3.1.4.2</span> Within School Variance</h5>
+<p>Within-school variance refers to the variation in the outcome variable (score) within schools. This component captures the differences in scores among students within the same school. Understanding this variance is essential for identifying how much of the total variance is due to individual differences within schools.</p>
+<ol type="1">
+<li>
+<strong>Constant Only Model</strong>:
+<ul>
+<li>In the constant only (null) model, the within-school variance (residual variance) is 258.36.</li>
+<li>This model does not include any explanatory variables and serves as a baseline to compare other models.</li>
+</ul>
+</li>
+<li>
+<strong>Model with Explanatory Variable (cohort90)</strong>:
+<ul>
+<li>When <code>cohort90</code> is added as an explanatory variable, the within-school variance reduces to 219.29.</li>
+<li>This reduction indicates that some of the variance within schools is explained by the cohort year.</li>
+</ul>
+</li>
+<li>
+<strong>Reduction in Variance</strong>:
+<ul>
+<li>The addition of <code>cohort90</code> reduces both the between-school and within-school variances.</li>
+<li>The between-school variance reduces from 61.02 to 45.99.</li>
+<li>The within-school variance reduces from 258.36 to 219.29.</li>
+<li>The decrease in within-school variance is expected because <code>cohort90</code> is a student-level variable, meaning it explains part of the individual differences within schools.</li>
+</ul>
+</li>
+</ol></section></section></section></section></section></main><!-- /main column -->
 &nbsp;
 <hr>
 <p style="text-align: center;">A dedicated work by Dr Muhammad Saufi</p>
