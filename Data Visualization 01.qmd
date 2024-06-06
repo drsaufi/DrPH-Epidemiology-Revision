@@ -1,0 +1,112 @@
+---
+title: "Data Visualization 01"
+author: "Dr Saufi"
+date: 29 May 2024
+format: 
+    html:
+      toc: true
+      toc-title: Contents
+      toc-location: left
+      toc-depth: 3
+      toc-expand: 1
+      number-sections: true
+editor: visual
+---
+
+# Prepare R Environment
+
+Begin data analysis by creating a new project in RStudio to keep work organized. Steps to create a new project: Click File -\> Click New Project -\> Set name for the directory -\> Click Create Project
+
+# Load Libraries
+
+Load the necessary libraries for data visualization:
+
+```{r}
+# Load tidyverse for data manipulation and visualization
+library(tidyverse)
+
+# Load gapminder dataset for practice
+library(gapminder)
+```
+
+# Basic Plots
+
+Create different types of basic plots using ggplot2.
+
+## Histogram
+
+Visualize the distribution of life expectancy:
+
+```{r}
+ggplot(gapminder) +
+  geom_histogram(aes(lifeExp))
+```
+
+## Barchart
+
+Visualize the count of observations for each continent:
+
+```{r}
+ggplot(gapminder) +
+  geom_bar(aes(continent))
+```
+
+## Line Graph
+
+Visualize the change in life expectancy over time for each country:
+
+```{r}
+ggplot(gapminder) +
+  geom_line(aes(x = year, y = lifeExp, group = country))
+```
+
+## Scatter Plot
+
+Visualize the relationship between GDP per capita and life expectancy:
+
+```{r}
+ggplot(gapminder) +
+  geom_point(aes(x = gdpPercap, y = lifeExp))
+```
+
+## Smooth Plot
+
+Add a smooth trend line to the scatter plot to better visualize the relationship:
+
+```{r}
+ggplot(gapminder) +
+  geom_smooth(aes(x = gdpPercap, y = lifeExp))
+```
+
+# Split Your Plots
+
+Create faceted plots to split data visualizations by continent:
+
+```{r}
+ggplot(gapminder) +
+  geom_histogram(aes(lifeExp)) +
+  facet_wrap(~ continent)
+```
+
+# Saving Your Plots
+
+Save your plots in different formats (PDF, PNG, JPG):
+
+```{r}
+# Save the plot as PDF
+ggsave('myplot.pdf')
+
+# Save the plot as PNG
+ggsave('myplot.png')
+
+# Save the plot as JPG
+ggsave('myplot.jpg')
+```
+
+# References
+
+Useful resources for further learning and customization:
+
+-   [Different types of geom](https://ggplot2.tidyverse.org/reference/index.html)
+-   [Customizing your plots](http://www.cookbook-r.com/Graphs/)
+-   [More advanced R graphs](https://www.r-graph-gallery.com/)

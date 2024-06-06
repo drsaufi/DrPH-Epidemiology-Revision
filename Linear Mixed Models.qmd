@@ -1,0 +1,234 @@
+---
+title: "Linear Mixed Models"
+author: "Dr Saufi"
+date: last-modified
+format: 
+    html:
+      toc: true
+      toc-title: Contents
+      toc-location: left
+      toc-depth: 3
+      toc-expand: 1
+      number-sections: true
+    pdf:
+      toc: true
+      colorlinks: true
+    docx: 
+      toc: true
+      toc-depth: 2
+editor: visual
+---
+
+# Loading Packages
+
+```{r}
+library(haven)
+library(tidyverse)
+library(broom.mixed)
+library(here)
+library(gtsummary)
+library(DT)
+library(kableExtra)
+library(lme4)
+library(lmerTest)
+library(dplyr)
+```
+
+# Dataset
+
+The dataset is from the Scottish School Leavers Survey (SSLS). It is a longitudinal dataset that captures information on several cohorts of young people over time.
+
+**Hierarchy**: The dataset has a hierarchical structure with students (level 1) nested within schools (level 2).
+
+-   **Level 1 (Students)**: Individual students identified by `caseid`.
+-   **Level 2 (Schools)**: Schools identified by `schoolid`.
+
+**Dependent Variable**:
+
+-   `score`: Total attainment score of the student, ranging from 0 to 75.
+
+**Explanatory Variables**:
+
+-   `cohort90`: Year of the cohort, represented by subtracting 1990 from each value. Values range from -6 (1984) to 8 (1998), with 0 representing 1990.
+-   `female`: Gender of the student (1 = female, 0 = male).
+-   `sclass`: Social class of the student, defined as the higher class of mother or father (1 = managerial and professional, 2 = intermediate, 3 = working, 4 = unclassified).
+-   `schtype`: Type of school (1 = independent, 0 = state-funded).
+-   `schurban`: Urban-rural classification of the school (1 = urban, 0 = town or rural).
+-   `schdenom`: School denomination (1 = Roman Catholic, 0 = non-denominational).
+
+## Load the Dataset
+
+```{r}
+score.sch <- read_dta("score.sch_data.dta")
+glimpse(score.sch)
+```
+
+## Data Wrangling
+
+Numerical variables are often converted to factors to facilitate easier analysis and interpretation.
+
+```{r}
+score.sch <- score.sch %>%
+  mutate(
+    female2 = factor(female, labels = c('male', 'female')),
+    class2 = factor(sclass, labels = c('managerial+prof', 'intermediate', 'working', 'unclassified')),
+    schtype2 = factor(schtype, labels = c('state-funded', 'independent')),
+    schurban2 = factor(schurban, labels = c('town/rural', 'urban')),
+    schdenom2 = factor(schdenom, labels = c('state-funded', 'independent')))
+glimpse(score.sch)
+```
+
+## Exploratory Data Analysis
+
+Summarize the data and create some basic plots.
+
+### Descriptive Table
+
+```{r}
+score.sch %>% tbl_summary()
+```
+
+### Plot 1
+
+```{r}
+score.sch %>%
+  ggplot(aes(x = cohort90, y = score)) +
+  geom_point() +
+  geom_smooth(method = lm)
+```
+
+**Comment:** This graph displays the relationship between `cohort90` and `score`, along with a fitted linear regression line. The graph suggests that student attainment scores have generally increased over the years from 1984 to 1998. However, there is a substantial amount of variability in the scores within each cohort year. The positive slope of the regression line quantifies the trend of improvement in scores over time.
+
+### Plot 2
+
+```{r}
+score.sch %>%
+  ggplot(aes(x = cohort90, y = score, col = female, group = female)) +
+  geom_point() +
+  geom_smooth(method = lm)
+```
+
+**Comment:** This graph shows the relationship between `cohort90` and `score`, with a distinction between male and female students. The graph indicates that both male and female students have experienced improvements in attainment scores over the years from 1984 to 1998. The trends for both genders are very similar, suggesting that gender does not play a significant role in the difference in attainment scores within this dataset. The upward slope of both lines quantifies the overall improvement in scores over time, and the color differentiation helps visualize the gender distribution within each cohort.
+
+# Multilevel Model
+
+Multilevel model, also known as a hierarchical linear model or mixed-effects model, accounts for the nested structure of the data. In this dataset, students are nested within schools.
+
+## Null Model (Simplest Model)
+
+The simplest form of a multilevel model is the null model, which does not include any explanatory variables. It only includes random intercepts for the groups (schools in this case). The null model helps in understanding how much of the total variance in the outcome variable (score) can be attributed to differences between groups (schools).
+
+The equation for the null model is: $$
+score_{ij} = \beta_0 + u_{0j} + e_{ij}
+$$
+
+-   $score_{ij}$ is the attainment score of student $i$ in school $j$.
+-   $\beta_0$ is the overall mean score across all schools.
+-   $u_{0j}$ is the random effect for school $j$, capturing the deviation of school $j$'s mean score from the overall mean.
+-   $e_{ij}$ is the residual error term for student $i$ in school $j$.
+
+## Single-Level Analysis
+
+A single-level analysis uses a standard linear regression model assuming that all data points are independent and the outcome is normally distributed.
+
+```{r}
+m.lm <- lm(score ~ 1, data = score.sch)
+summary(m.lm)
+```
+
+**Summary of the Output**
+
+1.  **Call**: `lm(formula = score ~ 1, data = score.sch)`
+
+    -   This indicates that a linear model is being fitted with `score` as the response variable and no predictors (only an intercept).
+
+2.  **Residuals**: The residuals section provides a summary of the distribution of the residuals (differences between observed and predicted values):
+
+    -   **Min**: -31.095
+    -   **1Q (First Quartile)**: -12.095
+    -   **Median**: 1.905
+    -   **3Q (Third Quartile)**: 13.905
+    -   **Max**: 43.905
+
+3.  **Coefficients**: The coefficients section provides the estimate of the model's intercept:
+
+    -   **Estimate**: 31.09462 This is the estimated mean score for all students.
+    -   **Std. Error**: 0.09392 This is the standard error of the intercept estimate, indicating the precision of the estimate.
+    -   **t value**: 331.1 This is the t-statistic for testing whether the intercept is significantly different from zero.
+    -   **Pr(\>\|t\|)**: \<2e-16 This is the p-value associated with the t-statistic, indicating that the intercept is highly significant (p \< 0.001).
+
+4.  **Residual Standard Error**:
+
+    -   **Residual standard error**: 17.31 on 33987 degrees of freedom
+    -   This value measures the average distance that the observed scores fall from the regression line (mean score). A lower residual standard error indicates a better fit.
+
+5.  **Interpretation**:
+
+    i)  **Overall Mean Score**: The overall mean score for students is estimated to be 31.09462. This value is statistically significant, as indicated by the extremely small p-value (p \< 0.001).
+
+    ii) **Residuals**: The residuals indicate the spread of the differences between observed scores and the estimated mean score. The range of residuals (-31.095 to 43.905) suggests variability in scores around the mean.
+
+    iii) **Model Fit**: The residual standard error of 17.31 suggests that there is considerable variability in student scores around the mean. This model does not account for any grouping structure (such as schools), meaning it assumes all observations are independent.
+
+6.  **Equation**:
+
+    -   $\hat{\text{score}} = \beta_0$
+    -   $\hat{\text{score}} = 31.09462$
+
+7.  **Conclusion**: The single-level analysis provides an estimate of the overall mean score (31.09462) for all students, which is highly significant. However, the residual standard error and the spread of residuals indicate that there is substantial variability in scores that is not explained by this simple model. This highlights the potential need for a more complex model, such as a multilevel model, to account for the nested structure of the data and potentially explain some of the variability in scores.
+
+## Multilevel Analysis
+
+Multilevel analysis (also known as hierarchical linear modeling or mixed-effects modeling) is used to analyze data that has a nested structure. In this dataset, students are nested within schools. This type of analysis allows us to account for variability at both the student level and the school level, providing more accurate estimates and inferences.
+
+1.  **Fixed Effects:** The overall mean score $\beta_0$ is estimated. These are the effects that are assumed to be constant across all groups. For example, the average effect of a variable like cohort90 on score across all students and schools.
+
+2.  **Random Effects:** These allow for variability between groups. For example, different schools may have different baseline scores (intercepts), and the effect of cohort90 on score may vary between schools.
+
+-   **Between-School Variance**: Variance due to differences between schools $u_{0j}$.
+-   **Within-School Variance**: Variance due to differences within schools $e_{ij}$.
+
+```{r}
+m0 <- lmer(score ~ 1 + (1 | schoolid), data = score.sch, REML = FALSE)
+summary(m0)
+```
+
+**Summary of the Output**
+
+1.  **Fixed Effects**: The estimated overall mean score across all schools is 30.6006. This value is statistically significant with a very small p-value (\< 2e-16), indicating that the mean score is significantly different from zero.
+
+2.  **Random Effects**
+
+    -   The variance of the school-level intercepts (i.e., the variability in the mean scores between schools) is 61.02, with a standard deviation of 7.812.
+    -   The variance of the residual errors (i.e., the variability in scores within schools) is 258.36, with a standard deviation of 16.073.
+
+3.  **Model Fit Statistics**
+
+    -   **AIC**: 286545.1, **BIC**: 286570.4
+    -   These statistics provide measures of the model fit. Lower AIC and BIC values indicate a better-fitting model.
+
+4.  **Scaled Residuals**: These are the quartiles of the residuals, which provide information about the distribution of the residuals.
+
+5.  **Interpretation**
+
+    i)  **Overall Mean Score**: The overall mean score for students across all schools is 30.6006, which is statistically significant.
+
+    ii) **Variance Components**:
+
+        -   The between-school variance (61.02) indicates that there is variability in mean scores between different schools.
+        -   The within-school variance (258.36) indicates that there is substantial variability in scores within schools.
+
+    iii) **Intraclass Correlation Coefficient (ICC)**: $$
+         \text{ICC} = \frac{\sigma^2_{\text{between}}}{\sigma^2_{\text{between}} + \sigma^2_{\text{within}}} = \frac{61.02}{61.02 + 258.36} \approx 0.191
+         $$
+
+    -   The ICC can be calculated to understand the proportion of total variance that is attributable to the grouping structure (schools in this case).
+    -   Approximately 19.1% of the total variance in scores is attributable to differences between schools, while the remaining 80.9% is due to differences within schools.
+
+6.  **Equation** ${score}_{ij} = 30.6006 + u_{0j} + e_{ij}$
+
+    -   $\beta_0 = 30.6006$ is the fixed effect (overall mean score).
+    -   $u_{0j} \sim N(0, 61.02)$ is the random effect for school ( j ) with a variance of 61.02.
+    -   $e_{ij} \sim N(0, 258.36)$ is the residual error term for student ( i ) in school ( j ) with a variance of 258.36.
+
+7.  **Conclusion**: The multilevel analysis shows that there is significant variability in student scores both within and between schools. The mean score across all schools is estimated to be 30.6006, with substantial variability observed within schools and some variability observed between schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion (19.1%) of the total variance in scores can be attributed to differences between schools. This justifies the use of a multilevel model, as it captures the hierarchical structure of the data and provides a more nuanced understanding of the variability in student scores.
