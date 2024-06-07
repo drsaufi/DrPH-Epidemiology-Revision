@@ -34,6 +34,9 @@ library(kableExtra)
 library(lme4)
 library(lmerTest)
 library(dplyr)
+library(DT)
+library(merTools)
+library(lattice)
 ```
 
 # Dataset
@@ -120,7 +123,9 @@ Multilevel model, also known as a hierarchical linear model or mixed-effects mod
 
 The simplest form of a multilevel model is the null model, which does not include any explanatory variables. It only includes random intercepts for the groups (schools in this case). The null model helps in understanding how much of the total variance in the outcome variable (score) can be attributed to differences between groups (schools).
 
-The equation for the null model is: $$
+The equation for the null model is:
+
+$$
 score_{ij} = \beta_0 + u_{0j} + e_{ij}
 $$
 
@@ -187,8 +192,8 @@ Multilevel analysis (also known as hierarchical linear modeling or mixed-effects
 
 2.  **Random Effects:** These allow for variability between groups. For example, different schools may have different baseline scores (intercepts), and the effect of cohort90 on score may vary between schools.
 
--   **Between-School Variance**: Variance due to differences between schools $u_{0j}$.
--   **Within-School Variance**: Variance due to differences within schools $e_{ij}$.
+    -   **Between-School Variance**: Variance due to differences between schools $u_{0j}$.
+    -   **Within-School Variance**: Variance due to differences within schools $e_{ij}$.
 
 ```{r}
 m0 <- lmer(score ~ 1 + (1 | schoolid), data = score.sch, REML = FALSE)
@@ -197,21 +202,21 @@ summary(m0)
 
 **Summary of the Output**
 
-1.  **Fixed Effects**: The estimated overall mean score across all schools is 30.6006. This value is statistically significant with a very small p-value (\< 2e-16), indicating that the mean score is significantly different from zero.
+-   **Fixed Effects**: The estimated overall mean score across all schools is 30.6006. This value is statistically significant with a very small p-value (\< 2e-16), indicating that the mean score is significantly different from zero.
 
-2.  **Random Effects**
+-   **Random Effects**
 
     -   The variance of the school-level intercepts (i.e., the variability in the mean scores between schools) is 61.02, with a standard deviation of 7.812.
     -   The variance of the residual errors (i.e., the variability in scores within schools) is 258.36, with a standard deviation of 16.073.
 
-3.  **Model Fit Statistics**
+-   **Model Fit Statistics**
 
     -   **AIC**: 286545.1, **BIC**: 286570.4
     -   These statistics provide measures of the model fit. Lower AIC and BIC values indicate a better-fitting model.
 
-4.  **Scaled Residuals**: These are the quartiles of the residuals, which provide information about the distribution of the residuals.
+-   **Scaled Residuals**: These are the quartiles of the residuals, which provide information about the distribution of the residuals.
 
-5.  **Interpretation**
+-   **Interpretation**
 
     i)  **Overall Mean Score**: The overall mean score for students across all schools is 30.6006, which is statistically significant.
 
@@ -225,15 +230,16 @@ summary(m0)
          $$
 
     -   The ICC can be calculated to understand the proportion of total variance that is attributable to the grouping structure (schools in this case).
+
     -   Approximately 19.1% of the total variance in scores is attributable to differences between schools, while the remaining 80.9% is due to differences within schools.
 
-6.  **Equation** ${score}_{ij} = 30.6006 + u_{0j} + e_{ij}$
+-   **Equation** ${score}_{ij} = 30.6006 + u_{0j} + e_{ij}$
 
     -   $\beta_0 = 30.6006$ is the fixed effect (overall mean score).
     -   $u_{0j} \sim N(0, 61.02)$ is the random effect for school ( j ) with a variance of 61.02.
     -   $e_{ij} \sim N(0, 258.36)$ is the residual error term for student ( i ) in school ( j ) with a variance of 258.36.
 
-7.  **Conclusion**: The multilevel analysis shows that there is significant variability in student scores both within and between schools. The mean score across all schools is estimated to be 30.6006, with substantial variability observed within schools and some variability observed between schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion (19.1%) of the total variance in scores can be attributed to differences between schools. This justifies the use of a multilevel model, as it captures the hierarchical structure of the data and provides a more nuanced understanding of the variability in student scores.
+-   **Conclusion**: The multilevel analysis shows that there is significant variability in student scores both within and between schools. The mean score across all schools is estimated to be 30.6006, with substantial variability observed within schools and some variability observed between schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion (19.1%) of the total variance in scores can be attributed to differences between schools. This justifies the use of a multilevel model, as it captures the hierarchical structure of the data and provides a more nuanced understanding of the variability in student scores.
 
 ### Random Intercept Models
 
@@ -257,9 +263,8 @@ $$ This equation represents a random intercept model with one explanatory variab
 # Adding an explanatory variable (cohort90)
 ri_model <- lmer(score ~ cohort90 + (1 | schoolid), data = score.sch, REML = FALSE)
 summary(ri_model)
-```
 
-```{r}
+# For a nicer output:
 tidy(ri_model, conf.int = TRUE) %>% kbl %>% kable_styling()
 ```
 
@@ -288,19 +293,25 @@ tidy(ri_model, conf.int = TRUE) %>% kbl %>% kable_styling()
 5.  **Interpretation**:
 
     i.  **Overall Mean Score**: The overall mean score for students, when `cohort90` is zero, is estimated to be 30.56.
+
     ii. **Effect of cohort90**: The score increases by 1.215 points for each unit increase in `cohort90`. This indicates a positive relationship between `cohort90` and `score`.
+
     iii. **Variance Components**: The variance of the school-level random intercepts is 45.99, indicating variability in mean scores between schools. The residual variance is 219.29, indicating variability in scores within schools.
+
     iv. **Intraclass Correlation Coefficient (ICC)**: Approximately 17.3% of the total variance in scores is attributable to differences between schools, while the remaining 82.7% is due to differences within schools. $$
         \text{ICC} = \frac{\sigma^2_{\text{between}}}{\sigma^2_{\text{between}} + \sigma^2_{\text{within}}} = \frac{45.99}{45.99 + 219.29} \approx 0.173
         $$
+
     v.  **Model Fit**: The model fit statistics (AIC, BIC, logLik, deviance) suggest that the model fits the data reasonably well. Lower AIC and BIC values compared to other models would indicate a better fit.
 
 6.  **Conclusion**: The random intercept model with `cohort90` as an explanatory variable shows that there is significant variability in student scores both within and between schools. The average score increases with higher values of `cohort90`, suggesting a positive trend over time or across cohorts. The random intercepts capture the variability between schools, and the residual variance captures the variability within schools. The intraclass correlation coefficient (ICC) indicates that a meaningful proportion of the variance in scores is due to differences between schools, justifying the use of a multilevel model.
 
 #### Prediction
 
-In multilevel modeling, the goal of prediction is to estimate the outcome variable (in this case, `score`) for each individual observation by considering both the fixed effects and the random effects. This allows for more accurate predictions by taking into account the hierarchical structure of the data. The general form of the prediction equation in a random intercept model with one explanatory variable (`cohort90`) is: $$
- \text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + e_{ij}
+In multilevel modeling, the goal of prediction is to estimate the outcome variable (in this case, `score`) for each individual observation by considering both the fixed effects and the random effects. This allows for more accurate predictions by taking into account the hierarchical structure of the data. The general form of the prediction equation in a random intercept model with one explanatory variable (`cohort90`) is:
+
+$$
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + e_{ij}
 $$
 
 ##### Steps for Prediction
@@ -318,7 +329,7 @@ head(pred_score, 10)  # Display the first 10 predicted scores
 
 ```{r}
 rand_ef <- ranef(ri_model)
-head(rand_ef$schoolid, 12)  # Display the random intercepts for the first 12 schools
+datatable(head(rand_ef$schoolid, 12))  # Display the random intercepts for the first 12 schools
 ```
 
 4.  Using `broom.mixed::augment` The `broom.mixed` package's `augment` function creates a data frame that includes the original data, fitted values, and residuals. This can be useful for further analysis and visualization:
@@ -331,15 +342,22 @@ ri_fitted %>% slice(1:12)  # Display the first 12 rows of the augmented data fra
 ##### Explanation
 
 1.  **Fixed Effects**:
+
     -   The fixed effects ($\beta_0$ and $\beta_1$) provide the overall intercept and the effect of `cohort90` on `score`.
     -   These effects are assumed to be the same across all schools.
+
 2.  **Random Effects**:
+
     -   The random effects ($u_{0j}$) represent the school-specific deviations from the overall intercept.
     -   Each school has its own intercept, which is the sum of the overall intercept ($\beta_0$) and the school's random intercept ($u_{0j}$).
+
 3.  **Residuals**:
+
     -   The residuals ($e_{ij}$) represent the individual-specific deviations from the school's predicted score.
     -   These capture the within-school variability that is not explained by the model.
+
 4.  **Combined Prediction**:
+
     -   The predicted score for each student is the sum of the overall intercept, the effect of `cohort90`, the school-specific random intercept, and the individual-specific residual.
     -   This combined approach ensures that the prediction accounts for both the fixed effects (common to all students) and the random effects (specific to each school).
 
@@ -396,12 +414,17 @@ ggplot(ri_fitted, aes(cohort90, .fitted, group = schoolid)) +
 Between-school variance refers to the variation in the outcome variable (score) that is attributed to differences between schools. This variance component is crucial in multilevel modeling as it helps to understand how much of the total variance in scores can be explained by the differences between schools.
 
 1.  **Constant Only Model**:
+
     -   In the constant only (null) model, the variance due to differences between schools (random intercept) is 61.02.
     -   This model does not include any explanatory variables and serves as a baseline to compare other models.
+
 2.  **Model with Explanatory Variable (cohort90)**:
+
     -   When `cohort90` is added as an explanatory variable, the between-school variance reduces to 45.99.
     -   This reduction indicates that some of the variance between schools is explained by the cohort year.
+
 3.  **Proportion of Unexplained Variance**:
+
     -   After accounting for the cohort effects, the proportion of unexplained variance due to differences between schools is calculated as: $$
         \frac{45.99}{45.99 + 219.29} = 17\%
         $$
@@ -412,13 +435,540 @@ Between-school variance refers to the variation in the outcome variable (score) 
 Within-school variance refers to the variation in the outcome variable (score) within schools. This component captures the differences in scores among students within the same school. Understanding this variance is essential for identifying how much of the total variance is due to individual differences within schools.
 
 1.  **Constant Only Model**:
+
     -   In the constant only (null) model, the within-school variance (residual variance) is 258.36.
     -   This model does not include any explanatory variables and serves as a baseline to compare other models.
+
 2.  **Model with Explanatory Variable (cohort90)**:
+
     -   When `cohort90` is added as an explanatory variable, the within-school variance reduces to 219.29.
     -   This reduction indicates that some of the variance within schools is explained by the cohort year.
+
 3.  **Reduction in Variance**:
+
     -   The addition of `cohort90` reduces both the between-school and within-school variances.
     -   The between-school variance reduces from 61.02 to 45.99.
     -   The within-school variance reduces from 258.36 to 219.29.
     -   The decrease in within-school variance is expected because `cohort90` is a student-level variable, meaning it explains part of the individual differences within schools.
+
+### Random Slope Models
+
+Random slope models allow both the intercept and the slope of the regression line to vary across groups (e.g., schools). This flexibility accounts for the possibility that different schools may not only have different starting points (intercepts) but also different rates of change (slopes) in the outcome variable. The random slope model is an extension of the random intercept model. It can be expressed as:
+
+$$
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + u_{1j} \text{cohort90}_{ij} + e_{ij}
+$$
+
+-   $\beta_0$: Overall intercept.
+-   $\beta_1$: Overall slope for `cohort90`.
+-   $u_{0j}$: Random intercept for school $j$.
+-   $u_{1j}$: Random slope for `cohort90` for school $j$.
+-   $\text{cohort90}_{ij}$: Value of `cohort90` for student $i$ in school $j$.
+-   $e_{ij}$: Residual error term for student $i$ in school $j$.
+
+```{r}
+# Random Slope Model
+rs_model1 <- lmer(score ~ cohort90 + (1 + cohort90 | schoolid), data = score.sch, REML = FALSE)
+summary(rs_model1)
+```
+
+```{r}
+# Model failed to converge, switch to `bobyqa` optimizer
+rs_model2 <- lmer(score ~ cohort90 + (1 + cohort90 | schoolid), data = score.sch, control = lmerControl(optimizer = 'bobyqa'), REML = FALSE)
+summary(rs_model2)
+```
+
+```{r}
+# For a nicer output
+tidy(rs_model2, conf.int = TRUE) %>% kbl %>% kable_styling()
+```
+
+**Summary of Output**
+
+1.  **Model Fit Statistics**
+
+    -   **AIC**: 280698.2, **BIC**: 280748.8
+    -   Lower AIC and BIC values indicate a better fit of the model to the data.
+
+2.  **Scaled Residuals**
+
+    -   **Min**: -3.1008, **1Q (First Quartile)**: -0.7202, **Median**: 0.0387, **3Q (Third Quartile)**: 0.7264, **Max**: 3.5220
+    -   The residuals have a median close to zero, indicating a good fit of the model. The range of residuals (-3.1008 to 3.5220) suggests that there are no extreme outliers.
+
+3.  **Random Effects**
+
+    -   **Variance of Intercepts (schoolid)**: The variance of 42.8581 (standard deviation of 6.5466) indicates significant variability in the baseline scores between schools.
+    -   **Variance of Slopes (cohort90)**: The variance of 0.1606 (standard deviation of 0.4007) indicates that the effect of `cohort90` on scores varies across schools.
+    -   **Correlation between Intercepts and Slopes**: The correlation of -0.39 suggests that schools with higher baseline scores tend to have a less steep increase in scores with respect to `cohort90`.
+    -   **Residual Variance**: 215.7393, Standard Deviation: The variance of 215.7393 (standard deviation of 14.6881) indicates variability in scores within schools.
+
+4.  **Fixed Effects**
+
+    -   **Intercept (**$\beta_0$): The average score when `cohort90` is zero is 30.60963, which is statistically significant (p \< 2e-16).
+    -   **cohort90 (**$\beta_1$): The average effect of `cohort90` on scores is 1.23390, indicating that for each unit increase in `cohort90`, the score increases by 1.23390 points, which is also statistically significant (p \< 2e-16).
+
+5.  **Correlation of Fixed Effects**
+
+    -   **Intercept and cohort90**: The negative correlation (-0.266) between the intercept and `cohort90` indicates that higher initial scores are associated with a slightly lower effect of `cohort90` on scores.
+
+6.  **Conclusion**: The random slope model indicates that student scores increase with `cohort90`, with an average increase of 1.2339 points per unit increase in `cohort90`, which is statistically significant. The intercept, representing the average score when `cohort90` is zero, is 30.60963. Significant variability exists both between schools (intercept variance of 42.8581) and in how `cohort90` affects scores across schools (slope variance of 0.1606). The negative correlation (-0.39) between the intercept and slope suggests that schools with higher initial scores tend to have a slower increase in scores over time. Residual variance of 215.7393 indicates considerable within-school variability in scores. Overall, the model effectively captures the hierarchical data structure, revealing important insights into the factors influencing student scores.
+
+#### The Fitted Values {#the-fitted-value}
+
+Fitted values are the predicted scores obtained from the model, incorporating both fixed effects and random effects. These values help in understanding how well the model fits the data and in interpreting the effects of the explanatory variables at different levels.
+
+```{r}
+rs_res <- augment(rs_model2) # Fitted random slope model
+datatable(head(rs_res, 20)) # Display the first 20 fitted values
+```
+
+##### Interpretation of the Fitted Values
+
+1.  **Cohort Effect**:
+
+    -   The cohort effect for school $j$ is estimated as $1.234 + \hat{u}_{1j}$.
+    -   The between-school variance in these slopes is estimated as 0.160.
+    -   This means that for the average school, we predict an increase of 1.234 points in the attainment score for each successive cohort year.
+
+2.  **Intercept Variance**:
+
+    -   The intercept variance of 42.858 is interpreted as the between-school variance when `cohort90` = 0, i.e., for the 1990 cohort.
+    -   This indicates the variability in baseline scores (intercepts) between schools.
+
+3.  **Intercept-Slope Correlation**:
+
+    -   The intercept-slope correlation is estimated as -0.39.
+    -   This suggests that schools with higher intercepts (above-average attainment in 1990) tend to have a flatter-than-average slope.
+    -   In other words, schools that started with higher scores in 1990 show less increase in scores over successive cohorts.
+
+4.  Example for the first observation from the table.
+
+    -   The fitted value (16.1) is calculated by adding the fixed effect (23.2) and the random effect (16.1).
+    -   The residual (-16.1) is the difference between the observed score and the fitted value.
+
+#### Model Comparison: Random Intercept vs. Random Slope
+
+Comparing models using the `anova` function helps to statistically test whether the addition of random slopes significantly improves the fit of the model compared to a simpler random intercept model. This is done through a likelihood ratio test.
+
+```{r}
+anova(ri_model, rs_model2)
+```
+
+**ANOVA Output Summary**
+
+1.  **Number of Parameters (npar)**:
+
+    -   **ri_model**: 4 parameters
+    -   **rs_model2**: 6 parameters
+    -   The random slope model has more parameters due to the additional random slope component.
+
+2.  **AIC (Akaike Information Criterion)**:
+
+    -   **ri_model**: 280922
+    -   **rs_model2**: 280698
+    -   The lower AIC for the random slope model indicates a better fit, despite the increased complexity.
+
+3.  **Log-Likelihood (logLik)**:
+
+    -   **ri_model**: -140457
+    -   **rs_model2**: -140343
+    -   The higher log-likelihood for the random slope model indicates a better fit.
+
+4.  **Chi-Square Statistic (Chisq)**: 227.4, which represents the improvement in fit by adding the random slope.
+
+5.  **p-Value (Pr(\>Chisq))**:
+
+    -   The p-value is less than 2.2e-16, which is highly significant.
+    -   This indicates that the random slope model provides a significantly better fit to the data than the random intercept model.
+
+**ANOVA Interpretation**
+
+-   **Model Fit**: The random slope model (`rs_model2`) fits the data significantly better than the random intercept model (`ri_model`). This is evidenced by the lower AIC, higher log-likelihood, and significant Chi-square test result.
+
+-   **Statistical Significance**: The p-value from the likelihood ratio test is less than 2.2e-16, which is highly significant. This means that the improvement in model fit when adding random slopes is not due to chance, and the additional complexity of the random slope model is justified.
+
+#### Interpretation of Random Effects Across Schools
+
+Random effects capture the variability in the data at different levels, such as between schools. Understanding these effects is crucial for making meaningful inferences about how different schools deviate from the overall population average.
+
+1.  **Cohort Effect for School** $j$:
+
+    -   The cohort effect for school $j$ is estimated as $1.234 + \hat{u}\_{1j}$.
+    -   Here, 1.234 is the overall average effect of `cohort90` across all schools, and $\hat{u}_{1j}$ is the random slope for school \$ j \$, representing the deviation of school \$ j \$ from this overall average.
+
+2.  **Between-School Variance in Slopes**:
+
+    -   The between-school variance in the slopes is estimated as 0.160.
+    -   This indicates the variability in the effect of `cohort90` on scores across different schools.
+
+3.  **Average School Prediction**: For the average school, the predicted increase in attainment score for each successive cohort is 1.234 points.
+
+4.  **95% Coverage Interval for School Slopes**: $$
+    1.234 \pm 1.96 \sqrt{0.160} = 1.234 \pm 1.96 \times 0.400 = 1.234 \pm 0.784 = 0.45 \text{ to } 2.018
+    $$
+
+    -   This interval suggests that, assuming a normal distribution, we would expect the middle 95% of schools to have a slope between 0.45 and 2.018.
+
+#### Prediction from Random Slope
+
+This section discusses how to obtain and interpret the predictions from a random slope model, specifically focusing on the random effects for each school. The random intercepts indicate how much each school's average score deviates from the overall average, while the random slopes indicate how much the effect of `cohort90` on scores deviates for each school. The random effects for the random slope model can be extracted using the `ranef` function. The `condVar = TRUE` argument includes the conditional variances of the random effects in the output.
+
+```{r}
+ra.eff.rs <- ranef(rs_model2, condVar = TRUE)
+datatable(ra.eff.rs$schoolid)
+```
+
+-   The table shows the random intercepts and random slopes for each school.
+-   Each row corresponds to a school, identified by an ID (e.g., 1, 2, 3, etc.).
+-   **(Intercept)**: The random intercept for the school, indicating how much the school's average score deviates from the overall average score.
+-   **cohort90**: The random slope for the school, indicating how much the effect of `cohort90` (the cohort year) on the score deviates from the overall effect.
+
+#### Plot of Random Effects
+
+This section discusses how to visualize random effects from a random slope model. Visualizing these effects helps in understanding the variations across different groups—in this case, schools. In a random slope model, random effects can be categorized into:
+
+1.  **Random Intercepts**: Differences in starting points (intercepts) for each school.
+2.  **Random Slopes**: Differences in the rate of change (slopes) for each school.
+
+The objective is to create a scatter plot where:
+
+-   The x-axis represents the random intercepts.
+-   The y-axis represents the random slopes.
+
+##### Scatter Plot 1
+
+To quickly visualize the random effects extracted from a mixed-effects model using base R graphics.
+
+```{r}
+plot(ra.eff.rs)
+```
+
+**Interpretation**: The scatter plot presents the relationship between random intercepts and random slopes for different schools. There appears to be a downward trend in the scatter plot, indicating a negative correlation between random intercepts and random slopes. Schools with higher intercepts tend to have lower slopes, suggesting that schools with higher starting scores improve at a slower rate.
+
+##### Scatter Plot 2
+
+To create a customized scatter plot of random intercepts vs. random slopes using `ggplot2`.
+
+```{r}
+# Extract random effects for `schoolid`
+ra.eff.rs.sc <- ra.eff.rs$schoolid
+
+# Rename columns for clarity
+ra.eff.rs.sc <- ra.eff.rs.sc %>% rename(rs_slope = cohort90, rs_int = "(Intercept)")
+
+# Plot random effects
+ggplot(ra.eff.rs.sc, aes(x = rs_int, y = rs_slope)) +
+  geom_point() +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 0) +
+  xlab("Random Intercepts") +
+  ylab("Random Slopes") +
+  ggtitle("Random Effects: Intercepts vs Slopes")
+```
+
+**Interpretation**: The scatter plot visualizes the relationship between random intercepts and random slopes for different schools. There is a slight downward trend in the scatter plot, indicating a negative correlation between random intercepts and random slopes. Schools with higher intercepts tend to have lower slopes, suggesting that schools starting with higher scores improve at a slower rate.
+
+#### Equation for Random Slope Model
+
+$$\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + u_{0j} + u_{1j} \text{cohort90}_{ij} + e_{ij}$$ $$\hat{score}_{ij} = (30.610 + \hat{u}_{0j}) + (1.234 + \hat{u}_{1j}) \text{cohort90}_{ij}$$
+
+-   $\hat{score}_{ij}$: The predicted score attainment for student $i$ in school $j$.
+-   $30.610$: The fixed part of the intercept, representing the average score across all schools when `cohort90` is zero (the year 1990).
+-   $\hat{u}_{0j}$: The random intercept for school $j$, which captures the deviation of school $j$'s intercept from the overall intercept (30.610).
+-   $1.234$: The fixed part of the slope, representing the average change in score attainment per unit change in `cohort90`.
+-   $\hat{u}_{1j}$: The random slope for school $j$, which captures the deviation of school $j$'s slope from the overall slope (1.234).
+
+**Interpretation**: The model indicates that on average, students' scores increase by 1.234 points for each unit increase in `cohort90`. Each school has its own intercept ($30.610 + \hat{u}_{0j}$) and slope ($1.234 + \hat{u}_{1j}$), allowing for variability in how different schools start and how the scores change over time.
+
+#### Plot the Fitted Values from Random Slope
+
+The random slope model allows both the intercept and the slope to vary across different groups (schools). By plotting the fitted values from the random slope model, we can effectively visualize the differences in trends and baselines across the groups (schools) in the dataset.
+
+Use the extracted fitted values (`rs_res`) which was generated in [The Fitted Values](#the-fitted-value).
+
+```{r}
+rs_res %>% 
+  ggplot(aes(cohort90, .fitted, group = schoolid)) +
+  geom_point(alpha = 0.3) +
+  geom_line(aes(colour = schoolid), alpha = 0.3) +
+  ylab('The fitted score attainment') +
+  xlab('cohort: 0 equals year 1990') +
+  theme_bw() +
+  ggtitle('The fitted score attainment for each student against year from random slope model')
+```
+
+**Interpretation** : The graph presented shows the fitted score attainment for each student against the cohort year from a random slope model. The overall trend shows that scores generally increase over time (as cohort year increases), indicating that later cohorts tend to have higher scores. The positive slope in most lines indicates improvement in scores over time for most schools. There is considerable variability in the slopes and intercepts of the lines, reflecting differences in how scores change over time across different schools. Some schools start at a higher baseline score (higher intercept) and show steady improvement, while others start lower and improve more gradually.
+
+#### Adding a Level-1 Variable to the Random Slope Model
+
+Random slope model can be extended by incorporating an additional level-1 explanatory variable (for example, gender). By doing this, the effect of gender on score attainment across schools can be analyzed. The model equation is extended to:
+
+$$
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + \beta_2 \text{female}_{ij} + u_{0j} + u_{1j} \text{cohort90}_{ij} + e_{ij}
+$$
+
+-   $\beta_0$ is the overall intercept.
+-   $\beta_1$ is the coefficient for the cohort90 variable.
+-   $\beta_2$ is the coefficient for the gender variable (female).
+-   $u_{0j}$ is the random intercept for school $j$.
+-   $u_{1j}$ is the random slope for the cohort90 variable within school $j$. $e_{ij}$ is the residual error term.
+
+##### Random Slope Model with Gender
+
+```{r}
+# Model fitting
+rs_gend1 <- lmer(score ~ cohort90 + female2 + (1 + cohort90 | schoolid), data = score.sch, REML = FALSE)
+summary(rs_gend1)
+```
+
+::: callout-note
+Upon running the model, a warning indicates that the model did not converge due to the gradient being too high. This means the default optimizer was unable to find a suitable solution within the specified tolerance.
+:::
+
+```{r}
+# model is re-fitted using the `bobyqa` optimizer
+rs_gend2 <- lmer(score ~ cohort90 + female2 + (1 + cohort90 | schoolid), data = score.sch, REML = FALSE, lmerControl(optimizer = 'bobyqa'))
+summary(rs_gend2)
+
+# For a nicer output:
+tidy(rs_gend2, conf.int = TRUE) %>% kbl %>% kable_styling()
+```
+
+**Interpretation**:
+
+1.  **Random Effects**
+
+    -   **Intercept (schoolid)**: The variance in intercepts (42.5750) indicates substantial variability in starting scores between schools.
+    -   **cohort90 (schoolid)**: The variance in slopes (0.1613) indicates variability in how scores change over time across different schools.
+    -   **Correlation (-0.39)**: A moderate negative correlation between intercepts and slopes for cohort90 suggests that schools with higher starting scores tend to have slower rates of score increase.
+
+2.  **Fixed Effects**
+
+    -   **(Intercept)**: The average starting score for a student in 1990 is approximately 29.58.
+    -   **cohort90**: On average, each additional year (cohort90) increases the score by 1.227 points, which is highly significant.
+    -   **female2female**: Female students, on average, score 1.945 points higher than male students, which is also highly significant.
+
+3.  **Conclusion**: The model reveals significant effects of both `cohort90` and `female` on scores. The random effects show variability across schools in both starting scores and the rate of change over time. The negative correlation between intercepts and slopes indicates that schools with higher initial scores tend to improve more slowly over time.
+
+##### Random Slope Model with Gender Having a Random Slope
+
+The model is further extended to allow the gender variable (female) to have a random slope. This means we are considering the possibility that the effect of gender on score attainment might vary across different schools. The model equation becomes:
+
+$$
+\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + \beta_2 \text{female}_{ij} + u_{0j} + u_{1j} \text{cohort90}_{ij} + u_{2j} \text{female}_{ij} + e_{ij}
+$$
+
+::: callout-note
+$u_{2j}$ is the random slope for the gender variable within school $j$.
+:::
+
+```{r}
+# Model fitting
+rs_gend2_slope <- lmer(score ~ cohort90 + female2 + (1 + cohort90 + female2 | schoolid), data = score.sch, REML = FALSE, lmerControl(optimizer = 'bobyqa'))
+summary(rs_gend2_slope)
+```
+
+**Interpretation**:
+
+1.  **Random Effects**
+
+    -   **Intercept (schoolid)**: The variance in intercepts (40.5580) indicates substantial variability in starting scores between schools.
+
+    -   **cohort90 (schoolid)**: The variance in slopes (0.1617) indicates variability in how scores change over time across different schools.
+
+    -   **female2female (schoolid)**: The variance in slopes (1.3711) indicates variability in the effect of gender (female) on scores across different schools.
+
+    -   **Correlation**:
+
+        -   A moderate negative correlation (-0.39) between intercepts and slopes for cohort90 suggests that schools with higher starting scores tend to have slower rates of score increase.
+        -   A positive correlation (0.21) between intercepts and slopes for female2female suggests that schools with higher starting scores tend to have a stronger gender effect.
+        -   A slight negative correlation (-0.11) between the slopes for cohort90 and female2female suggests a small inverse relationship between these effects.
+
+2.  **Fixed Effects**
+
+    -   **(Intercept)**: The average starting score for a student in 1990 is approximately 29.58909.
+
+    -   **cohort90**: On average, each additional year (cohort90) increases the score by 1.22777 points, which is highly significant.
+
+    -   **female2female**: Female students, on average, score 1.93145 points higher than male students, which is also highly significant.
+
+3.  **Conclusion**: The model reveals significant effects of both `cohort90` and `female2` on scores. The random effects show variability across schools in both starting scores, the rate of change over time, and the effect of gender. The correlations between random effects suggest relationships between the intercepts and slopes, as well as between the slopes for different variables.
+
+##### Comparison Between Models
+
+To compare the random slope model for `cohort90` only with the model including random slopes for both `cohort90` and gender, use the `anova` function.
+
+```{r}
+anova(rs_gend2, rs_gend2_slope)
+```
+
+The `anova` function performs a likelihood ratio test to compare the two models. The output will include statistics such as AIC, BIC, log-likelihood, deviance, and the chi-square test for the difference in deviance.
+
+**Interpretation**:
+
+1.  **Model Fit Metrics**: The AIC values are very close for both models, indicating that the addition of random slopes for `female2` does not significantly improve the model fit.
+
+2.  **Chi-Square Test**: A p-value of 0.1553 indicates that the difference in deviance between the two models is not statistically significant at the typical alpha level of 0.05. Therefore, the additional complexity of allowing `female2` to have a random slope is not justified based on this test.
+
+3.  **Conclusion**:
+
+    -   The addition of random slopes for `female2` (in `rs_gend2_slope`) does not significantly improve the model fit compared to having only random slopes for `cohort90` (in `rs_gend2`).
+
+    -   Given the p-value of 0.1553, the simpler model (`rs_gend2`) is preferred because it provides a similar fit to the data with fewer parameters.
+
+    -   This suggests that the effect of gender on score attainment does not vary significantly across schools, or at least not enough to justify the added complexity in the model.
+
+    -   The results indicate that while there is some variability in the slopes for `cohort90` across schools, allowing the gender effect (`female2`) to vary across schools does not provide a statistically significant improvement in the model fit. Therefore, the simpler model (`rs_gend2`) is more appropriate for this dataset.
+
+#### Adding a Level-2 Explanatory Variable to the Random Slope Model
+A level-2 variable is one that varies between groups rather than within groups (students within a school). In the previous models, the level-1 variables are `cohort90` and `female2`, which vary within schools. 
+
+Now, the model is extended by including a level-2 variable that varies between schools. Here, `class2` (social class) is used as the level-2 explanatory variable. The extended model can be written as:
+
+$$\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + \beta_2 \text{female}_{ij} + \beta_3 \text{class2}_j + u_{0j} + u_{1j} \text{cohort90}_{ij} + u_{2j} \text{female}_{ij} + e_{ij}$$
+
+:::{.callout-note}
+$\beta_3 \text{class2}_j$: The fixed effect of the level-2 variable `class2`, which is a characteristic of the school.
+:::
+
+```{r}
+# Add the level-2 explanatory variable `class2` to the model.
+rs_gend2_class <- lmer(score ~ cohort90 + female2 + class2 + (1 + cohort90 | schoolid), data = score.sch, REML = FALSE, lmerControl(optimizer = 'bobyqa'))
+summary(rs_gend2_class)
+
+# For a nicer output:
+tidy(rs_gend2_class, conf.int = TRUE) %>% kbl %>% kable_styling()
+```
+
+
+**Interpretation**:
+
+1. **Random Effects**
+
+    - **Intercept (schoolid)**: The variance in intercepts (22.5133) indicates substantial variability in starting scores between schools.
+    - **cohort90 (schoolid)**: The variance in slopes (0.1508) indicates variability in how scores change over time across different schools.
+    - **Residual Variance**: The residual variance (192.9457) represents the within-school variability not explained by the model.
+    - **Correlation**:A moderate negative correlation (-0.32) between intercepts and slopes for cohort90 suggests that schools with higher starting scores tend to have slower rates of score increase.
+
+2. **Fixed Effects**
+
+    - **(Intercept)**: The average starting score for a student is approximately 35.70 when all predictors are zero.
+    - **cohort90**: On average, each additional year (cohort90) increases the score by 1.183 points, which is highly significant.
+    - **female2female**: Female students, on average, score 1.961 points higher than male students, which is also highly significant.
+    - **class2**:
+
+      - Students from intermediate social class score 5.210 points lower on average compared to the baseline class.
+      - Students from working social class score 11.09 points lower on average compared to the baseline class.
+      - Students from unclassified social class score 14.82 points lower on average compared to the baseline class.
+
+3. **Conclusion**: The model reveals significant effects of `cohort90`, `female2`, and `class2` on scores. The random effects show variability across schools in both starting scores and the rate of change over time. The negative correlation between intercepts and slopes indicates that schools with higher initial scores tend to improve more slowly over time. The fixed effects indicate that social class has a substantial impact on student scores, with lower social classes associated with lower scores.
+
+#### Cross-Level Interaction in the Random Slope Model
+A cross-level interaction involves an interaction between a level-1 variable (within-group) and a level-2 variable (between-group). This type of interaction allows the effect of a level-1 variable to vary depending on the value of a level-2 variable.
+
+```{r}
+# cross-level interactions
+m.int <- lmer(score ~ cohort90 + female2 + class2 + schtype + schurban + cohort90:schtype + (1 + cohort90 | schoolid), data = score.sch, REML = FALSE, lmerControl(optimizer = 'bobyqa'))
+summary(m.int)
+
+# For a nicer output:
+tidy(m.int, conf.int = TRUE) %>% kbl %>% kable_styling()
+```
+
+**Components of Model**:
+
+1. **Fixed Effects**:
+
+    - `cohort90`: A level-1 predictor variable representing the cohort year.
+    - `female2`: A level-1 predictor variable representing gender.
+    - `factor(sclass)`: A level-2 predictor variable representing social class.
+    - `schtype`: A level-2 predictor variable representing school type.
+    - `schurban`: A level-2 predictor variable representing whether the school is urban.
+    - `cohort90:schtype`: The cross-level interaction term between cohort year and school type.
+
+2. **Random Effects** `(1 + cohort90 | schoolid)`: Random intercepts and random slopes for cohort90 within each school (`schoolid`).
+
+**Interpretation**:
+
+1. **Random Effects**
+
+    - **Intercept (schoolid)**: The variance in intercepts (20.414) indicates substantial variability in starting scores between schools.
+    - **cohort90 (schoolid)**: The variance in slopes (0.138) indicates variability in how scores change over time across different schools.
+    - **Residual Variance**: The residual variance (192.851) represents the within-school variability not explained by the model.
+    - **Correlation**: A moderate negative correlation (-0.23) between intercepts and slopes for cohort90 suggests that schools with higher starting scores tend to have slower rates of score increase.
+
+2. **Fixed Effects**
+
+    - **(Intercept)**: The average starting score for a student is approximately 36.21 when all predictors are zero.
+    - **cohort90**: On average, each additional year (cohort90) increases the score by 1.214 points, which is highly significant.
+    - **female2female**: Female students, on average, score 1.970 points higher than male students, which is also highly significant.
+    - **class2**:
+
+      - Students from intermediate social class score 5.189 points lower on average compared to the baseline class.
+      - Students from working social class score 11.02 points lower on average compared to the baseline class.
+      - Students from unclassified social class score 14.76 points lower on average compared to the baseline class.
+
+    - **schtype**: Schools of a particular type have scores that are 5.291 points higher on average, which is highly significant.
+    - **schurban**: Students in urban schools score 1.404 points lower on average, which is significant.
+    - **cohort90:schtype**: The interaction term indicates that the effect of cohort year on score is modified by the school type. Specifically, for each additional year, the score increases by 1.214 points, but this increase is reduced by 0.5994 points in certain school types, which is highly significant.
+
+3. **Conclusion**: The model reveals significant effects of `cohort90`, `female2`, `class2`, `schtype`, and `schurban` on scores. The random effects show variability across schools in both starting scores and the rate of change over time. The interaction between `cohort90` and `schtype` indicates that the effect of cohort year on scores varies depending on the school type. The fixed effects indicate that social class, school type, and whether the school is urban significantly impact student scores.
+
+#### Checking Assumptions
+Checking assumptions is a critical step in validating the results of any statistical model. The objective is to validate that the model fits the data well and that the assumptions underlying the model are not violated.
+
+1. **Residual Analysis**: Augment the model to get residuals and fitted values for further analysis.
+
+```{r}
+res.rs.gend2.slope <- augment(rs_gend2_slope)
+datatable(res.rs.gend2.slope)
+```
+
+2. **Plotting Random Effects**
+
+::: {.panel-tabset .nav-pills}
+
+## Plot 1
+`REsim` function generates simulated random effects, providing a distribution of these effects. `plotREsim` visualizes these distributions to check if they are approximately normal and to assess the variability between groups.
+
+```{r}
+# Using the `merTools` package to visualize the random effects
+re.rs.gend2.slope <- REsim(rs_gend2_slope)
+plotREsim(re.rs.gend2.slope)
+```
+
+## Plot 2
+The `dotplot` of random effects helps visualize the distribution and variability of the random effects. Consistency in the spread of dots across the plot indicates that the random effects are well-modeled.
+
+```{r}
+# Using the `lattice` package to create a dot plot of the random effects
+randoms <- ranef(rs_gend2_slope, condVar = TRUE)
+dotplot(randoms)
+```
+:::
+
+3. **Fitted vs Residuals Plot**: This plot helps check the linearity assumption and the homogeneity of variances. A random scatter of residuals around zero without a clear pattern indicates that these assumptions are likely met.
+
+```{r}
+# Plot fitted values against residuals to check for patterns
+plot(rs_gend2_slope)
+```
+
+4. **Normality of Residuals**: The Q-Q plot checks if the residuals are normally distributed. Points that closely follow the reference line in the plot suggest that the residuals are normally distributed.
+
+```{r}
+# Create a Q-Q plot for checking the normality of residuals
+qqmath(rs_gend2_slope)
+```
+
+# Acknowledgements
+I would like to extend my sincere gratitude to [Professor Dr. Kamarul Imran Musa](https://github.com/drkamarul), Medical Epidemiologist and Statistician, and Professor in Epidemiology and Biostatistics at the School of Medical Sciences, Universiti Sains Malaysia. His guidance and teaching in statistical analysis and R software have been invaluable in the development of this analysis. 
+
+# References
+- [Introduction to Multilevel Modelling](https://www.cmm.bris.ac.uk/lemma/pluginfile.php/7973/mod_resource/content/3/R%20P5%20Introduction%20to%20Multilevel%20Modelling.pdf)
+- [UCLA: Repeated Measures Analysis with R](https://stats.idre.ucla.edu/r/seminars/repeated-measures-analysis-with-r/)
+- [More Advanced Guide: Longitudinal Data Analysis using lme4](https://rpsychologist.com/r-guide-longitudinal-lme-lmer)
+- [Bolker's Guide to Mixed Models](https://bbolker.github.io/mixedmodels-misc/ecostats_chap.html)
+
+# R Codes
+The R codes used in this analysis are available at the following GitHub repository: [DrPH-Epidemiology-Revision](https://github.com/drsaufi/DrPH-Epidemiology-Revision.git). This repository includes all scripts and data necessary to replicate the analyses presented in this work.
