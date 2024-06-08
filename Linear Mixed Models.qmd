@@ -926,10 +926,7 @@ datatable(res.rs.gend2.slope)
 
 2. **Plotting Random Effects**
 
-::: {.panel-tabset .nav-pills}
-
-## Plot 1
-`REsim` function generates simulated random effects, providing a distribution of these effects. `plotREsim` visualizes these distributions to check if they are approximately normal and to assess the variability between groups.
+**Plot 1**: `REsim` function generates simulated random effects, providing a distribution of these effects. `plotREsim` visualizes these distributions to check if they are approximately normal and to assess the variability between groups.
 
 ```{r}
 # Using the `merTools` package to visualize the random effects
@@ -937,15 +934,13 @@ re.rs.gend2.slope <- REsim(rs_gend2_slope)
 plotREsim(re.rs.gend2.slope)
 ```
 
-## Plot 2
-The `dotplot` of random effects helps visualize the distribution and variability of the random effects. Consistency in the spread of dots across the plot indicates that the random effects are well-modeled.
+**Plot 2**: The `dotplot` of random effects helps visualize the distribution and variability of the random effects. Consistency in the spread of dots across the plot indicates that the random effects are well-modeled.
 
 ```{r}
 # Using the `lattice` package to create a dot plot of the random effects
 randoms <- ranef(rs_gend2_slope, condVar = TRUE)
 dotplot(randoms)
 ```
-:::
 
 3. **Fitted vs Residuals Plot**: This plot helps check the linearity assumption and the homogeneity of variances. A random scatter of residuals around zero without a clear pattern indicates that these assumptions are likely met.
 
