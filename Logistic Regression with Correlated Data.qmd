@@ -17,10 +17,15 @@ format:
     theme:
       light: united
       dark: cyborg
-    css: styles.css
+    css: style.css
 editor: visual
 include-after-body: "footer.html"
 ---
+
+::: {.callout-note collapse="true"}
+# About This Document
+This document serves both learning and practical purposes. It is designed for educational use, aiming to enhance statistical analysis skills and provide clear, organized notes for future reference.
+:::
 
 # Introduction
 Logistic regression for correlated data is designed to handle situations where binary outcomes (e.g., success/failure) are not independent, such as in clustered data (e.g., patients within hospitals) or repeated measures (e.g., multiple observations over time on the same subject). Standard logistic regression assumes independence among observations, which, when violated, leads to biased estimates and incorrect inferences. To address this, two primary models are used: marginal models and conditional models.
@@ -39,6 +44,7 @@ Conditional models include random effects to capture variability within clusters
 Random intercept model is used to account for hierarchical or nested data structures. This model includes both fixed effects, which apply to the entire population, and random effects, which account for the variability between clusters by allowing each cluster to have its own intercept, which captures the baseline level of the response variable for that cluster.
 
 ## Setting Up the Environment
+Load the necessary libraries to ensure the R environment is equipped with the tools and functions required for efficient and effective analysis.
 
 ```{r, warning=FALSE, message=FALSE}
 # Load the libraries
@@ -52,6 +58,7 @@ library(sjPlot)
 library(kableExtra)
 library(ggplot2)
 library(dplyr)
+library(DT)
 ```
 
 ## Dataset Overview
@@ -90,7 +97,9 @@ The data is structured in multiple levels to account for the correlation within 
 ```{r}
 # Data structure
 data_glow %>% count(site_id)
-data_glow %>% count(site_id, phy_id)
+data_glow %>%
+  count(site_id, phy_id) %>%
+  datatable()
 ```
 
 ## Estimation
@@ -118,7 +127,7 @@ The following covariates are used:
 
 ```{r}
 # Data transformation
-data_glow2 <- data_glow %>% mutate(weight5 = weight/5, frac2 = as.integer(fracture) - 1)
+data_glow2 <- data_glow %>% mutate(weight5 = weight / 5, frac2 = as.integer(fracture) - 1)
 
 # Summarize the transformed data
 dfSummary(data_glow2)
@@ -133,7 +142,7 @@ Population Average Model is used to estimate the average effect of predictors on
 
 ```{r}
 # Fit the GEE model
-glow_gee <- gee(frac2 ~ weight5 + raterisk + armassist, id = site_id, data = data_glow2, family = binomial(link = 'logit'), corstr = "independence", scale.fix = TRUE, scale.value = 1, maxiter = 100)
+glow_gee <- gee(frac2 ~ weight5 + raterisk + armassist, id = site_id, data = data_glow2, family = binomial(link = "logit"), corstr = "independence", scale.fix = TRUE, scale.value = 1, maxiter = 100)
 
 # View the GEE model
 glow_gee
