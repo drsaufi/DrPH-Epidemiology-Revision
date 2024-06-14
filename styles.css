@@ -1,14 +1,10 @@
-/* Add a border and padding to code chunks */
-.quarto-code-cell .cell-input, .quarto-code-cell .cell-output {
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    background-color: #f8f9fa;
+/* Link font color */
+a {
+    color: #69b3a2;
 }
 
-/* Adjust font and spacing */
-.quarto-code-cell .cell-input pre, .quarto-code-cell .cell-output pre {
-    font-size: 14px;
-    line-height: 1.5;
+/* TOC color (left border and font color) */
+.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
+    border-left: 1px solid #69b3a2;
+    color: #69b3a2 !important;
 }

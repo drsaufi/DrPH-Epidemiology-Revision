@@ -1,0 +1,193 @@
+---
+title: "Logistic Regression with Correlated Data"
+subtitle: "Advanced Categorical Data Analysis"
+author: "Dr Muhammad Saufi"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-fold: true
+    code-summary: "Code"
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+editor: visual
+include-after-body: "footer.html"
+---
+
+# Introduction
+Logistic regression for correlated data is designed to handle situations where binary outcomes (e.g., success/failure) are not independent, such as in clustered data (e.g., patients within hospitals) or repeated measures (e.g., multiple observations over time on the same subject). Standard logistic regression assumes independence among observations, which, when violated, leads to biased estimates and incorrect inferences. To address this, two primary models are used: marginal models and conditional models.
+
+## Marginal Models (Population Average Models)
+Marginal models focus on estimating the average effect of covariates across the entire population. They use Generalized Estimating Equations (GEE) to account for the correlation within clusters. The GEE approach specifies a working correlation structure (e.g., independence, exchangeable, auto-regressive, unstructured) to adjust for within-cluster correlations and provides robust population-level estimates.
+
+## Conditional Models (Random Effects Models)
+Conditional models include random effects to capture variability within clusters, offering subject-specific or cluster-specific inferences.
+
+-   **Random Intercept Models**: Allow the intercept to vary across clusters, capturing baseline differences. Represent the average effect of covariates on the log-odds of the outcome.
+
+-   **Random Slope Models**: Allow both the intercept and the slope of the covariate to vary across clusters, capturing differences in the effect of covariates. Capture unobserved heterogeneity between clusters or subjects.
+
+# Multilevel Random Intercept Model
+Random intercept model is used to account for hierarchical or nested data structures. This model includes both fixed effects, which apply to the entire population, and random effects, which account for the variability between clusters by allowing each cluster to have its own intercept, which captures the baseline level of the response variable for that cluster.
+
+## Setting Up the Environment
+
+```{r, warning=FALSE, message=FALSE}
+# Load the libraries
+library(tidyverse)
+library(aplore3)
+library(summarytools)
+library(broom.mixed)
+library(lme4)
+library(gee)
+library(sjPlot)
+library(kableExtra)
+library(ggplot2)
+library(dplyr)
+```
+
+## Dataset Overview
+The dataset is from the book "Applied Logistic Regression" by Hosmer, Lemeshow, and Sturdivant (2013). The specific dataset referred to is called `GLOW_RAND`, which contains 500 observations. This dataset is used for demonstrating logistic regression techniques and can be loaded in R using the `aplore3` package. The dataset contains:
+
+- **6 sites**: The number of subjects per site varies from as few as 24 in one site (site 4) to as many as 113 in another site (site 2).
+
+- **124 physicians**: The number of subjects treated by each physician varies from 1 to 13.
+
+- **Outcome of Interest**: Whether a fracture occurred in the first year of follow-up (FRACTURE), coded as `NO` (0) or `YES` (1).
+
+```{r}
+# Data wrangling
+data_glow <- glow_rand
+glimpse(data_glow)
+```
+
+## Hierarchical Data Structure
+The data is structured in multiple levels to account for the correlation within clusters. Each level represents a different grouping or clustering of the data:
+
+- **Level 1**: Subject
+
+    - This is the individual level, where each `sub_id` represents a unique participant or subject in the study.
+    - A participant in a clinical study with specific characteristics like age, gender, medical history, etc.
+
+- **Level 2**: Physician for Subject
+
+    - This level groups subjects under the same physician. Each `phy_id` represents a unique physician who is responsible for multiple subjects.
+    - All subjects treated by the same doctor. This introduces correlation because subjects under the same physician might receive similar treatments or follow similar protocols.
+
+- **Level 3**: Site Where Physician Works
+
+    - This is the highest level, grouping physicians by the site or location where they work. Each `site_id` represents a unique site, such as a hospital or clinic.
+    - All physicians working in the same hospital. This adds another layer of correlation because practices and resources can vary between sites, affecting the subjects treated there.
+
+```{r}
+# Data structure
+data_glow %>% count(site_id)
+data_glow %>% count(site_id, phy_id)
+```
+
+## Estimation
+In hierarchical or nested data structures, observations within the same group tend to be more similar to each other than to observations in different groups. This leads to correlation within groups, which needs to be accounted for in the analysis to avoid biased estimates and incorrect inferences.
+
+### Sources of Correlation
+In this dataset, there are two possible sources of correlation:
+
+1. **Physician (PHYS_ID)**: Subjects (Level 1) are grouped under the same physician (Level 2). This means that subjects treated by the same physician may have more similar outcomes compared to subjects treated by different physicians.
+
+2. **Site (SITE_ID)**: Physicians (Level 2) are grouped under the same site (Level 3). This means that physicians working at the same site may follow similar protocols or share resources, leading to more similar outcomes for their subjects compared to physicians working at different sites.
+
+Because of these nested structures, we consider using random effects models to account for the correlation within these groups. However, in this analysis, the focus is on a two-level model using only the site level (SITE_ID).
+
+### Model Variables
+The following covariates are used:
+
+- **WEIGHT5**: Continuous variable representing the weight (in kg) at enrollment, divided by 5. Dividing by 5 helps in interpreting the coefficient more easily, as it will represent the change in log-odds for a 5 kg increase in weight.
+
+- **ARMASSIST**: Dichotomous variable indicating whether the subject needs assistance with their arms to stand.
+
+- **RATERISK**: Three-level categorical variable indicating the self-reported risk of fracture (low, medium, high).
+
+### Data Transformation
+
+```{r}
+# Data transformation
+data_glow2 <- data_glow %>% mutate(weight5 = weight/5, frac2 = as.integer(fracture) - 1)
+
+# Summarize the transformed data
+dfSummary(data_glow2)
+```
+
+1. A new variable `weight5` is created by dividing the original weight by 5. For example, if the original weight is 70 kg, `weight5` will be 70/5 = 14. This transformation is done so that the coefficient for `weight5` in the logistic regression model represents the change in log-odds for a 5 kg increase in weight, making interpretation easier.
+
+2. The `FRACTURE` variable is originally coded as `NO` and `YES`. This step converts it into a numeric format where `NO` becomes 0 and `YES` becomes 1. The `as.integer()` function converts `NO` to 1 and `YES` to 2, so subtracting 1 results in `NO` becoming 0 and `YES` becoming 1.
+
+### Population Average Model
+Population Average Model is used to estimate the average effect of predictors on the outcome across the entire population. This approach is implemented using Generalized Estimating Equations (GEE).
+
+```{r}
+# Fit the GEE model
+glow_gee <- gee(frac2 ~ weight5 + raterisk + armassist, id = site_id, data = data_glow2, family = binomial(link = 'logit'), corstr = "independence", scale.fix = TRUE, scale.value = 1, maxiter = 100)
+
+# View the GEE model
+glow_gee
+```
+
+**Summary of Output**:
+
+1. **Model Formula**: `frac2 ~ weight5 + raterisk + armassist` specifies the dependent variable (`frac2`) and the independent variables (`weight5`, `raterisk`, and `armassist`).
+
+    - **ID**: `site_id` indicates that clustering is by site.
+    - **Data**: `data_glow2` is the dataset used.
+    - **Max Iterations**: The maximum number of iterations for the algorithm is set to 100.
+    - **Family**: `binomial(link = "logit")` indicates a logistic regression model.
+    - **Correlation Structure**: `independence` specifies an independent correlation structure.
+    - **Scale**: The scale parameter is fixed at 1.
+
+2. **Interpretation**
+
+    - **Intercept**: The baseline log-odds of having a fracture when all predictors are at their reference levels is -0.342.
+    - **weight5**: A 5 kg increase in weight is associated with a decrease in the log-odds of having a fracture by 0.121.
+    - **rateriskSame**: Compared to low risk, the same risk increases the log-odds of having a fracture by 0.721.
+    - **rateriskGreater**: Compared to low risk, greater risk increases the log-odds of having a fracture by 0.771.
+    - **armassistYes**: Needing arm assistance increases the log-odds of having a fracture by 0.901.
+
+Proceed with the calculation of log odds and odds ratios from the model coefficients. `coef()` function extracts the estimated coefficients (log odds) from the GEE model `glow_gee`, and `exp()` function exponentiates the coefficients to convert them from log odds to odds ratios.
+
+```{r}
+res_glow_gee <- data.frame(log_odds = coef(glow_gee), odds_ratio = exp(coef(glow_gee)))
+res_glow_gee
+```
+
+**Summary of Output**:
+
+1. **Intercept**:
+
+    - **Log Odds**: -0.3424651, **Odds Ratio**: 0.7100179
+    - The odds ratio of the baseline category (when all predictors are at their reference levels) is 0.71, indicating that the odds of having a fracture are 29% lower compared to the reference category.
+
+2. **weight5**:
+
+    - **Log Odds**: -0.1211036, **Odds Ratio**: 0.8859421
+    - For each 5 kg increase in weight, the odds of having a fracture decrease by 11.4% (odds ratio of 0.886).
+
+3. **rateriskSame**:
+
+    - **Log Odds**: 0.7208085, **Odds Ratio**: 2.0560948
+    - Compared to the reference category (low risk), the odds of having a fracture are approximately 2.06 times higher for those with the same risk.
+
+4. **rateriskGreater**:
+
+    - **Log Odds**: 0.7713922, **Odds Ratio**: 2.1627751
+    - Compared to the reference category (low risk), the odds of having a fracture are approximately 2.16 times higher for those with a greater risk.
+
+5. **armassistYes**:
+
+    - **Log Odds**: 0.9012544, **Odds Ratio**: 2.4626903
+    - The odds of having a fracture are approximately 2.46 times higher for those who need assistance with their arms to stand compared to those who do not.
