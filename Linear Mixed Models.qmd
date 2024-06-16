@@ -12,18 +12,20 @@ format:
     toc-expand: 1
     number-sections: true
     code-fold: true
-    code-summary: "Show the code"
+    code-summary: "Code"
     code-link: true
     theme:
       light: united
       dark: cyborg
+    css: styles.css
 editor: visual
 include-after-body: "footer.html"
 ---
 
-# Loading Packages
+# Setting Up the Environment
+Load the necessary libraries to ensure the R environment is equipped with the tools and functions required for efficient and effective analysis.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(haven)
 library(tidyverse)
 library(broom.mixed)
@@ -64,7 +66,7 @@ The dataset is from the Scottish School Leavers Survey (SSLS). It is a longitudi
 ## Load the Dataset
 
 ```{r}
-score.sch <- read_dta("score.sch_data.dta")
+score.sch <- read_dta("Datasets/score.sch_data.dta")
 glimpse(score.sch)
 ```
 
@@ -821,13 +823,14 @@ The `anova` function performs a likelihood ratio test to compare the two models.
     -   The results indicate that while there is some variability in the slopes for `cohort90` across schools, allowing the gender effect (`female2`) to vary across schools does not provide a statistically significant improvement in the model fit. Therefore, the simpler model (`rs_gend2`) is more appropriate for this dataset.
 
 #### Adding a Level-2 Explanatory Variable to the Random Slope Model
-A level-2 variable is one that varies between groups rather than within groups (students within a school). In the previous models, the level-1 variables are `cohort90` and `female2`, which vary within schools. 
+
+A level-2 variable is one that varies between groups rather than within groups (students within a school). In the previous models, the level-1 variables are `cohort90` and `female2`, which vary within schools.
 
 Now, the model is extended by including a level-2 variable that varies between schools. Here, `class2` (social class) is used as the level-2 explanatory variable. The extended model can be written as:
 
 $$\text{score}_{ij} = \beta_0 + \beta_1 \text{cohort90}_{ij} + \beta_2 \text{female}_{ij} + \beta_3 \text{class2}_j + u_{0j} + u_{1j} \text{cohort90}_{ij} + u_{2j} \text{female}_{ij} + e_{ij}$$
 
-:::{.callout-note}
+::: callout-note
 $\beta_3 \text{class2}_j$: The fixed effect of the level-2 variable `class2`, which is a characteristic of the school.
 :::
 
@@ -840,30 +843,33 @@ summary(rs_gend2_class)
 tidy(rs_gend2_class, conf.int = TRUE) %>% kbl %>% kable_styling()
 ```
 
-
 **Interpretation**:
 
-1. **Random Effects**
+1.  **Random Effects**
 
-    - **Intercept (schoolid)**: The variance in intercepts (22.5133) indicates substantial variability in starting scores between schools.
-    - **cohort90 (schoolid)**: The variance in slopes (0.1508) indicates variability in how scores change over time across different schools.
-    - **Residual Variance**: The residual variance (192.9457) represents the within-school variability not explained by the model.
-    - **Correlation**:A moderate negative correlation (-0.32) between intercepts and slopes for cohort90 suggests that schools with higher starting scores tend to have slower rates of score increase.
+    -   **Intercept (schoolid)**: The variance in intercepts (22.5133) indicates substantial variability in starting scores between schools.
+    -   **cohort90 (schoolid)**: The variance in slopes (0.1508) indicates variability in how scores change over time across different schools.
+    -   **Residual Variance**: The residual variance (192.9457) represents the within-school variability not explained by the model.
+    -   **Correlation**:A moderate negative correlation (-0.32) between intercepts and slopes for cohort90 suggests that schools with higher starting scores tend to have slower rates of score increase.
 
-2. **Fixed Effects**
+2.  **Fixed Effects**
 
-    - **(Intercept)**: The average starting score for a student is approximately 35.70 when all predictors are zero.
-    - **cohort90**: On average, each additional year (cohort90) increases the score by 1.183 points, which is highly significant.
-    - **female2female**: Female students, on average, score 1.961 points higher than male students, which is also highly significant.
-    - **class2**:
+    -   **(Intercept)**: The average starting score for a student is approximately 35.70 when all predictors are zero.
 
-      - Students from intermediate social class score 5.210 points lower on average compared to the baseline class.
-      - Students from working social class score 11.09 points lower on average compared to the baseline class.
-      - Students from unclassified social class score 14.82 points lower on average compared to the baseline class.
+    -   **cohort90**: On average, each additional year (cohort90) increases the score by 1.183 points, which is highly significant.
 
-3. **Conclusion**: The model reveals significant effects of `cohort90`, `female2`, and `class2` on scores. The random effects show variability across schools in both starting scores and the rate of change over time. The negative correlation between intercepts and slopes indicates that schools with higher initial scores tend to improve more slowly over time. The fixed effects indicate that social class has a substantial impact on student scores, with lower social classes associated with lower scores.
+    -   **female2female**: Female students, on average, score 1.961 points higher than male students, which is also highly significant.
+
+    -   **class2**:
+
+        -   Students from intermediate social class score 5.210 points lower on average compared to the baseline class.
+        -   Students from working social class score 11.09 points lower on average compared to the baseline class.
+        -   Students from unclassified social class score 14.82 points lower on average compared to the baseline class.
+
+3.  **Conclusion**: The model reveals significant effects of `cohort90`, `female2`, and `class2` on scores. The random effects show variability across schools in both starting scores and the rate of change over time. The negative correlation between intercepts and slopes indicates that schools with higher initial scores tend to improve more slowly over time. The fixed effects indicate that social class has a substantial impact on student scores, with lower social classes associated with lower scores.
 
 #### Cross-Level Interaction in the Random Slope Model
+
 A cross-level interaction involves an interaction between a level-1 variable (within-group) and a level-2 variable (between-group). This type of interaction allows the effect of a level-1 variable to vary depending on the value of a level-2 variable.
 
 ```{r}
@@ -877,54 +883,60 @@ tidy(m.int, conf.int = TRUE) %>% kbl %>% kable_styling()
 
 **Components of Model**:
 
-1. **Fixed Effects**:
+1.  **Fixed Effects**:
 
-    - `cohort90`: A level-1 predictor variable representing the cohort year.
-    - `female2`: A level-1 predictor variable representing gender.
-    - `factor(sclass)`: A level-2 predictor variable representing social class.
-    - `schtype`: A level-2 predictor variable representing school type.
-    - `schurban`: A level-2 predictor variable representing whether the school is urban.
-    - `cohort90:schtype`: The cross-level interaction term between cohort year and school type.
+    -   `cohort90`: A level-1 predictor variable representing the cohort year.
+    -   `female2`: A level-1 predictor variable representing gender.
+    -   `factor(sclass)`: A level-2 predictor variable representing social class.
+    -   `schtype`: A level-2 predictor variable representing school type.
+    -   `schurban`: A level-2 predictor variable representing whether the school is urban.
+    -   `cohort90:schtype`: The cross-level interaction term between cohort year and school type.
 
-2. **Random Effects** `(1 + cohort90 | schoolid)`: Random intercepts and random slopes for cohort90 within each school (`schoolid`).
+2.  **Random Effects** `(1 + cohort90 | schoolid)`: Random intercepts and random slopes for cohort90 within each school (`schoolid`).
 
 **Interpretation**:
 
-1. **Random Effects**
+1.  **Random Effects**
 
-    - **Intercept (schoolid)**: The variance in intercepts (20.414) indicates substantial variability in starting scores between schools.
-    - **cohort90 (schoolid)**: The variance in slopes (0.138) indicates variability in how scores change over time across different schools.
-    - **Residual Variance**: The residual variance (192.851) represents the within-school variability not explained by the model.
-    - **Correlation**: A moderate negative correlation (-0.23) between intercepts and slopes for cohort90 suggests that schools with higher starting scores tend to have slower rates of score increase.
+    -   **Intercept (schoolid)**: The variance in intercepts (20.414) indicates substantial variability in starting scores between schools.
+    -   **cohort90 (schoolid)**: The variance in slopes (0.138) indicates variability in how scores change over time across different schools.
+    -   **Residual Variance**: The residual variance (192.851) represents the within-school variability not explained by the model.
+    -   **Correlation**: A moderate negative correlation (-0.23) between intercepts and slopes for cohort90 suggests that schools with higher starting scores tend to have slower rates of score increase.
 
-2. **Fixed Effects**
+2.  **Fixed Effects**
 
-    - **(Intercept)**: The average starting score for a student is approximately 36.21 when all predictors are zero.
-    - **cohort90**: On average, each additional year (cohort90) increases the score by 1.214 points, which is highly significant.
-    - **female2female**: Female students, on average, score 1.970 points higher than male students, which is also highly significant.
-    - **class2**:
+    -   **(Intercept)**: The average starting score for a student is approximately 36.21 when all predictors are zero.
 
-      - Students from intermediate social class score 5.189 points lower on average compared to the baseline class.
-      - Students from working social class score 11.02 points lower on average compared to the baseline class.
-      - Students from unclassified social class score 14.76 points lower on average compared to the baseline class.
+    -   **cohort90**: On average, each additional year (cohort90) increases the score by 1.214 points, which is highly significant.
 
-    - **schtype**: Schools of a particular type have scores that are 5.291 points higher on average, which is highly significant.
-    - **schurban**: Students in urban schools score 1.404 points lower on average, which is significant.
-    - **cohort90:schtype**: The interaction term indicates that the effect of cohort year on score is modified by the school type. Specifically, for each additional year, the score increases by 1.214 points, but this increase is reduced by 0.5994 points in certain school types, which is highly significant.
+    -   **female2female**: Female students, on average, score 1.970 points higher than male students, which is also highly significant.
 
-3. **Conclusion**: The model reveals significant effects of `cohort90`, `female2`, `class2`, `schtype`, and `schurban` on scores. The random effects show variability across schools in both starting scores and the rate of change over time. The interaction between `cohort90` and `schtype` indicates that the effect of cohort year on scores varies depending on the school type. The fixed effects indicate that social class, school type, and whether the school is urban significantly impact student scores.
+    -   **class2**:
+
+        -   Students from intermediate social class score 5.189 points lower on average compared to the baseline class.
+        -   Students from working social class score 11.02 points lower on average compared to the baseline class.
+        -   Students from unclassified social class score 14.76 points lower on average compared to the baseline class.
+
+    -   **schtype**: Schools of a particular type have scores that are 5.291 points higher on average, which is highly significant.
+
+    -   **schurban**: Students in urban schools score 1.404 points lower on average, which is significant.
+
+    -   **cohort90:schtype**: The interaction term indicates that the effect of cohort year on score is modified by the school type. Specifically, for each additional year, the score increases by 1.214 points, but this increase is reduced by 0.5994 points in certain school types, which is highly significant.
+
+3.  **Conclusion**: The model reveals significant effects of `cohort90`, `female2`, `class2`, `schtype`, and `schurban` on scores. The random effects show variability across schools in both starting scores and the rate of change over time. The interaction between `cohort90` and `schtype` indicates that the effect of cohort year on scores varies depending on the school type. The fixed effects indicate that social class, school type, and whether the school is urban significantly impact student scores.
 
 #### Checking Assumptions
+
 Checking assumptions is a critical step in validating the results of any statistical model. The objective is to validate that the model fits the data well and that the assumptions underlying the model are not violated.
 
-1. **Residual Analysis**: Augment the model to get residuals and fitted values for further analysis.
+1.  **Residual Analysis**: Augment the model to get residuals and fitted values for further analysis.
 
 ```{r}
 res.rs.gend2.slope <- augment(rs_gend2_slope)
 datatable(res.rs.gend2.slope)
 ```
 
-2. **Plotting Random Effects**
+2.  **Plotting Random Effects**
 
 **Plot 1**: `REsim` function generates simulated random effects, providing a distribution of these effects. `plotREsim` visualizes these distributions to check if they are approximately normal and to assess the variability between groups.
 
@@ -942,28 +954,32 @@ randoms <- ranef(rs_gend2_slope, condVar = TRUE)
 dotplot(randoms)
 ```
 
-3. **Fitted vs Residuals Plot**: This plot helps check the linearity assumption and the homogeneity of variances. A random scatter of residuals around zero without a clear pattern indicates that these assumptions are likely met.
+3.  **Fitted vs Residuals Plot**: This plot helps check the linearity assumption and the homogeneity of variances. A random scatter of residuals around zero without a clear pattern indicates that these assumptions are likely met.
 
 ```{r}
 # Plot fitted values against residuals to check for patterns
 plot(rs_gend2_slope)
 ```
 
-4. **Normality of Residuals**: The Q-Q plot checks if the residuals are normally distributed. Points that closely follow the reference line in the plot suggest that the residuals are normally distributed.
+4.  **Normality of Residuals**: The Q-Q plot checks if the residuals are normally distributed. Points that closely follow the reference line in the plot suggest that the residuals are normally distributed.
 
 ```{r}
 # Create a Q-Q plot for checking the normality of residuals
 qqmath(rs_gend2_slope)
 ```
 
-# Acknowledgements
-I would like to extend my sincere gratitude to [Professor Dr. Kamarul Imran Musa](https://github.com/drkamarul), Medical Epidemiologist and Statistician, and Professor in Epidemiology and Biostatistics at the School of Medical Sciences, Universiti Sains Malaysia. His guidance and teaching in statistical analysis and R software have been invaluable in the development of this analysis. 
+# Acknowledgement
+
+I would like to express my gratitude to [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/), Medical Epidemiologist and Statistician, and Professor in Epidemiology and Biostatistics at the School of Medical Sciences, Universiti Sains Malaysia, for his teaching and guidance on the subject matter.
 
 # References
+
+- **Lecture on Linear Mixed Effect Models** by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/)
 - [Introduction to Multilevel Modelling](https://www.cmm.bris.ac.uk/lemma/pluginfile.php/7973/mod_resource/content/3/R%20P5%20Introduction%20to%20Multilevel%20Modelling.pdf)
 - [UCLA: Repeated Measures Analysis with R](https://stats.idre.ucla.edu/r/seminars/repeated-measures-analysis-with-r/)
 - [More Advanced Guide: Longitudinal Data Analysis using lme4](https://rpsychologist.com/r-guide-longitudinal-lme-lmer)
 - [Bolker's Guide to Mixed Models](https://bbolker.github.io/mixedmodels-misc/ecostats_chap.html)
 
 # R Codes
-The R codes used in this analysis are available at the following GitHub repository: [DrPH-Epidemiology-Revision](https://github.com/drsaufi/DrPH-Epidemiology-Revision.git). This repository includes all scripts and data necessary to replicate the analyses presented in this work.
+
+The R codes used in this analysis are available at the following GitHub repository: [DrPH Epidemiology Revision](https://github.com/drsaufi/DrPH-Epidemiology-Revision.git). This repository includes all scripts and data necessary to replicate the analyses presented in this work.
