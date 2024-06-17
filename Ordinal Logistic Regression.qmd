@@ -1,0 +1,85 @@
+---
+title: "Ordinal Logistic Regression"
+subtitle: "Advanced Categorical Data Analysis"
+author: "Dr Muhammad Saufi"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-fold: true
+    code-summary: "Code"
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+editor: visual
+include-after-body: "footer.html"
+---
+
+::: {.callout-note collapse="true"}
+# About This Document
+
+This document serves both learning and practical purposes. It is designed for educational use, aiming to enhance statistical analysis skills and provide clear, organized notes for future reference.
+:::
+
+# Introduction
+Ordinal logistic regression is a statistical analysis used for predicting an ordinal outcome based on one or more predictor variables. An ordinal outcome has categories with a natural order but unknown distances between categories, such as ratings (e.g., poor, fair, good, excellent).
+
+The dependent variable is ordinal, meaning it has a meaningful order. Examples include survey responses (e.g., strongly disagree to strongly agree) or educational attainment (e.g., high school, bachelor’s, master’s, doctorate).
+
+Ordinal logistic regression includes several models that are used to analyze ordinal data. The most common models are:
+
+1. Adjacent-Category Logit Model
+2. Continuation-Ratio Logit Model
+3. Proportional Odds Model (Cumulative Logit Model)
+
+## Adjacent-Category Logit Model
+This model compares each response category with the next adjacent category. The model can be written as:
+
+$$
+\log \left( \frac{P(Y = j)}{P(Y = j+1)} \right) = \alpha_j + \beta X
+$$
+
+- $Y$ is the ordinal response variable.
+- $j$ is the category.
+- $\alpha_j$ are the intercepts for the $j$-th category.
+- $\beta$ is the coefficient for the predictor variable $X$.
+
+The model assumes that the log-odds do not depend on the specific category being compared. The model helps understand how the odds change from one category to the next adjacent category based on the predictor variables.
+
+## Continuation-Ratio Logit Model
+This model is used to compare each response category with all lower categories combined. The model can be written as:
+
+$$
+\log \left( \frac{P(Y = j)}{P(Y < j)} \right) = \alpha_j + \beta X
+$$
+
+- $Y$ is the ordinal response variable.
+- $j$ is the category.
+- $\alpha_j$ are the intercepts for the $j$-th category.
+- $\beta$ is the coefficient for the predictor variable $X$.
+
+Different constant terms and slopes are allowed, making it more flexible. The model compares the probability of being in a particular category to the probability of being in all lower categories combined, providing detailed insights into transitions between levels.
+
+## Proportional Odds Model (Cumulative Logit Model)
+The Proportional Odds Model is used to model the cumulative probabilities of the ordinal outcome variable. The model compares the cumulative probability of the response being in a category less than or equal to a specific value versus being in a higher category:
+
+$$
+\log \left( \frac{P(Y \leq j)}{P(Y > j)} \right) = \alpha_j + \beta X
+$$
+
+- $Y$ is the ordinal response variable.
+- $j$ is the category.
+- $\alpha_j$ are the intercepts for the $j$-th category.
+- $\beta$ is the coefficient for the predictor variable $X$.
+
+The relationship between predictors and the log-odds of being in a lower versus higher category is constant across all categories. The coefficients $\beta$ indicate the effect of the predictors on the log-odds of the outcome being at or below a certain category versus above it.
+
+# Setting Up the Environment
+Load the necessary libraries to ensure the R environment is equipped with the tools and functions required for efficient and effective analysis.
