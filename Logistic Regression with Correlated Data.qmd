@@ -1146,10 +1146,10 @@ plot_model(mod_toe1, type = "re")
 I would like to express my gratitude to [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/), Medical Epidemiologist and Statistician, and Professor in Epidemiology and Biostatistics at the School of Medical Sciences, Universiti Sains Malaysia, for his teaching and guidance on the subject matter.
 
 # References
-- **Lecture on Logistic Regression for Correlated Data** by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/)
-- **Applied Logistic Regression** by Hosmer, D.W., Lemeshow, S., and Sturdivant, R.X. (2013). Applied Logistic Regression. Wiley
-- **Multilevel Models for Binary Responses R Practicals: P7.5 Two-Level Random Slope Model** by Camille Szmaragd and George Leckie from the Centre for Multilevel Modelling, Bristol University
-- **Multilevel and Longitudinal Modelling Using Stata, Chapter 10** (pg. 515)
+- Lecture on Logistic Regression for Correlated Data by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/)
+- Applied Logistic Regression by Hosmer, D.W., Lemeshow, S., and Sturdivant, R.X. (2013). Applied Logistic Regression. Wiley
+- Multilevel Models for Binary Responses R Practicals: P7.5 Two-Level Random Slope Model by Camille Szmaragd and George Leckie from the Centre for Multilevel Modelling, Bristol University
+- Multilevel and Longitudinal Modelling Using Stata, Chapter 10 (pg. 515)
 
 # R Codes
 The R codes used in this analysis are available at the following GitHub repository: [DrPH-Epidemiology-Revision](https://github.com/drsaufi/DrPH-Epidemiology-Revision.git). This repository includes all scripts and data necessary to replicate the analyses presented in this work.

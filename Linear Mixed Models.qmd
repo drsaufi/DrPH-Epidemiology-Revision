@@ -22,6 +22,12 @@ editor: visual
 include-after-body: "footer.html"
 ---
 
+::: {.callout-note collapse="true"}
+# About This Document
+
+This document serves both learning and practical purposes. It is designed for educational use, aiming to enhance statistical analysis skills and provide clear, organized notes for future reference.
+:::
+
 # Setting Up the Environment
 Load the necessary libraries to ensure the R environment is equipped with the tools and functions required for efficient and effective analysis.
 
@@ -974,7 +980,7 @@ I would like to express my gratitude to [Professor Dr. Kamarul Imran Musa](https
 
 # References
 
-- **Lecture on Linear Mixed Effect Models** by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/)
+- Lecture on Linear Mixed Effect Models by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/)
 - [Introduction to Multilevel Modelling](https://www.cmm.bris.ac.uk/lemma/pluginfile.php/7973/mod_resource/content/3/R%20P5%20Introduction%20to%20Multilevel%20Modelling.pdf)
 - [UCLA: Repeated Measures Analysis with R](https://stats.idre.ucla.edu/r/seminars/repeated-measures-analysis-with-r/)
 - [More Advanced Guide: Longitudinal Data Analysis using lme4](https://rpsychologist.com/r-guide-longitudinal-lme-lmer)
