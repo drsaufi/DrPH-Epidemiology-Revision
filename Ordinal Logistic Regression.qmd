@@ -340,7 +340,7 @@ head(class.o1)
 
 - This output shows the predicted most likely category for each observation, represented by the numbers 1 to 5.
 
-### Method 2: Predicting Probabilities for New Data {#method-2}
+### Method 2: Predicting Probabilities for New Data {#prediction-method-2}
 This method involves predicting the probabilities that new data falls into each response category. This is useful for understanding model behavior under different conditions or for making predictions for hypothetical scenarios. Remember the categories of the outcome are:
 
 ```{r}
@@ -428,14 +428,14 @@ summary(mod.o1)
 ```
 
 #### New Data for Prediction
-The new data points for which predictions are needed are defined using the previously generated new data from [Method 2](#method-2).
+The new data points for which predictions are needed are defined using the previously generated new data from [Prediction: Method 2](#prediction-method-2).
 
 ```{r}
 new.data2
 ```
 
 #### Obtain Linear Predictors
-Use the `predict` function with `type = "linear.predictor"` to get the linear predictors for the new data points, represented by `eta1` and `eta2` in the output. Refer [Method 2](#method-2).
+Use the `predict` function with `type = "linear.predictor"` to get the linear predictors for the new data points, represented by `eta1` and `eta2` in the output. Refer [Prediction: Method 2](#prediction-method-2).
 
 ```{r}
 lp.new.data2
@@ -623,3 +623,105 @@ levels(data.o4$bwt4)
 levels(data.o4$bwt4a)
 ```
 
+## Baseline Logit Model
+The Baseline Logit Model, also known as the Multinomial Logistic Regression Model, is used to handle situations where the outcome variable is nominal with more than two categories. This model extends the binary logistic regression model to multiple categories by modeling the log-odds of each category relative to a baseline category.
+
+This exercise demonstrates how to replicate the baseline logit model (unconstrained) which requires a dataset with an outcome variable without ordering. In this dataset `data.o4`, a new variable `bwt4b` without ordering is created from `bwt4` by re-leveling the factors according to the specified levels (`lev`).
+
+```{r}
+# Create new variable and re-leveling according to the specified levels
+data.o4 <- data.o4 %>% mutate(bwt4b = fct_relevel(bwt4, lev))
+
+# Fit the model
+bl.mod <- vglm(formula = bwt4 ~ smoke, family = multinomial, data = data.o4)
+summary(bl.mod)
+```
+
+***
+- `smoke:1` with an estimate of 1.1914 implies a positive effect of smoking on the probability of being in the first category (`<=2500`) relative to the reference category (`>3500`).
+- `smoke:2` and `smoke:3` have positive estimates, suggesting an increased likelihood of being in these categories as well due to smoking.
+
+```{r}
+# Calculate the exponentiated coefficients (RRR)
+exp(coef(bl.mod))
+```
+
+***
+- For `smoke:1`, the RRR is 3.2915, meaning smokers are about 3.29 times more likely to be in the lowest birth weight category (`<=2500`) compared to the reference category (`>3500`).
+
+## Continuation Ratio Model
+The Continuation Ratio Model is another approach to modeling ordinal response data, particularly useful when the response categories have a natural order and when the sequential nature of the response process makes clinical or logical sense. This model is different from other ordinal logistic models in that it models the log-odds of being in a particular category given that the respondent has not been in any previous categories. The model is used to analyze ordinal response data by comparing categories sequentially. In this case, the weight categories are compared in the following manner:
+
+1. Compare `bwt >= 3500` vs. `bwt = 3000-3500`
+2. Compare `bwt >= 3500` and `bwt = 3000-3500` vs. `bwt = 2500-3000`
+3. Compare `bwt >= 3500` and `bwt = 3000-3500` and `bwt = 2500-3000` vs. `bwt < 2500`
+
+```{r}
+# Check the distribution of weight categories
+table(data.o4$bwt4)
+```
+
+### First Model
+
+```{r}
+# Filter the dataset to include only the weight categories `>3500` and `3001-3500`
+data.o4a <- data.o4 %>% 
+  filter(bwt4a == '>3500' | bwt4a == '3001-3500')
+
+# Check the distribution of weight categories
+table(data.o4a$bwt4a)
+
+# Fit the first model that predicts `bwt4a` based on `smoke`
+cr.mod1 <- glm(bwt4a ~ smoke, 
+               family = binomial(link ='logit'), 
+               data = data.o4a)
+
+summary(cr.mod1)
+```
+
+### Second Model
+
+```{r}
+# Filter the dataset to include the weight categories `>3500`, `3001-3500`, and `2501-3000`
+data.o4b <- data.o4 %>% 
+  filter(bwt4 == '>3500' | bwt4 == '3001-3500' | bwt4 == '2501-3000')
+
+# Recode `bwt4a` variable into a new variable `bwt4b`
+data.o4b <- data.o4b %>% 
+  mutate(bwt4b = ifelse(bwt4a == '>3500', 0, ifelse(bwt4a == '3001-3500', 0, 1)))
+
+# Check the distribution of weight categories
+table(data.o4b$bwt4b)
+
+# Fit the second model with the recoded `bwt4b` as the dependent variable and `smoke` as the independent variable
+cr.mod2 <- glm(bwt4b ~ smoke, 
+               family = binomial(link ='logit'), 
+               data = data.o4b)
+
+summary(cr.mod2)
+```
+
+#### Third Model
+
+```{r}
+# Recode `bwt4a` variable into `bwt4c` where all categories are grouped into a new variable
+data.o4c <- data.o4 %>%
+  mutate(bwt4c = fct_recode(bwt4a, 
+                            gp0 = '>3500',
+                            gp0 = '3001-3500',
+                            gp0 = '3001-3500',
+                            gp0 = '2501-3000'))
+
+# Check the distribution of weight categories
+table(data.o4c$bwt4c)
+
+# Fit the third model to compare the recoded groups with `smoke` as the predictor
+cr.mod3 <- glm(bwt4c ~ smoke, 
+               family = binomial(link ='logit'), 
+               data = data.o4c)
+
+summary(cr.mod3)
+```
+
+### Conclusion 
+The three estimates from the different continuation-ratio models are quite similar, with values around 0.6. These estimates indicate that the odds of a birth in the next lower weight category relative to the higher weight categories among women who smoked during pregnancy is about 1.8 times that of women who did not smoke. In summary, smoking during pregnancy consistently increases the odds of having a baby in a lower weight category by approximately 1.8 times across the different comparisons made using the continuation-ratio model. 
