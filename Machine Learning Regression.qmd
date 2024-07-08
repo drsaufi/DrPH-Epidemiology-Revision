@@ -1,0 +1,309 @@
+---
+title: "Machine Learning Regression"
+author: "Dr Muhammad Saufi"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-fold: true
+    code-summary: "Code"
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+editor: visual
+include-after-body: "footer.html"
+---
+
+# Linear Regression Analysis 
+To build and evaluate a linear regression model to predict the progression of diabetes using various attributes from the dataset.
+
+## Install Required Packages
+
+```{r}
+library(Metrics)
+```
+
+## Load the Dataset
+
+```{r}
+diabetes <- read.csv("Datasets/diabetes.csv")
+```
+
+## Examine the Dataset
+
+```{r}
+str(diabetes)
+```
+
+## Split the Data
+Split the data into training and testing sets with a ratio of 70:30:
+
+```{r}
+sample_ind1 <- sample(nrow(diabetes), nrow(diabetes) * 0.7)
+train1 <- diabetes[sample_ind1, ]
+test1 <- diabetes[-sample_ind1, ]
+```
+
+## Build the Linear Regression Model
+Create the linear regression model using the training set:
+
+```{r}
+lr.mod <- lm(diabetes ~ ., data = train1)
+```
+
+## Summarize the Model
+Display the summary of the model to understand the coefficients and residuals:
+
+```{r}
+summary(lr.mod)
+```
+
+## Evaluate the Model
+Perform predictions on the test set and evaluate the model's performance using RMSE (Root Mean Squared Error):
+
+```{r}
+test1$pred <- predict(lr.mod, newdata = test1)
+rmse_value1 <- rmse(test1$diabetes, test1$pred)
+print(rmse_value1)
+```
+
+## Interpretation of Results
+
+- **Coefficients:** The "Estimate" column in the summary output lists the coefficients (slopes) for each attribute, which indicates the relationship between the predictor and the outcome variable.
+- **Residuals:** The residuals indicate how well the model fits the data, represented by the vertical distances between the actual data points and the regression line.
+- **RMSE:** The root mean squared error (RMSE) measures the average deviation of predictions from the actual values. A lower RMSE indicates a better fit of the model.
+
+# Decision Tree
+## Install and Load Required Packages
+
+```{r}
+library(rpart)
+library(Metrics)
+```
+
+## Load the Dataset
+
+```{r}
+diabetes <- read.csv("Datasets/diabetes.csv")
+```
+
+## Examine the Dataset Structure
+
+```{r}
+str(diabetes)
+```
+
+## Split the Dataset
+Split the dataset into training (70%) and test (30%) sets. The training set is used for training and creating the model. The test set is to evaluate the accuracy of the model.
+
+```{r}
+sample_ind2 <- sample(nrow(diabetes), nrow(diabetes) * 0.7)
+train2 <- diabetes[sample_ind2, ]
+test2 <- diabetes[-sample_ind2, ]
+```
+
+## Build the Regression Tree
+Build a regression tree using the `rpart` function:
+
+```{r}
+reg_tree <- rpart(diabetes ~ ., data = train2, method = "anova", control = rpart.control(cp = 0))
+```
+
+## Plot the Decision Tree
+Plot and visualize the decision tree:
+
+```{r}
+plot(reg_tree)
+text(reg_tree, cex = 0.5)
+```
+
+## Evaluate the Tree
+Evaluate the tree using the test set and calculate the root mean squared error (RMSE):
+
+```{r}
+test2$pred <- predict(reg_tree, test2)
+rmse(test2$diabetes, test2$pred)
+```
+
+## Prune the Tree
+### Pre-pruning
+Perform pre-pruning by specifying parameters like `maxdepth`, `minsplit`, and `minbucket`:
+
+```{r}
+reg_tree_es <- rpart(diabetes ~ ., data = train2, method = "anova", control = rpart.control(cp = 0, maxdepth = 6, minsplit = 70))
+test2$pred2 <- predict(reg_tree_es, test2)
+rmse(test2$diabetes, test2$pred2)
+```
+
+### Post-pruning
+Perform post-pruning based on the cost complexity parameter (cp):
+
+1. Display the cp table:
+
+```{r}
+printcp(reg_tree)
+```
+
+2. Plot the cp values against the cross-validated error:
+
+```{r}
+plotcp(reg_tree)
+```
+
+3. Find the best cp value that minimizes the cross-validated error:
+
+```{r}
+bestcp <- reg_tree$cptable[which.min(reg_tree$cptable[,"xerror"]),"CP"]
+```
+
+4. Build the pruned tree and evaluate it:
+
+```{r}
+reg_tree_prune <- rpart(diabetes ~ ., data = train2, method = "anova", control = rpart.control(cp = bestcp))
+test2$pred3 <- predict(reg_tree_prune, test2)
+rmse(test2$diabetes, test2$pred3)
+```
+
+## Export the Tree
+Create a postscript file of the tree for generating a PDF:
+
+```{r}
+post(reg_tree_prune, file = "reg_tree_prune.ps", title = "Regression Tree for Diabetes Dataset")
+```
+
+# Neural Network_Regression
+
+## Install and Load Required Packages
+
+```{r}
+library(h2o)
+library(Metrics)
+```
+
+## Initialize H2O
+Before building the model, initialize the H2O instance:
+
+```{r}
+h2o.init(nthreads=-1, max_mem_size="2G")
+```
+
+## Load the Dataset
+Load the dataset into R and convert it to an H2O frame:
+
+```{r}
+consultation <- read.csv("Datasets/consultation_fee.csv")
+consultation.frame <- as.h2o(consultation)
+```
+
+## Examine the Data
+Check the structure of the data:
+
+```{r}
+str(consultation.frame)
+```
+
+## Normalize the Data
+Normalize the columns "Experience", "Rating", and "Fees" as they are in different ranges:
+
+```{r}
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x)))
+}
+
+consultation.frame$Experience.norm <- normalize(consultation.frame$Experience)
+consultation.frame$Rating.norm <- normalize(consultation.frame$Rating)
+consultation.frame$Fees.norm <- normalize(consultation.frame$Fees)
+```
+
+## Split the Data into Training and Test Sets
+Split the data into training (70%) and test (30%) sets:
+
+```{r}
+split <- h2o.splitFrame(consultation.frame, ratios = 0.7)
+train3 <- split[[1]]
+test3 <- split[[2]]
+```
+
+## Build the Neural Network Model
+Build the neural network model with default parameters:
+
+```{r}
+nn <- h2o.deeplearning(
+  x = c(1, 4, 5, 7, 8), 
+  y = 9, 
+  training_frame = train3, 
+  epochs = 500, 
+  mini_batch_size = 32, 
+  hidden = c(20, 20), 
+  seed = 1
+)
+```
+
+## Plot the Scoring History
+Visualize the scoring history of the model:
+
+```{r}
+plot(nn)
+```
+
+## Make Predictions and Evaluate the Model
+Perform predictions on the test data and evaluate the model's performance using RMSE:
+
+```{r}
+pred1 <- h2o.predict(nn, test3)
+rmse(test3$Fees.norm, pred1)
+```
+
+## Implement Early Stopping
+Add early stopping parameters to the model:
+
+```{r}
+nn <- h2o.deeplearning(
+  x = c(1, 4, 5, 7, 8), 
+  y = 9, 
+  training_frame = train3, 
+  epochs = 500, 
+  mini_batch_size = 32, 
+  hidden = c(20, 20), 
+  seed = 1, 
+  stopping_metric = "rmse", 
+  stopping_rounds = 3, 
+  stopping_tolerance = 0.05, 
+  score_interval = 1
+)
+
+pred2 <- h2o.predict(nn, test3)
+rmse(test3$Fees.norm, pred2)
+```
+
+## Implement Dropout Regularization
+Add dropout regularization to improve generalization:
+
+```{r}
+nn <- h2o.deeplearning(
+  x = c(1, 4, 5, 7, 8), 
+  y = 9, 
+  training_frame = train3, 
+  epochs = 500, 
+  mini_batch_size = 32, 
+  hidden = c(20, 20), 
+  seed = 1, 
+  stopping_metric = "rmse", 
+  stopping_rounds = 3, 
+  stopping_tolerance = 0.05, 
+  score_interval = 1, 
+  activation = "RectifierWithDropout", 
+  hidden_dropout_ratio = c(0.5, 0.5), 
+  input_dropout_ratio = 0.1
+)
+
+pred3 <- h2o.predict(nn, test3)
+rmse(test3$Fees.norm, pred3)
+```
