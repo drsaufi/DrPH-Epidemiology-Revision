@@ -206,7 +206,7 @@ NNmodel <- neuralnet(diabetes ~ pregnant + glucose + pressure + triceps + insuli
 plot(NNmodel)
 ```
 
-![](Inputs/NNmodel){fig-align="center"}
+![](Inputs/NNmodel.png){fig-align="center"}
 
 **Interpretation**:
 
