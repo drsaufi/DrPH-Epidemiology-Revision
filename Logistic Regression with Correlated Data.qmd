@@ -727,9 +727,11 @@ For the third woman in community 1 with age 26 and wealth 2: $= -0.544754$
 :::
 
 ## Plots
+
 These plots provide valuable insights into the model's results, making it easier to interpret and communicate the effects of different predictors and the variability across different groups or communities.
 
 ### Fixed Effects Plot
+
 The fixed effects plot visualizes the estimated fixed effects from the model, showing how predictors like age and wealth influence the log-odds of receiving antenatal care across the entire population.
 
 ```{r}
@@ -738,6 +740,7 @@ plot_model(rs_mod2)
 ```
 
 ### Random Effect Plot
+
 The random effects plot visualizes the estimated random effects for different communities, along with their confidence intervals. It helps in understanding the variability in the effects across communities.
 
 ```{r}
@@ -753,15 +756,17 @@ ggplot(cater_re_rs_mod2, aes(estimate, qq, xmin = lb, xmax = ub)) +
   geom_point() +
   facet_wrap(~variable, scale = "free_x")
 ```
-***
 
-- **ggplot**: The main function from the `ggplot2` package used for creating the plot.
-- **aes(estimate, qq, xmin = lb, xmax = ub)**: Sets up the aesthetic mappings. Here, `estimate` is the estimated random effect, `qq` is the quantile, `xmin` and `xmax` represent the lower and upper bounds of the confidence intervals, respectively.
-- **geom_errorbarh(height = 0)**: Adds horizontal error bars to represent the confidence intervals of the random effects.
-- **geom_point()**: Adds points to represent the estimated random effects.
-- **facet_wrap(~variable, scale = "free_x")**: Creates separate panels for each variable's random effects, allowing the x-axis scale to vary for each panel.
+------------------------------------------------------------------------
+
+-   **ggplot**: The main function from the `ggplot2` package used for creating the plot.
+-   **aes(estimate, qq, xmin = lb, xmax = ub)**: Sets up the aesthetic mappings. Here, `estimate` is the estimated random effect, `qq` is the quantile, `xmin` and `xmax` represent the lower and upper bounds of the confidence intervals, respectively.
+-   **geom_errorbarh(height = 0)**: Adds horizontal error bars to represent the confidence intervals of the random effects.
+-   **geom_point()**: Adds points to represent the estimated random effects.
+-   **facet_wrap(\~variable, scale = "free_x")**: Creates separate panels for each variable's random effects, allowing the x-axis scale to vary for each panel.
 
 ### Plotting the Predicted Values and Marginal Effects
+
 These plots help visualize the relationship between the predictors (mother's age and wealth) and the predicted probability of receiving antenatal care, providing insights into how these factors influence the outcome.
 
 ```{r, warning=FALSE, message=FALSE}
@@ -769,64 +774,67 @@ These plots help visualize the relationship between the predictors (mother's age
 plot_model(rs_mod2, type = "pred", vars = "mage")
 ```
 
-- This code creates a plot showing the predicted values of receiving antenatal care based on the mother's age.
-- **plot_model**: This function from the `sjPlot` package is used to create various types of plots for regression models.
+-   This code creates a plot showing the predicted values of receiving antenatal care based on the mother's age.
 
-    - **rs_mod2**: This is the fitted mixed-effects logistic regression model.
-    - **type = "pred"**: Specifies that the plot should display predicted values.
-    - **vars = "mage"**: Indicates that the plot should show the predicted values for the variable "mage" (mother's age).
+-   **plot_model**: This function from the `sjPlot` package is used to create various types of plots for regression models.
+
+    -   **rs_mod2**: This is the fitted mixed-effects logistic regression model.
+    -   **type = "pred"**: Specifies that the plot should display predicted values.
+    -   **vars = "mage"**: Indicates that the plot should show the predicted values for the variable "mage" (mother's age).
 
 ```{r, warning=FALSE, message=FALSE}
 # Plots predicted values for the wealth index
 plot_model(rs_mod2, type = "pred", vars = "wealth")
 ```
 
-- This code creates a plot showing the predicted values of receiving antenatal care based on the wealth index.
-- **vars = "wealth"**: Indicates that the plot should show the predicted values for the variable "wealth".
+-   This code creates a plot showing the predicted values of receiving antenatal care based on the wealth index.
+-   **vars = "wealth"**: Indicates that the plot should show the predicted values for the variable "wealth".
 
 ```{r, warning=FALSE, message=FALSE}
 # Plots predicted values for both the mother's age and the wealth index in separate panels
 plot_model(rs_mod2, type = "pred", vars = c("mage", "wealth"))
 ```
 
-- This code creates a plot showing the predicted values of receiving antenatal care based on both the mother's age and the wealth index.
-- **vars = c("mage", "wealth")**: Indicates that the plot should show the predicted values for both "mage" and "wealth".
+-   This code creates a plot showing the predicted values of receiving antenatal care based on both the mother's age and the wealth index.
+-   **vars = c("mage", "wealth")**: Indicates that the plot should show the predicted values for both "mage" and "wealth".
 
 ```{r, warning=FALSE, message=FALSE}
 # Plots predicted values for both the mother's age and the wealth index on the same plot
 plot_model(rs_mod2, type = "pred", vars = c("mage", "wealth"), facet.grid = FALSE)
 ```
 
-- This code creates a combined plot showing the predicted values of receiving antenatal care based on both the mother's age and the wealth index, without using separate panels for each variable.
-- **facet.grid = FALSE**: Disables faceting, so both variables will be displayed on the same plot rather than in separate panels.
+-   This code creates a combined plot showing the predicted values of receiving antenatal care based on both the mother's age and the wealth index, without using separate panels for each variable.
+-   **facet.grid = FALSE**: Disables faceting, so both variables will be displayed on the same plot rather than in separate panels.
 
 # Longitudinal Data
+
 Longitudinal data involves repeated observations of the same subjects over time, allowing researchers to examine changes within subjects and the effects of time-dependent variables. Longitudinal data is collected in multiple waves or at several time points, providing a rich dataset for analyzing trends, patterns, and causal relationships.
 
 ## Dataset Overview
+
 The toenail dataset is used to examine longitudinal data where the outcome of interest is in binary form. This dataset is sourced from the HSAUR book and package and is also detailed in Chapter 10 of Multilevel and Longitudinal Modelling Using Stata.
 
 The outcome variable measures the condition of the toenail and is binary (dichotomous), with categories: none or mild, and moderate or severe. This outcome captures whether the toenail condition is relatively mild or more severe.
 
 The primary covariate in the study is the treatment received by the subjects. This variable indicates the type of treatment administered and is expected to influence the toenail condition over time.
 
-1. Variables in the Dataset:
+1.  Variables in the Dataset:
 
-    - **Outcome:** Toenail condition (none or mild vs. moderate or severe).
-    - **Treatment:** Type of treatment administered to the patients.
-    - **Visit:** The time point at which the measurement was taken.
-    - **PatientID:** Unique identifier for each patient.
+    -   **Outcome:** Toenail condition (none or mild vs. moderate or severe).
+    -   **Treatment:** Type of treatment administered to the patients.
+    -   **Visit:** The time point at which the measurement was taken.
+    -   **PatientID:** Unique identifier for each patient.
 
 ```{r}
 data(toenail)
 summary(toenail)
 ```
 
-2. Hierarchical Structure: 
+2.  Hierarchical Structure:
 
-    - **Level 1 (visit):** This level represents repeated measurements or visits for each subject. Each visit provides a snapshot of the toenail condition and the treatment status at that point in time.
+    -   **Level 1 (visit):** This level represents repeated measurements or visits for each subject. Each visit provides a snapshot of the toenail condition and the treatment status at that point in time.
 
-    - **Level 2 (patientID):** This level represents individual patients, with each patient having a unique identifier. The repeated visits for each patient are nested within this identifier, allowing for the analysis of within-patient changes over time.
+    -   **Level 2 (patientID):** This level represents individual patients, with each patient having a unique identifier. The repeated visits for each patient are nested within this identifier, allowing for the analysis of within-patient changes over time.
 
 ```{r}
 toenail %>% count(visit)
@@ -836,7 +844,9 @@ toenail %>%
 ```
 
 ## Exploratory Data Analysis
+
 ### Descriptive Analysis
+
 Describe the data and get an overview of its contents. Display the first 30 observations in the dataset.
 
 ```{r}
@@ -847,6 +857,7 @@ toenail %>%
 ```
 
 ### Data Visualization
+
 The visualization step involves plotting the distribution of the outcome variable across different visits and treatments to get a better understanding of the data. Generate a bar plot where the x-axis represents the visit number, the bars are filled based on the outcome severity, and the plots are faceted by treatment group.
 
 ```{r}
@@ -856,16 +867,18 @@ ggplot(toenail, aes(visit)) +
 ```
 
 ## Estimation
+
 ### Population Average Model
-The analysis focuses on examining the longitudinal data, using the primary covariate (treatment) to assess its impact on the outcome over multiple visits for each patient. The hierarchical structure includes the repeated measures (visits) nested within patients. For the estimation of the population average model, Generalized Estimating Equations (GEE) will be used. 
+
+The analysis focuses on examining the longitudinal data, using the primary covariate (treatment) to assess its impact on the outcome over multiple visits for each patient. The hierarchical structure includes the repeated measures (visits) nested within patients. For the estimation of the population average model, Generalized Estimating Equations (GEE) will be used.
 
 ```{r}
 # Conversion of Outcome Variable
 toenail2 <- toenail %>% mutate(outcome2 = as.integer(outcome) - 1)
 ```
 
-- The binary outcome variable `outcome` is converted to a numerical variable `outcome2`. 
-- This is done using the `mutate` function from the `dplyr` package to ensure the GEE function can process it.
+-   The binary outcome variable `outcome` is converted to a numerical variable `outcome2`.
+-   This is done using the `mutate` function from the `dplyr` package to ensure the GEE function can process it.
 
 ```{r, warning=FALSE, message=FALSE}
 # Running the GEE Model
@@ -879,12 +892,12 @@ gee_toe <- gee(outcome2 ~ treatment + visit,
 )
 ```
 
-- The `gee` function is used to fit the GEE model. 
-- The outcome variable is `outcome2`, and the predictors are `treatment` and `visit`.
-- The data used is the `toenail` dataset.
-- The correlation structure is specified as `exchangeable`, indicating that the correlation between any two observations from the same subject is assumed to be constant.
-- The scale is fixed (`scale.fix = TRUE`), and the scale value is set to 1 (`scale.value = 1`).
-   
+-   The `gee` function is used to fit the GEE model.
+-   The outcome variable is `outcome2`, and the predictors are `treatment` and `visit`.
+-   The data used is the `toenail` dataset.
+-   The correlation structure is specified as `exchangeable`, indicating that the correlation between any two observations from the same subject is assumed to be constant.
+-   The scale is fixed (`scale.fix = TRUE`), and the scale value is set to 1 (`scale.value = 1`).
+
 ```{r}
 # Summary of the GEE Model
 summary(gee_toe)
@@ -902,7 +915,7 @@ gee_toe_ind <- gee(outcome2 ~ treatment + visit,
 )
 ```
 
-:::{.callout-note}
+::: callout-note
 An additional GEE model is fitted with an `independence` correlation structure to compare the effects.
 :::
 
@@ -911,11 +924,12 @@ summary(gee_toe_ind)
 ```
 
 ### Random Intercept Model
+
 The model is fitted to the data using the `glmer` function from the `lme4` package. This model allows for random intercepts for each subject, accounting for within-subject correlation. The outcome variable is modeled as a function of the treatment, time, and their interaction, with random intercepts for each patient. The model includes the following covariates:
 
-- `treatment`
-- `time` (a numerical variable representing the time points)
-- `interaction between treatment and time`
+-   `treatment`
+-   `time` (a numerical variable representing the time points)
+-   `interaction between treatment and time`
 
 ```{r}
 mod_toe1 <- glmer(outcome ~ treatment * time + (1 | patientID),
@@ -924,72 +938,81 @@ mod_toe1 <- glmer(outcome ~ treatment * time + (1 | patientID),
   nAGQ = 20
 )
 ```
-***
-- `outcome ~ treatment*time`: This specifies the fixed effects in the model, including the interaction between treatment and time.
-- `(1 | patientID)`: This specifies the random intercept for each patient, allowing for individual variability.
-- `data = toenail`: The dataset used for the analysis.
-- `family = binomial`: Indicates that the outcome variable is binary.
-- `nAGQ = 20`: The number of quadrature points for approximating the likelihood. Higher values lead to more accurate but computationally intensive results.
-   
+
+------------------------------------------------------------------------
+
+-   `outcome ~ treatment*time`: This specifies the fixed effects in the model, including the interaction between treatment and time.
+-   `(1 | patientID)`: This specifies the random intercept for each patient, allowing for individual variability.
+-   `data = toenail`: The dataset used for the analysis.
+-   `family = binomial`: Indicates that the outcome variable is binary.
+-   `nAGQ = 20`: The number of quadrature points for approximating the likelihood. Higher values lead to more accurate but computationally intensive results.
+
 ```{r}
 summary(mod_toe1)
 ```
-
 
 ```{r}
 tidy(mod_toe1, effect = "fixed", conf.int = TRUE) %>%
   kbl() %>%
   kable_styling()
 ```
-***
-- This code uses the `broom.mixed` package to tidy up the model output and includes confidence intervals for the estimates.
-- The result shows the log-odds coefficients, standard errors, z-values, p-values, and confidence intervals for each fixed effect.
+
+------------------------------------------------------------------------
+
+-   This code uses the `broom.mixed` package to tidy up the model output and includes confidence intervals for the estimates.
+-   The result shows the log-odds coefficients, standard errors, z-values, p-values, and confidence intervals for each fixed effect.
 
 ```{r}
 tidy(mod_toe1, effect = "fixed", exponentiate = TRUE, conf.int = TRUE) %>%
   kbl() %>%
   kable_styling()
 ```
-***
-- This code converts the log-odds coefficients into odds ratios by exponentiating the coefficients. 
-- Odds ratios are easier to interpret in the context of logistic regression.
 
-***
+------------------------------------------------------------------------
+
+-   This code converts the log-odds coefficients into odds ratios by exponentiating the coefficients.
+-   Odds ratios are easier to interpret in the context of logistic regression.
+
+------------------------------------------------------------------------
+
 **Summary of Output**
 
-- **Intercept**: The intercept represents the log-odds of the outcome for the reference group (baseline category) when all covariates are at their reference levels (e.g., no treatment and at the initial time point).
+-   **Intercept**: The intercept represents the log-odds of the outcome for the reference group (baseline category) when all covariates are at their reference levels (e.g., no treatment and at the initial time point).
 
-- **Treatment Effect**: The coefficient for treatment (`treatmentterbinafine`) represents the change in log-odds of the outcome associated with being in the treatment group versus the control group. An odds ratio less than 1 suggests a protective effect of the treatment, although in this case, the result is not statistically significant (p-value > 0.05).
+-   **Treatment Effect**: The coefficient for treatment (`treatmentterbinafine`) represents the change in log-odds of the outcome associated with being in the treatment group versus the control group. An odds ratio less than 1 suggests a protective effect of the treatment, although in this case, the result is not statistically significant (p-value \> 0.05).
 
-- **Time Effect**: The coefficient for time indicates how the log-odds of the outcome change over time. A negative coefficient suggests that the probability of the outcome decreases over time.
+-   **Time Effect**: The coefficient for time indicates how the log-odds of the outcome change over time. A negative coefficient suggests that the probability of the outcome decreases over time.
 
-- **Interaction Effect**: The interaction term (`treatmentterbinafine:time`) shows how the effect of treatment changes over time. A significant interaction effect indicates that the treatment's impact on the outcome varies depending on the time point.
+-   **Interaction Effect**: The interaction term (`treatmentterbinafine:time`) shows how the effect of treatment changes over time. A significant interaction effect indicates that the treatment's impact on the outcome varies depending on the time point.
 
 ### Interpretation
-1. **Itraconazole Group**
 
-    - The estimated conditional odds for a subject in the itraconazole group are multiplied by 0.68 for every month.
-    - Each month, the odds of having a none or mild toenail condition (versus moderate or severe) decrease by 32% for subjects in the itraconazole group. 
-    - This suggests that the treatment's effectiveness improves over time.
+1.  **Itraconazole Group**
+
+    -   The estimated conditional odds for a subject in the itraconazole group are multiplied by 0.68 for every month.
+    -   Each month, the odds of having a none or mild toenail condition (versus moderate or severe) decrease by 32% for subjects in the itraconazole group.
+    -   This suggests that the treatment's effectiveness improves over time.
 
 $$
 100\% \times (0.6765 - 1) = -32\%
 $$
 
-2. **Terbinafine Group**
+2.  **Terbinafine Group**
 
-    - The conditional odds for a subject in the terbinafine group are multiplied by 0.59 for every month.
-    - Each month, the odds of having a none or mild toenail condition decrease by 41% for subjects in the terbinafine group. 
-    - This larger reduction indicates that the effectiveness of terbinafine in improving toenail conditions is more pronounced over time compared to the itraconazole group.
+    -   The conditional odds for a subject in the terbinafine group are multiplied by 0.59 for every month.
+    -   Each month, the odds of having a none or mild toenail condition decrease by 41% for subjects in the terbinafine group.
+    -   This larger reduction indicates that the effectiveness of terbinafine in improving toenail conditions is more pronounced over time compared to the itraconazole group.
 
 $$
 100\% \times (0.6765 \times 0.8722 - 1) = -41\%
 $$
 
 ### Prediction
+
 Estimate the predicted probabilities and log-odds for each observation in the dataset using the fitted random intercept model.
 
 #### Fixed Effects
+
 Extracts the fixed effect coefficients from the model, which are used to calculate predictions.
 
 ```{r}
@@ -997,6 +1020,7 @@ fixef(mod_toe1)
 ```
 
 #### Random Effects
+
 Extracts the random effect values for each patient. The random intercepts account for individual variability not explained by the fixed effects.
 
 ```{r}
@@ -1010,7 +1034,7 @@ head(re_toe$patientID, 20) %>% datatable()
 head(predict(mod_toe1, type = "link"), 20)
 ```
 
-:::{.callout-note}
+::: callout-note
 `type = 'link'`: Returns the predicted log-odds.
 :::
 
@@ -1018,26 +1042,28 @@ head(predict(mod_toe1, type = "link"), 20)
 head(predict(mod_toe1, type = "response"), 20)
 ```
 
-:::{.callout-note}
+::: callout-note
 `type = 'response'`: Returns the predicted probabilities.
 :::
 
 #### Manual Calculation of Log Odds
+
 The log-odds for each observation can be manually calculated using the fixed and random effect coefficients. The logistic regression model is specified as follows:
 
 $$
 \text{Log Odds} = \beta_0 + \beta_1 \times \text{treatment} + \beta_2 \times \text{time} + \beta_3 \times (\text{treatment} \times \text{time}) + u_i
 $$
 
-- Intercept: -1.6183291
-- Treatment (terbinafine): -0.1608070
-- Time: -0.3908424
-- Interaction between treatment (terbinafine) and time: -0.1367248
+-   Intercept: -1.6183291
+-   Treatment (terbinafine): -0.1608070
+-   Time: -0.3908424
+-   Interaction between treatment (terbinafine) and time: -0.1367248
 
 ##### Observation 1
-- Treatment (tx) = 1 (terbinafine)
-- Month = 0
-- Random effect (RE) for patient 1 = 3.7341888
+
+-   Treatment (tx) = 1 (terbinafine)
+-   Month = 0
+-   Random effect (RE) for patient 1 = 3.7341888
 
 $$
 \text{Log Odds} = -1.6183291 + (-0.1608070 \times 1) + (-0.3908424 \times 0) + (-0.1367248 \times (1 \times 0)) + 3.7341888
@@ -1048,9 +1074,10 @@ $$
 $$
 
 ##### Observation 7
-- Treatment (tx) = 1 (terbinafine)
-- Month = 13.07143
-- Random effect (RE) for patient 1 = 3.7341888
+
+-   Treatment (tx) = 1 (terbinafine)
+-   Month = 13.07143
+-   Random effect (RE) for patient 1 = 3.7341888
 
 $$
 \text{Log Odds} = -1.6183291 + (-0.1608070 \times 1) + (-0.3908424 \times 13.07143) + (-0.1367248 \times (1 \times 13.07143)) + 3.7341888
@@ -1061,7 +1088,8 @@ $$
 $$
 
 #### Predicting New Data
-1. Create new data:
+
+1.  Create new data:
 
 ```{r}
 # Create a new dataset with combinations of treatment and time values
@@ -1071,7 +1099,7 @@ new_data2 <- expand.grid(
 )
 ```
 
-2. Predict the probability:
+2.  Predict the probability:
 
 ```{r}
 # Estimate the probabilities and log-odds for new data
@@ -1082,7 +1110,7 @@ pred_prob <- predict(mod_toe1,
 )
 ```
 
-3. Visualize the predictions:
+3.  Visualize the predictions:
 
 ```{r}
 # Combine the data and the probability column
@@ -1094,7 +1122,7 @@ ggplot(new_data3, aes(x = time, y = pred_prob)) +
   facet_grid(. ~ treatment)
 ```
 
-4. Predict the log odds:
+4.  Predict the log odds:
 
 ```{r}
 # predict the log-odds for the new data without considering the random effects
@@ -1106,19 +1134,22 @@ predict(mod_toe1,
 ```
 
 ## Plots
+
 ### Fixed Effect Plot
-The fixed effect (also known as the regression coefficient) represents the overall impact of each predictor on the response variable, assuming all random effects are zero. 
+
+The fixed effect (also known as the regression coefficient) represents the overall impact of each predictor on the response variable, assuming all random effects are zero.
 
 ```{r}
 # Fixed effect (beta of the model)
 mod_toe1@beta
 ```
 
-***
-- The intercept ($\beta_0$): -1.6183291
-- The effect of the treatment ($\beta_1$): -0.1608070
-- The effect of time ($\beta_2$): -0.3908424
-- The interaction effect of treatment and time ($\beta_3$): -0.1367248
+------------------------------------------------------------------------
+
+-   The intercept ($\beta_0$): -1.6183291
+-   The effect of the treatment ($\beta_1$): -0.1608070
+-   The effect of time ($\beta_2$): -0.3908424
+-   The interaction effect of treatment and time ($\beta_3$): -0.1367248
 
 ```{r}
 # Fixed effect plot
@@ -1126,14 +1157,15 @@ plot_model(mod_toe1, type = "est")
 ```
 
 ### Random Effect Plot
-Random effect represents the deviation of individual groups (patients) from the overall model. It capture the variability in the data that is not explained by the fixed effects alone. 
+
+Random effect represents the deviation of individual groups (patients) from the overall model. It capture the variability in the data that is not explained by the fixed effects alone.
 
 ```{r, warning=FALSE, message=FALSE}
 # Random effect
 mod_toe1@u %>% tidy() %>% datatable()
 ```
 
-:::{.callout-note}
+::: callout-note
 The output provides the random effect estimates for each patient in the study, which show how each patient's intercept deviates from the overall intercept.
 :::
 
@@ -1143,13 +1175,16 @@ plot_model(mod_toe1, type = "re")
 ```
 
 # Acknowledgment
+
 I would like to express my gratitude to [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/), Medical Epidemiologist and Statistician, and Professor in Epidemiology and Biostatistics at the School of Medical Sciences, Universiti Sains Malaysia, for his teaching and guidance on the subject matter.
 
 # References
-- Lecture on Logistic Regression for Correlated Data by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/)
-- Applied Logistic Regression by Hosmer, D.W., Lemeshow, S., and Sturdivant, R.X. (2013). Applied Logistic Regression. Wiley
-- Multilevel Models for Binary Responses R Practicals: P7.5 Two-Level Random Slope Model by Camille Szmaragd and George Leckie from the Centre for Multilevel Modelling, Bristol University
-- Multilevel and Longitudinal Modelling Using Stata, Chapter 10 (pg. 515)
+
+-   Lecture on Logistic Regression for Correlated Data by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/)
+-   Applied Logistic Regression by Hosmer, D.W., Lemeshow, S., and Sturdivant, R.X. (2013). Applied Logistic Regression. Wiley
+-   Multilevel Models for Binary Responses R Practicals: P7.5 Two-Level Random Slope Model by Camille Szmaragd and George Leckie from the Centre for Multilevel Modelling, Bristol University
+-   Multilevel and Longitudinal Modelling Using Stata, Chapter 10 (pg. 515)
 
 # R Codes
+
 The R codes used in this analysis are available at the following GitHub repository: [DrPH-Epidemiology-Revision](https://github.com/drsaufi/DrPH-Epidemiology-Revision.git). This repository includes all scripts and data necessary to replicate the analyses presented in this work.
