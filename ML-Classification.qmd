@@ -10,8 +10,6 @@ format:
     toc-depth: 5
     toc-expand: 1
     number-sections: true
-    code-fold: true
-    code-summary: "Code"
     code-link: true
     theme:
       light: united
