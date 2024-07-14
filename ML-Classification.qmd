@@ -147,9 +147,7 @@ confusionMatrix(DTpred, testData$diabetes, positive = "pos")
 
 2.  Recall (Sensitivity) of 63.16% means that the model correctly identified 63.16% of the actual positive cases.
 
-3.  Specificity of 89.86% indicates that the model correctly identified 89.86% of the actual negative cases.
-
-4.  Precision (Positive Predictive Value) of 77.42% means that 77.42% of the instances predicted as positive by the model were indeed positive.
+3.  Precision (Positive Predictive Value) of 77.42% means that 77.42% of the instances predicted as positive by the model were indeed positive.
 
 # K-Nearest Neighboor
 
@@ -191,9 +189,7 @@ confusionMatrix(KNNpred, testDataN$diabetes, positive = "pos")
 
 2.  Recall (Sensitivity) of 52.63% means that the model correctly identified 52.63% of the actual positive cases.
 
-3.  Specificity of 91.30% indicates that the model correctly identified 91.30% of the actual negative cases.
-
-4.  Precision (Positive Predictive Value) of 76.92% means that 76.92% of the instances predicted as positive by the model were indeed positive.
+3.  Precision (Positive Predictive Value) of 76.92% means that 76.92% of the instances predicted as positive by the model were indeed positive.
 
 # Artificial Neural Network
 
@@ -241,9 +237,7 @@ confusionMatrix(factor(NNpred), testDataN$diabetes, positive = "pos")
 
 2.  Recall (Sensitivity) of 65.79% means that the model correctly identified 65.79% of the actual positive cases.
 
-3.  Specificity of 89.86% indicates that the model correctly identified 89.86% of the actual negative cases.
-
-4.  Precision (Positive Predictive Value) of 78.12% means that 78.12% of the instances predicted as positive by the model were indeed positive.
+3.  Precision (Positive Predictive Value) of 78.12% means that 78.12% of the instances predicted as positive by the model were indeed positive.
 
 # Model Comparison
 
@@ -255,10 +249,10 @@ library(kableExtra)
 
 # Create a data frame with the comparison metrics
 comparison_df <- tibble::tibble(
-  Metric = c("Accuracy", "Recall (Sensitivity)", "Specificity", "Pecision (PPV)"),
-  `Decision Tree` = c(0.8037, 0.6316, 0.8986, 0.7742),
-  `K-Nearest Neighbor` = c(0.7757, 0.5263, 0.9130, 0.7692),
-  `Artificial Neural Network` = c(0.8131, 0.6579, 0.8986, 0.7812)
+  Metric = c("Accuracy", "Recall (Sensitivity)", "Precision (PPV)"),
+  `Decision Tree` = c(0.8037, 0.6316, 0.7742),
+  `K-Nearest Neighbor` = c(0.7757, 0.5263, 0.7692),
+  `Artificial Neural Network` = c(0.8131, 0.6579, 0.7812)
 )
 
 # Print the table
@@ -268,11 +262,7 @@ kable(comparison_df, "html", caption = "Comparison of Evaluation Metrics for Mac
 
 **Interpretation**:
 
-1.  Based on the comparison of three machine learning models—Decision Tree, K-Nearest Neighbor (k-NN), and Artificial Neural Network (ANN)—the ANN emerges as the best-performing model. It achieves the highest accuracy (81.31%), indicating its overall superior performance in correctly classifying instances. The ANN also has the highest sensitivity (65.79%) and positive predictive value (PPV) (78.12%), making it more effective in identifying true positive cases.
-
-2.  While the k-NN model has the highest specificity (91.30%), indicating it is best at correctly identifying negative cases, it falls short in accuracy and sensitivity.
-
-3.  The Decision Tree model performs well but is slightly less accurate and sensitive compared to the ANN. Therefore, the ANN is the most balanced and reliable model for predictive analytics in this dataset.
+Based on the comparison of three machine learning models—Decision Tree, K-Nearest Neighbor (k-NN), and Artificial Neural Network (ANN)—the ANN emerges as the best-performing model. It achieves the highest accuracy (81.31%), indicating its overall superior performance in correctly classifying instances. The ANN also has the highest sensitivity (65.79%) and positive predictive value (PPV) (78.12%), making it more effective in identifying true positive cases.
 
 # DT Cross Validation
 

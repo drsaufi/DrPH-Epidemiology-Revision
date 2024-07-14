@@ -321,7 +321,6 @@ Prediction neg pos
 <ol type="1">
 <li><p>Accuracy of 80.37% indicates that 80.37% of the predictions made by the model are correct.</p></li>
 <li><p>Recall (Sensitivity) of 63.16% means that the model correctly identified 63.16% of the actual positive cases.</p></li>
-<li><p>Specificity of 89.86% indicates that the model correctly identified 89.86% of the actual negative cases.</p></li>
 <li><p>Precision (Positive Predictive Value) of 77.42% means that 77.42% of the instances predicted as positive by the model were indeed positive.</p></li>
 </ol></section></section><section id="k-nearest-neighboor" class="level1" data-number="5"><h1 data-number="5">
 <span class="header-section-number">5</span> K-Nearest Neighboor</h1>
@@ -387,7 +386,6 @@ Prediction neg pos
 <ol type="1">
 <li><p>Accuracy of 77.57% indicates that 77.57% of the predictions made by the model are correct.</p></li>
 <li><p>Recall (Sensitivity) of 52.63% means that the model correctly identified 52.63% of the actual positive cases.</p></li>
-<li><p>Specificity of 91.30% indicates that the model correctly identified 91.30% of the actual negative cases.</p></li>
 <li><p>Precision (Positive Predictive Value) of 76.92% means that 76.92% of the instances predicted as positive by the model were indeed positive.</p></li>
 </ol></section></section><section id="artificial-neural-network" class="level1" data-number="6"><h1 data-number="6">
 <span class="header-section-number">6</span> Artificial Neural Network</h1>
@@ -454,7 +452,6 @@ Prediction neg pos
 <ol type="1">
 <li><p>Accuracy of 81.31% indicates that 81.31% of the predictions made by the model are correct.</p></li>
 <li><p>Recall (Sensitivity) of 65.79% means that the model correctly identified 65.79% of the actual positive cases.</p></li>
-<li><p>Specificity of 89.86% indicates that the model correctly identified 89.86% of the actual negative cases.</p></li>
 <li><p>Precision (Positive Predictive Value) of 78.12% means that 78.12% of the instances predicted as positive by the model were indeed positive.</p></li>
 </ol></section></section><section id="model-comparison" class="level1" data-number="7"><h1 data-number="7">
 <span class="header-section-number">7</span> Model Comparison</h1>
@@ -483,13 +480,7 @@ Prediction neg pos
 <td style="text-align: right;">0.6579</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Specificity</td>
-<td style="text-align: right;">0.8986</td>
-<td style="text-align: right;">0.9130</td>
-<td style="text-align: right;">0.8986</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Pecision (PPV)</td>
+<td style="text-align: left;">Precision (PPV)</td>
 <td style="text-align: right;">0.7742</td>
 <td style="text-align: right;">0.7692</td>
 <td style="text-align: right;">0.7812</td>
@@ -502,11 +493,8 @@ Prediction neg pos
 </div>
 </div>
 <p><strong>Interpretation</strong>:</p>
-<ol type="1">
-<li><p>Based on the comparison of three machine learning models—Decision Tree, K-Nearest Neighbor (k-NN), and Artificial Neural Network (ANN)—the ANN emerges as the best-performing model. It achieves the highest accuracy (81.31%), indicating its overall superior performance in correctly classifying instances. The ANN also has the highest sensitivity (65.79%) and positive predictive value (PPV) (78.12%), making it more effective in identifying true positive cases.</p></li>
-<li><p>While the k-NN model has the highest specificity (91.30%), indicating it is best at correctly identifying negative cases, it falls short in accuracy and sensitivity.</p></li>
-<li><p>The Decision Tree model performs well but is slightly less accurate and sensitive compared to the ANN. Therefore, the ANN is the most balanced and reliable model for predictive analytics in this dataset.</p></li>
-</ol></section><section id="dt-cross-validation" class="level1" data-number="8"><h1 data-number="8">
+<p>Based on the comparison of three machine learning models—Decision Tree, K-Nearest Neighbor (k-NN), and Artificial Neural Network (ANN)—the ANN emerges as the best-performing model. It achieves the highest accuracy (81.31%), indicating its overall superior performance in correctly classifying instances. The ANN also has the highest sensitivity (65.79%) and positive predictive value (PPV) (78.12%), making it more effective in identifying true positive cases.</p>
+</section><section id="dt-cross-validation" class="level1" data-number="8"><h1 data-number="8">
 <span class="header-section-number">8</span> DT Cross Validation</h1>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
