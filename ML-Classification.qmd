@@ -149,7 +149,7 @@ confusionMatrix(DTpred, testData$diabetes, positive = "pos")
 
 3.  Precision (Positive Predictive Value) of 77.42% means that 77.42% of the instances predicted as positive by the model were indeed positive.
 
-# K-Nearest Neighboor
+# k-Nearest Neighbors
 
 ## Data Normalization
 
