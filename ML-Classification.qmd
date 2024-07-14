@@ -145,11 +145,11 @@ confusionMatrix(DTpred, testData$diabetes, positive = "pos")
 
 1.  Accuracy of 80.37% indicates that 80.37% of the predictions made by the model are correct.
 
-2.  Sensitivity of 63.16% means that the model correctly identified 63.16% of the actual positive cases.
+2.  Recall (Sensitivity) of 63.16% means that the model correctly identified 63.16% of the actual positive cases.
 
 3.  Specificity of 89.86% indicates that the model correctly identified 89.86% of the actual negative cases.
 
-4.  Positive Predictive Value of 77.42% means that 77.42% of the instances predicted as positive by the model were indeed positive.
+4.  Precision (Positive Predictive Value) of 77.42% means that 77.42% of the instances predicted as positive by the model were indeed positive.
 
 # K-Nearest Neighboor
 
@@ -188,11 +188,11 @@ confusionMatrix(KNNpred, testDataN$diabetes, positive = "pos")
 
 1.  Accuracy of 77.57% indicates that 77.57% of the predictions made by the model are correct.
 
-2.  Sensitivity of 52.63% means that the model correctly identified 52.63% of the actual positive cases.
+2.  Recall (Sensitivity) of 52.63% means that the model correctly identified 52.63% of the actual positive cases.
 
 3.  Specificity of 91.30% indicates that the model correctly identified 91.30% of the actual negative cases.
 
-4.  Positive Predictive Value of 76.92% means that 76.92% of the instances predicted as positive by the model were indeed positive.
+4.  Precision (Positive Predictive Value) of 76.92% means that 76.92% of the instances predicted as positive by the model were indeed positive.
 
 # Artificial Neural Network
 
@@ -235,18 +235,18 @@ confusionMatrix(factor(NNpred), testDataN$diabetes, positive = "pos")
 
 1.  Accuracy of 81.31% indicates that 81.31% of the predictions made by the model are correct.
 
-2.  Sensitivity of 65.79% means that the model correctly identified 65.79% of the actual positive cases.
+2.  Recall (Sensitivity) of 65.79% means that the model correctly identified 65.79% of the actual positive cases.
 
 3.  Specificity of 89.86% indicates that the model correctly identified 89.86% of the actual negative cases.
 
-4.  Positive Predictive Value of 78.12% means that 78.12% of the instances predicted as positive by the model were indeed positive.
+4.  Precision (Positive Predictive Value) of 78.12% means that 78.12% of the instances predicted as positive by the model were indeed positive.
 
-## Model Comparison
+# Model Comparison
 
 ```{r, echo=FALSE}
 # Create a data frame with the comparison metrics
 comparison_df <- tibble::tibble(
-  Metric = c("Accuracy", "Sensitivity", "Specificity", "Positive Predictive Value (PPV)"),
+  Metric = c("Accuracy", "Recall (Sensitivity)", "Specificity", "Pecision (PPV)"),
   `Decision Tree` = c(0.8037, 0.6316, 0.8986, 0.7742),
   `K-Nearest Neighbor` = c(0.7757, 0.5263, 0.9130, 0.7692),
   `Artificial Neural Network` = c(0.8131, 0.6579, 0.8986, 0.7812)
