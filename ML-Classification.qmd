@@ -206,6 +206,8 @@ NNmodel <- neuralnet(diabetes ~ pregnant + glucose + pressure + triceps + insuli
 plot(NNmodel)
 ```
 
+![](Inputs/NNmodel){fig-align="center"}
+
 **Interpretation**:
 
 1.  The artificial neural network (ANN) model visualized in the provided plot is trained to predict diabetes based on several input features: pregnant, glucose, pressure, triceps, insulin, mass, pedigree, and age.
