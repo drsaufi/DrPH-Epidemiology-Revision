@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Dr Muhammad Saufi">
+<meta name="dcterms.date" content="2024-07-14">
+<title>Machine Learning Classification</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="ML-Classification_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ML-Classification_files/libs/quarto-html/quarto.js"></script>
+<script src="ML-Classification_files/libs/quarto-html/popper.min.js"></script>
+<script src="ML-Classification_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ML-Classification_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ML-Classification_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ML-Classification_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="ML-Classification_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="ML-Classification_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ML-Classification_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ML-Classification_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="ML-Classification_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script src="ML-Classification_files/libs/kePrint-0.0.1/kePrint.js"></script><link href="ML-Classification_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="1"><h2 id="toc-title">Contents</h2>
+   
+  <ul>
+<li>
+<a href="#steps-of-analysis" id="toc-steps-of-analysis" class="nav-link active" data-scroll-target="#steps-of-analysis"><span class="header-section-number">1</span> Steps of Analysis</a>
+  <ul>
+<li><a href="#explore-and-understand-the-data" id="toc-explore-and-understand-the-data" class="nav-link" data-scroll-target="#explore-and-understand-the-data"><span class="header-section-number">1.1</span> Explore and Understand the Data</a></li>
+  <li><a href="#prepare-the-data-for-modelling" id="toc-prepare-the-data-for-modelling" class="nav-link" data-scroll-target="#prepare-the-data-for-modelling"><span class="header-section-number">1.2</span> Prepare the Data for Modelling</a></li>
+  <li>
+<a href="#model-building" id="toc-model-building" class="nav-link" data-scroll-target="#model-building"><span class="header-section-number">1.3</span> Model Building</a>
+  <ul>
+<li><a href="#decision-tree" id="toc-decision-tree" class="nav-link" data-scroll-target="#decision-tree"><span class="header-section-number">1.3.1</span> Decision Tree</a></li>
+  <li><a href="#k-nearest-neighbors-k-nn" id="toc-k-nearest-neighbors-k-nn" class="nav-link" data-scroll-target="#k-nearest-neighbors-k-nn"><span class="header-section-number">1.3.2</span> k-Nearest Neighbors (k-NN)</a></li>
+  <li><a href="#artificial-neural-network-ann" id="toc-artificial-neural-network-ann" class="nav-link" data-scroll-target="#artificial-neural-network-ann"><span class="header-section-number">1.3.3</span> Artificial Neural Network (ANN)</a></li>
+  </ul>
+</li>
+  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">1.4</span> Model Evaluation</a></li>
+  </ul>
+</li>
+  <li><a href="#setting-up-the-environment" id="toc-setting-up-the-environment" class="nav-link" data-scroll-target="#setting-up-the-environment"><span class="header-section-number">2</span> Setting Up the Environment</a></li>
+  <li>
+<a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset"><span class="header-section-number">3</span> Dataset</a>
+  <ul>
+<li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">3.1</span> Data Preparation</a></li>
+  <li><a href="#divide-data-into-training-and-test-dataset" id="toc-divide-data-into-training-and-test-dataset" class="nav-link" data-scroll-target="#divide-data-into-training-and-test-dataset"><span class="header-section-number">3.2</span> Divide Data into Training and Test Dataset</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#decision-tree-1" id="toc-decision-tree-1" class="nav-link" data-scroll-target="#decision-tree-1"><span class="header-section-number">4</span> Decision Tree</a>
+  <ul>
+<li><a href="#model-building-1" id="toc-model-building-1" class="nav-link" data-scroll-target="#model-building-1"><span class="header-section-number">4.1</span> Model Building</a></li>
+  <li><a href="#model-evaluation-1" id="toc-model-evaluation-1" class="nav-link" data-scroll-target="#model-evaluation-1"><span class="header-section-number">4.2</span> Model Evaluation</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#k-nearest-neighboor" id="toc-k-nearest-neighboor" class="nav-link" data-scroll-target="#k-nearest-neighboor"><span class="header-section-number">5</span> K-Nearest Neighboor</a>
+  <ul>
+<li><a href="#data-normalization" id="toc-data-normalization" class="nav-link" data-scroll-target="#data-normalization"><span class="header-section-number">5.1</span> Data Normalization</a></li>
+  <li><a href="#model-building-2" id="toc-model-building-2" class="nav-link" data-scroll-target="#model-building-2"><span class="header-section-number">5.2</span> Model Building</a></li>
+  <li><a href="#model-evaluation-2" id="toc-model-evaluation-2" class="nav-link" data-scroll-target="#model-evaluation-2"><span class="header-section-number">5.3</span> Model Evaluation</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#artificial-neural-network" id="toc-artificial-neural-network" class="nav-link" data-scroll-target="#artificial-neural-network"><span class="header-section-number">6</span> Artificial Neural Network</a>
+  <ul>
+<li><a href="#model-building-with-1-layer" id="toc-model-building-with-1-layer" class="nav-link" data-scroll-target="#model-building-with-1-layer"><span class="header-section-number">6.1</span> Model Building with 1 Layer</a></li>
+  <li><a href="#model-prediction" id="toc-model-prediction" class="nav-link" data-scroll-target="#model-prediction"><span class="header-section-number">6.2</span> Model Prediction</a></li>
+  <li><a href="#model-evaluation-3" id="toc-model-evaluation-3" class="nav-link" data-scroll-target="#model-evaluation-3"><span class="header-section-number">6.3</span> Model Evaluation</a></li>
+  <li><a href="#model-comparison" id="toc-model-comparison" class="nav-link" data-scroll-target="#model-comparison"><span class="header-section-number">6.4</span> Model Comparison</a></li>
+  </ul>
+</li>
+  <li><a href="#dt-cross-validation" id="toc-dt-cross-validation" class="nav-link" data-scroll-target="#dt-cross-validation"><span class="header-section-number">7</span> DT Cross Validation</a></li>
+  </ul></nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">Machine Learning Classification</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr Muhammad Saufi </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 14, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header><section id="steps-of-analysis" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Steps of Analysis</h1>
+<p>To perform predictive analytics using a machine learning approach, a researcher can follow a systematic process to ensure accurate and reliable results.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="Inputs/ML%20Classification.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<section id="explore-and-understand-the-data" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="explore-and-understand-the-data">
+<span class="header-section-number">1.1</span> Explore and Understand the Data</h2>
+<p>The first step is to explore and understand the dataset. This involves collecting the data and performing initial analyses to gain insights into its structure and characteristics.</p>
+<p>The researcher should examine summary statistics to understand the central tendencies and variability of the data. Visualizations such as histograms, scatter plots, and box plots can help identify patterns, trends, and potential outliers.</p>
+<p>Identifying the independent variables (features) and the dependent variable (target) that needs to be predicted is essential for the subsequent steps in the analysis.</p>
+</section><section id="prepare-the-data-for-modelling" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="prepare-the-data-for-modelling">
+<span class="header-section-number">1.2</span> Prepare the Data for Modelling</h2>
+<p>The next step is to prepare it for modeling. Data preparation involves cleaning the data by handling missing values through imputation or removal, removing duplicates, and correcting inconsistencies.</p>
+<p>The dataset is then split into training and testing sets, typically with an 80/20 split, to allow for model training and evaluation on separate data.</p>
+</section><section id="model-building" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="model-building">
+<span class="header-section-number">1.3</span> Model Building</h2>
+<p>With the data prepared, the researcher can proceed to model building using various machine learning algorithms. Three common models for classification tasks are decision trees, k-nearest neighbors (k-NN), and artificial neural networks (ANN).</p>
+<section id="decision-tree" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="decision-tree">
+<span class="header-section-number">1.3.1</span> Decision Tree</h3>
+<p>A decision tree is a flowchart-like structure where internal nodes represent feature tests, branches represent the outcomes of these tests, and leaf nodes represent class labels. The model is trained by selecting the best features that partition the data to maximize information gain, resulting in a tree structure that can be used to make predictions on new data.</p>
+</section><section id="k-nearest-neighbors-k-nn" class="level3" data-number="1.3.2"><h3 data-number="1.3.2" class="anchored" data-anchor-id="k-nearest-neighbors-k-nn">
+<span class="header-section-number">1.3.2</span> k-Nearest Neighbors (k-NN)</h3>
+<p>The k-NN algorithm classifies a data point based on the majority class of its k nearest neighbors in the feature space. Distance metrics, such as Euclidean distance, are used to find the closest neighbors.</p>
+</section><section id="artificial-neural-network-ann" class="level3" data-number="1.3.3"><h3 data-number="1.3.3" class="anchored" data-anchor-id="artificial-neural-network-ann">
+<span class="header-section-number">1.3.3</span> Artificial Neural Network (ANN)</h3>
+<p>An ANN is inspired by the biological neural networks in the human brain. It consists of interconnected layers of neurons, including input, hidden, and output layers. Each connection has a weight that is adjusted during training. The ANN learns complex patterns by adjusting these weights through a process called backpropagation. The activation functions in the neurons determine whether they should be activated, influencing the final output of the network.</p>
+</section></section><section id="model-evaluation" class="level2" data-number="1.4"><h2 data-number="1.4" class="anchored" data-anchor-id="model-evaluation">
+<span class="header-section-number">1.4</span> Model Evaluation</h2>
+<p>The final step is to evaluate the performance of the trained models using the test data. This involves using metrics such as accuracy, precision, recall, and F1 score, which are derived from the confusion matrix.</p>
+<p>The confusion matrix provides a detailed breakdown of the true positive, false positive, true negative, and false negative predictions. Additionally, cross-validation techniques, such as k-fold cross-validation, can be used to ensure the robustness and generalizability of the model.</p>
+<p>By splitting the data into different training and testing sets multiple times, the researcher can assess how well the model performs on various subsets of the data, leading to a more reliable evaluation of its predictive power.</p>
+</section></section><section id="setting-up-the-environment" class="level1" data-number="2"><h1 data-number="2">
+<span class="header-section-number">2</span> Setting Up the Environment</h1>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">mlbench</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://had.co.nz/plyr">plyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bethatkinson/rpart">rpart</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.milbo.org/rpart-plot/index.html">rpart.plot</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/">class</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bips-hb/neuralnet">neuralnet</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/">caret</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/">knitr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="dataset" class="level1" data-number="3"><h1 data-number="3">
+<span class="header-section-number">3</span> Dataset</h1>
+<p>The Pima Indian Diabetes Dataset consists of medical diagnostic reports for 768 individuals from a population living near Arizona, USA. All participants in the dataset are female, at least 21 years old, and of Pima Indian heritage. The dataset is used to predict whether or not a patient has diabetes based on various diagnostic measurements.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">PimaIndiansDiabetes</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">PimaIndiansDiabetes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   768 obs. of  9 variables:
+ $ pregnant: num  6 1 8 1 0 5 3 10 2 8 ...
+ $ glucose : num  148 85 183 89 137 116 78 115 197 125 ...
+ $ pressure: num  72 66 64 66 40 74 50 0 70 96 ...
+ $ triceps : num  35 29 0 23 35 0 32 0 45 0 ...
+ $ insulin : num  0 0 0 94 168 0 88 0 543 0 ...
+ $ mass    : num  33.6 26.6 23.3 28.1 43.1 25.6 31 35.3 30.5 0 ...
+ $ pedigree: num  0.627 0.351 0.672 0.167 2.288 ...
+ $ age     : num  50 31 32 21 33 30 26 29 53 54 ...
+ $ diabetes: Factor w/ 2 levels "neg","pos": 2 1 2 1 2 1 2 1 2 2 ...</code></pre>
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">PimaIndiansDiabetes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>    pregnant         glucose         pressure         triceps     
+ Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  
+ 1st Qu.: 1.000   1st Qu.: 99.0   1st Qu.: 62.00   1st Qu.: 0.00  
+ Median : 3.000   Median :117.0   Median : 72.00   Median :23.00  
+ Mean   : 3.845   Mean   :120.9   Mean   : 69.11   Mean   :20.54  
+ 3rd Qu.: 6.000   3rd Qu.:140.2   3rd Qu.: 80.00   3rd Qu.:32.00  
+ Max.   :17.000   Max.   :199.0   Max.   :122.00   Max.   :99.00  
+    insulin           mass          pedigree           age        diabetes 
+ Min.   :  0.0   Min.   : 0.00   Min.   :0.0780   Min.   :21.00   neg:500  
+ 1st Qu.:  0.0   1st Qu.:27.30   1st Qu.:0.2437   1st Qu.:24.00   pos:268  
+ Median : 30.5   Median :32.00   Median :0.3725   Median :29.00            
+ Mean   : 79.8   Mean   :31.99   Mean   :0.4719   Mean   :33.24            
+ 3rd Qu.:127.2   3rd Qu.:36.60   3rd Qu.:0.6262   3rd Qu.:41.00            
+ Max.   :846.0   Max.   :67.10   Max.   :2.4200   Max.   :81.00            </code></pre>
+</div>
+</div>
+<section id="data-preparation" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="data-preparation">
+<span class="header-section-number">3.1</span> Data Preparation</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pima</span> <span class="op">&lt;-</span> <span class="va">PimaIndiansDiabetes</span></span>
+<span></span>
+<span><span class="va">pima1</span> <span class="op">&lt;-</span> <span class="va">pima</span><span class="op">[</span><span class="va">pima</span><span class="op">[</span><span class="st">"glucose"</span><span class="op">]</span> <span class="op">!=</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">pima</span><span class="op">[</span><span class="st">"pressure"</span><span class="op">]</span> <span class="op">!=</span> <span class="fl">0</span> <span class="op">&amp;</span></span>
+<span>  <span class="va">pima</span><span class="op">[</span><span class="st">"triceps"</span><span class="op">]</span> <span class="op">!=</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">pima</span><span class="op">[</span><span class="st">"mass"</span><span class="op">]</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Data now left with 532 samples. Split into 80% of training and another 20% for testing.</p>
+</section><section id="divide-data-into-training-and-test-dataset" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="divide-data-into-training-and-test-dataset">
+<span class="header-section-number">3.2</span> Divide Data into Training and Test Dataset</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sRow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pima1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">.8</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">trainData</span> <span class="op">&lt;-</span> <span class="va">pima1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">sRow</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">testData</span> <span class="op">&lt;-</span> <span class="va">pima1</span><span class="op">[</span><span class="op">(</span><span class="va">sRow</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pima1</span><span class="op">)</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section></section><section id="decision-tree-1" class="level1" data-number="4"><h1 data-number="4">
+<span class="header-section-number">4</span> Decision Tree</h1>
+<section id="model-building-1" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="model-building-1">
+<span class="header-section-number">4.1</span> Model Building</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DTmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">trainData</span>, method <span class="op">=</span> <span class="st">"class"</span>, parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>split <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rpart.plot/man/prp.html">prp</a></span><span class="op">(</span><span class="va">DTmodel</span>, roundint <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ML-Classification_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretation</strong>:</p>
+<ol type="1">
+<li><p>The decision tree for predicting diabetes primarily splits the data based on glucose levels, with glucose &lt; 154.5 being the root node.</p></li>
+<li><p>If glucose is below this threshold, further splits involve mass, age, pedigree, insulin, pregnant, and pressure to refine predictions.</p></li>
+<li><p>For instance, low mass or younger age tends to predict negative for diabetes, whereas high glucose levels predict positive.</p></li>
+<li><p>Other variables like pedigree and insulin levels further refine these predictions.</p></li>
+<li><p>This tree highlights glucose as the most influential variable, with other factors progressively contributing to the accuracy of diabetes classification.</p></li>
+</ol></section><section id="model-evaluation-1" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="model-evaluation-1">
+<span class="header-section-number">4.2</span> Model Evaluation</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DTpred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">DTmodel</span>, <span class="va">testData</span>, type <span class="op">=</span> <span class="st">"class"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="va">DTpred</span>, <span class="va">testData</span><span class="op">$</span><span class="va">diabetes</span>, positive <span class="op">=</span> <span class="st">"pos"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction neg pos
+       neg  62  14
+       pos   7  24
+                                          
+               Accuracy : 0.8037          
+                 95% CI : (0.7158, 0.8742)
+    No Information Rate : 0.6449          
+    P-Value [Acc &gt; NIR] : 0.0002546       
+                                          
+                  Kappa : 0.553           
+                                          
+ Mcnemar's Test P-Value : 0.1904303       
+                                          
+            Sensitivity : 0.6316          
+            Specificity : 0.8986          
+         Pos Pred Value : 0.7742          
+         Neg Pred Value : 0.8158          
+             Prevalence : 0.3551          
+         Detection Rate : 0.2243          
+   Detection Prevalence : 0.2897          
+      Balanced Accuracy : 0.7651          
+                                          
+       'Positive' Class : pos             
+                                          </code></pre>
+</div>
+</div>
+<p><strong>Interpretation</strong>:</p>
+<ol type="1">
+<li><p>Accuracy of 80.37% indicates that 80.37% of the predictions made by the model are correct.</p></li>
+<li><p>Sensitivity of 63.16% means that the model correctly identified 63.16% of the actual positive cases.</p></li>
+<li><p>Specificity of 89.86% indicates that the model correctly identified 89.86% of the actual negative cases.</p></li>
+<li><p>Positive Predictive Value of 77.42% means that 77.42% of the instances predicted as positive by the model were indeed positive.</p></li>
+</ol></section></section><section id="k-nearest-neighboor" class="level1" data-number="5"><h1 data-number="5">
+<span class="header-section-number">5</span> K-Nearest Neighboor</h1>
+<section id="data-normalization" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="data-normalization">
+<span class="header-section-number">5.1</span> Data Normalization</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pima2</span> <span class="op">&lt;-</span> <span class="va">pima1</span></span>
+<span></span>
+<span><span class="va">normalize</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="model-building-2" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="model-building-2">
+<span class="header-section-number">5.2</span> Model Building</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pima2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">pima2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, <span class="va">normalize</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">trainDataN</span> <span class="op">&lt;-</span> <span class="va">pima2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">sRow</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">testDataN</span> <span class="op">&lt;-</span> <span class="va">pima2</span><span class="op">[</span><span class="op">(</span><span class="va">sRow</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pima2</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="va">KNNpred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/class/man/knn.html">knn</a></span><span class="op">(</span></span>
+<span>  train <span class="op">=</span> <span class="va">trainDataN</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, test <span class="op">=</span> <span class="va">testDataN</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>,</span>
+<span>  cl <span class="op">=</span> <span class="va">trainDataN</span><span class="op">[</span>, <span class="fl">9</span><span class="op">]</span>, k <span class="op">=</span> <span class="fl">7</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="model-evaluation-2" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="model-evaluation-2">
+<span class="header-section-number">5.3</span> Model Evaluation</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="va">KNNpred</span>, <span class="va">testDataN</span><span class="op">$</span><span class="va">diabetes</span>, positive <span class="op">=</span> <span class="st">"pos"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction neg pos
+       neg  63  18
+       pos   6  20
+                                          
+               Accuracy : 0.7757          
+                 95% CI : (0.6849, 0.8507)
+    No Information Rate : 0.6449          
+    P-Value [Acc &gt; NIR] : 0.002462        
+                                          
+                  Kappa : 0.4729          
+                                          
+ Mcnemar's Test P-Value : 0.024745        
+                                          
+            Sensitivity : 0.5263          
+            Specificity : 0.9130          
+         Pos Pred Value : 0.7692          
+         Neg Pred Value : 0.7778          
+             Prevalence : 0.3551          
+         Detection Rate : 0.1869          
+   Detection Prevalence : 0.2430          
+      Balanced Accuracy : 0.7197          
+                                          
+       'Positive' Class : pos             
+                                          </code></pre>
+</div>
+</div>
+<p><strong>Interpretation</strong>:</p>
+<ol type="1">
+<li><p>Accuracy of 77.57% indicates that 77.57% of the predictions made by the model are correct.</p></li>
+<li><p>Sensitivity of 52.63% means that the model correctly identified 52.63% of the actual positive cases.</p></li>
+<li><p>Specificity of 91.30% indicates that the model correctly identified 91.30% of the actual negative cases.</p></li>
+<li><p>Positive Predictive Value of 76.92% means that 76.92% of the instances predicted as positive by the model were indeed positive.</p></li>
+</ol></section></section><section id="artificial-neural-network" class="level1" data-number="6"><h1 data-number="6">
+<span class="header-section-number">6</span> Artificial Neural Network</h1>
+<section id="model-building-with-1-layer" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="model-building-with-1-layer">
+<span class="header-section-number">6.1</span> Model Building with 1 Layer</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NNmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuralnet/man/neuralnet.html">neuralnet</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">pregnant</span> <span class="op">+</span> <span class="va">glucose</span> <span class="op">+</span> <span class="va">pressure</span> <span class="op">+</span> <span class="va">triceps</span> <span class="op">+</span> <span class="va">insulin</span> <span class="op">+</span></span>
+<span>  <span class="va">mass</span> <span class="op">+</span> <span class="va">pedigree</span> <span class="op">+</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">trainDataN</span>, hidden <span class="op">=</span> <span class="fl">1</span>, linear.output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">NNmodel</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>Interpretation</strong>:</p>
+<ol type="1">
+<li><p>The artificial neural network (ANN) model visualized in the provided plot is trained to predict diabetes based on several input features: pregnant, glucose, pressure, triceps, insulin, mass, pedigree, and age.</p></li>
+<li><p>The model consists of a single hidden layer with one neuron, indicating a relatively simple network structure. The connections between the input features and the hidden neuron show the weights (both positive and negative), reflecting the contribution of each feature to the model’s decision-making process.</p></li>
+<li><p>The model outputs two possible predictions: pos (positive for diabetes) and neg (negative for diabetes).</p></li>
+<li><p>The weights and biases associated with each input highlight the influence of each variable on the prediction, with glucose and mass appearing to have significant weights.</p></li>
+<li><p>The error value and the number of steps indicate the model’s training performance and the iterations it underwent to minimize the error.</p></li>
+</ol></section><section id="model-prediction" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="model-prediction">
+<span class="header-section-number">6.2</span> Model Prediction</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">predicted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">NNmodel</span>, <span class="va">testDataN</span>, type <span class="op">=</span> <span class="st">"class"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">NNpred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/maxCol.html">max.col</a></span><span class="op">(</span><span class="va">predicted</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span>, <span class="st">"neg"</span>, <span class="st">"pos"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="model-evaluation-3" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="model-evaluation-3">
+<span class="header-section-number">6.3</span> Model Evaluation</h2>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">NNpred</span><span class="op">)</span>, <span class="va">testDataN</span><span class="op">$</span><span class="va">diabetes</span>, positive <span class="op">=</span> <span class="st">"pos"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction neg pos
+       neg  62  13
+       pos   7  25
+                                          
+               Accuracy : 0.8131          
+                 95% CI : (0.7262, 0.8819)
+    No Information Rate : 0.6449          
+    P-Value [Acc &gt; NIR] : 0.0001072       
+                                          
+                  Kappa : 0.5769          
+                                          
+ Mcnemar's Test P-Value : 0.2635525       
+                                          
+            Sensitivity : 0.6579          
+            Specificity : 0.8986          
+         Pos Pred Value : 0.7812          
+         Neg Pred Value : 0.8267          
+             Prevalence : 0.3551          
+         Detection Rate : 0.2336          
+   Detection Prevalence : 0.2991          
+      Balanced Accuracy : 0.7782          
+                                          
+       'Positive' Class : pos             
+                                          </code></pre>
+</div>
+</div>
+<p><strong>Interpretation</strong>:</p>
+<ol type="1">
+<li><p>Accuracy of 81.31% indicates that 81.31% of the predictions made by the model are correct.</p></li>
+<li><p>Sensitivity of 65.79% means that the model correctly identified 65.79% of the actual positive cases.</p></li>
+<li><p>Specificity of 89.86% indicates that the model correctly identified 89.86% of the actual negative cases.</p></li>
+<li><p>Positive Predictive Value of 78.12% means that 78.12% of the instances predicted as positive by the model were indeed positive.</p></li>
+</ol></section><section id="model-comparison" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="model-comparison">
+<span class="header-section-number">6.4</span> Model Comparison</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<caption>Comparison of Evaluation Metrics for Machine Learning Models</caption>
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Metric</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Decision Tree</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">K-Nearest Neighbor</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Artificial Neural Network</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Accuracy</td>
+<td style="text-align: right;">0.8037</td>
+<td style="text-align: right;">0.7757</td>
+<td style="text-align: right;">0.8131</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sensitivity</td>
+<td style="text-align: right;">0.6316</td>
+<td style="text-align: right;">0.5263</td>
+<td style="text-align: right;">0.6579</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Specificity</td>
+<td style="text-align: right;">0.8986</td>
+<td style="text-align: right;">0.9130</td>
+<td style="text-align: right;">0.8986</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Positive Predictive Value (PPV)</td>
+<td style="text-align: right;">0.7742</td>
+<td style="text-align: right;">0.7692</td>
+<td style="text-align: right;">0.7812</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<p><strong>Interpretation</strong>:</p>
+<ol type="1">
+<li><p>Based on the comparison of three machine learning models—Decision Tree, K-Nearest Neighbor (k-NN), and Artificial Neural Network (ANN)—the ANN emerges as the best-performing model. It achieves the highest accuracy (81.31%), indicating its overall superior performance in correctly classifying instances. The ANN also has the highest sensitivity (65.79%) and positive predictive value (PPV) (78.12%), making it more effective in identifying true positive cases.</p></li>
+<li><p>While the k-NN model has the highest specificity (91.30%), indicating it is best at correctly identifying negative cases, it falls short in accuracy and sensitivity.</p></li>
+<li><p>The Decision Tree model performs well but is slightly less accurate and sensitive compared to the ANN. Therefore, the ANN is the most balanced and reliable model for predictive analytics in this dataset.</p></li>
+</ol></section></section><section id="dt-cross-validation" class="level1" data-number="7"><h1 data-number="7">
+<span class="header-section-number">7</span> DT Cross Validation</h1>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">DTaccuracy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">k</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">pima1</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pima1</span><span class="op">)</span>, <span class="va">k</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">k</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plyr/man/ldply.html">ldply</a></span><span class="op">(</span><span class="va">folds</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">data.frame</span><span class="op">)</span></span>
+<span>  <span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plyr/man/ldply.html">ldply</a></span><span class="op">(</span><span class="va">folds</span><span class="op">[</span><span class="op">-</span><span class="va">i</span><span class="op">]</span>, <span class="va">data.frame</span><span class="op">)</span></span>
+<span>  <span class="va">test</span><span class="op">$</span><span class="va">.id</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  <span class="va">train</span><span class="op">$</span><span class="va">.id</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span>  <span class="va">DTmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">train</span>, method <span class="op">=</span> <span class="st">"class"</span>, parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>split <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">DTpred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">DTmodel</span>, <span class="va">test</span>, type <span class="op">=</span> <span class="st">"class"</span><span class="op">)</span></span>
+<span>  <span class="va">DTaccuracy</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="va">DTpred</span>, <span class="va">test</span><span class="op">$</span><span class="va">diabetes</span>, positive <span class="op">=</span> <span class="st">"pos"</span><span class="op">)</span><span class="op">$</span><span class="va">overall</span><span class="op">[</span><span class="st">"Accuracy"</span><span class="op">]</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DTaccuracy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.7407407 0.8301887 0.6981132 0.5849057 0.8301887 0.8113208 0.7735849
+ [8] 0.8679245 0.8113208 0.8148148</code></pre>
+</div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">DTaccuracy</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7763103</code></pre>
+</div>
+</div>
+</section></main><!-- /main column -->
+&nbsp;
+<hr>
+<p style="text-align: center;">A dedicated work by Dr Muhammad Saufi</p>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Add font awesome icons --><p style="text-align: center;">
+    <a href="https://www.facebook.com/drsaufimbbch/" class="fa fa-facebook"></a>
+    <a href="https://github.com/drsaufi" class="fa fa-github"></a>
+    <a href="mailto:drsaufimbbch@gmail.com" class="fa fa-envelope"></a>
+</p>
+
+&nbsp;
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
