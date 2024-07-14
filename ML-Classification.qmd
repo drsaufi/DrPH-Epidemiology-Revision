@@ -1,6 +1,6 @@
 ---
 title: "Machine Learning Classification"
-author: "Dr Muhammad Saufi"
+author: "DrPH Epidemiology 2023/2024"
 date: last-modified
 format: 
   html:
@@ -16,7 +16,6 @@ format:
       dark: cyborg
     css: styles.css
 editor: visual
-include-after-body: "footer.html"
 ---
 
 # Steps of Analysis

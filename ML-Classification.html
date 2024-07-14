@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="Dr Muhammad Saufi">
+<meta name="author" content="DrPH Epidemiology 2023/2024">
 <meta name="dcterms.date" content="2024-07-14">
 <title>Machine Learning Classification</title>
 <style>
@@ -140,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Dr Muhammad Saufi </p>
+             <p>DrPH Epidemiology 2023/2024 </p>
           </div>
   </div>
     
@@ -416,34 +416,39 @@ Prediction neg pos
 <span class="header-section-number">6.3</span> Model Evaluation</h2>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/confusionMatrix.html">confusionMatrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">NNpred</span><span class="op">)</span>, <span class="va">testDataN</span><span class="op">$</span><span class="va">diabetes</span>, positive <span class="op">=</span> <span class="st">"pos"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in confusionMatrix.default(factor(NNpred), testDataN$diabetes, positive
+= "pos"): Levels are not in the same order for reference and data. Refactoring
+data to match.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Confusion Matrix and Statistics
 
           Reference
 Prediction neg pos
-       neg  62  13
-       pos   7  25
-                                          
-               Accuracy : 0.8131          
-                 95% CI : (0.7262, 0.8819)
-    No Information Rate : 0.6449          
-    P-Value [Acc &gt; NIR] : 0.0001072       
-                                          
-                  Kappa : 0.5769          
-                                          
- Mcnemar's Test P-Value : 0.2635525       
-                                          
-            Sensitivity : 0.6579          
-            Specificity : 0.8986          
-         Pos Pred Value : 0.7812          
-         Neg Pred Value : 0.8267          
-             Prevalence : 0.3551          
-         Detection Rate : 0.2336          
-   Detection Prevalence : 0.2991          
-      Balanced Accuracy : 0.7782          
-                                          
-       'Positive' Class : pos             
-                                          </code></pre>
+       neg  69  38
+       pos   0   0
+                                         
+               Accuracy : 0.6449         
+                 95% CI : (0.5465, 0.735)
+    No Information Rate : 0.6449         
+    P-Value [Acc &gt; NIR] : 0.544          
+                                         
+                  Kappa : 0              
+                                         
+ Mcnemar's Test P-Value : 1.947e-09      
+                                         
+            Sensitivity : 0.0000         
+            Specificity : 1.0000         
+         Pos Pred Value :    NaN         
+         Neg Pred Value : 0.6449         
+             Prevalence : 0.3551         
+         Detection Rate : 0.0000         
+   Detection Prevalence : 0.0000         
+      Balanced Accuracy : 0.5000         
+                                         
+       'Positive' Class : pos            
+                                         </code></pre>
 </div>
 </div>
 <p><strong>Interpretation</strong>:</p>
@@ -505,7 +510,7 @@ Prediction neg pos
 </ol></section></section><section id="dt-cross-validation" class="level1" data-number="7"><h1 data-number="7">
 <span class="header-section-number">7</span> DT Cross Validation</h1>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span><span class="va">DTaccuracy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">k</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">pima1</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pima1</span><span class="op">)</span>, <span class="va">k</span><span class="op">)</span><span class="op">)</span></span>
@@ -521,31 +526,17 @@ Prediction neg pos
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DTaccuracy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DTaccuracy</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.7407407 0.8301887 0.6981132 0.5849057 0.8301887 0.8113208 0.7735849
  [8] 0.8679245 0.8113208 0.8148148</code></pre>
 </div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">DTaccuracy</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">DTaccuracy</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7763103</code></pre>
 </div>
 </div>
-</section></main><!-- /main column -->
-&nbsp;
-<hr>
-<p style="text-align: center;">A dedicated work by Dr Muhammad Saufi</p>
-
-<!-- Add icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- Add font awesome icons --><p style="text-align: center;">
-    <a href="https://www.facebook.com/drsaufimbbch/" class="fa fa-facebook"></a>
-    <a href="https://github.com/drsaufi" class="fa fa-github"></a>
-    <a href="mailto:drsaufimbbch@gmail.com" class="fa fa-envelope"></a>
-</p>
-
-&nbsp;
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main column --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
