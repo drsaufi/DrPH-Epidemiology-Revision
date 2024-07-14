@@ -173,7 +173,8 @@ testDataN <- pima2[(sRow + 1):nrow(pima2), ]
 KNNpred <- knn(
   train = trainDataN[, 1:8], 
   test = testDataN[, 1:8],
-  cl = trainDataN[, 9], k = 7
+  cl = trainDataN[, 9], 
+  k = 7
 )
 ```
 
