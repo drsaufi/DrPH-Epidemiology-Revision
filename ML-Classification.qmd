@@ -73,9 +73,6 @@ library(rpart.plot)
 library(class)
 library(neuralnet)
 library(caret)
-library(tibble)
-library(knitr)
-library(kableExtra)
 ```
 
 # Dataset
@@ -244,6 +241,11 @@ confusionMatrix(factor(NNpred), testDataN$diabetes, positive = "pos")
 # Model Comparison
 
 ```{r, echo=FALSE}
+# Load necessary libraries
+library(tibble)
+library(knitr)
+library(kableExtra)
+
 # Create a data frame with the comparison metrics
 comparison_df <- tibble::tibble(
   Metric = c("Accuracy", "Recall (Sensitivity)", "Specificity", "Pecision (PPV)"),
