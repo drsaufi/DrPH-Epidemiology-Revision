@@ -22,9 +22,11 @@ include-after-body: "footer.html"
 
 ## Definition of Machine Learning
 
-Machine learning is a field of artificial intelligence that focuses on the development of algorithms and statistical models that enable computers to perform specific tasks without using explicit instructions.
+Machine learning is a study, design, and development of models and algorithms that enable computers to learn from data ad make predictions or decisions.
 
-Machine learning relies on patterns and inference derived from data. Machine learning creates models that can learn from and make decisions based on data. This ability to learn and adapt from experience is what differentiates machine learning from traditional programming paradigms where explicit rules and logic are predefined by a programmer.
+Machine learning uses algorithms and computational power to determine if a relationships exists between data and labels.
+
+In machine learning, a computer program is said to learn from experience (E), with respect to some task (T), and some performance measure (P), if its performance on (T), as measured by (P), improve with experience (E).
 
 ## Different Tasks of Machine Learning
 

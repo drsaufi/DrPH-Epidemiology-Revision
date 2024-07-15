@@ -224,8 +224,9 @@ window.Quarto = {
 <h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <section id="definition-of-machine-learning" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="definition-of-machine-learning"><span class="header-section-number">1.1</span> Definition of Machine Learning</h2>
-<p>Machine learning is a field of artificial intelligence that focuses on the development of algorithms and statistical models that enable computers to perform specific tasks without using explicit instructions.</p>
-<p>Machine learning relies on patterns and inference derived from data. Machine learning creates models that can learn from and make decisions based on data. This ability to learn and adapt from experience is what differentiates machine learning from traditional programming paradigms where explicit rules and logic are predefined by a programmer.</p>
+<p>Machine learning is a study, design, and development of models and algorithms that enable computers to learn from data ad make predictions or decisions.</p>
+<p>Machine learning uses algorithms and computational power to determine if a relationships exists between data and labels.</p>
+<p>In machine learning, a computer program is said to learn from experience (E), with respect to some task (T), and some performance measure (P), if its performance on (T), as measured by (P), improve with experience (E).</p>
 </section>
 <section id="different-tasks-of-machine-learning" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="different-tasks-of-machine-learning"><span class="header-section-number">1.2</span> Different Tasks of Machine Learning</h2>
@@ -314,28 +315,28 @@ Call:
 lm(formula = diabetes ~ ., data = train1)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--149.258  -41.548   -0.722   39.259  157.057 
+    Min      1Q  Median      3Q     Max 
+-134.50  -35.88    1.68   36.07  136.58 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  152.464      3.194  47.741  &lt; 2e-16 ***
-age           21.183     71.541   0.296  0.76736    
-sex         -226.559     74.924  -3.024  0.00271 ** 
-bmi          501.456     84.441   5.939 8.00e-09 ***
-bp           334.947     83.717   4.001 7.97e-05 ***
-s1          -465.075    568.663  -0.818  0.41410    
-s2           196.978    464.969   0.424  0.67214    
-s3            15.036    277.459   0.054  0.95682    
-s4           250.342    202.778   1.235  0.21797    
-s5           601.017    221.328   2.716  0.00700 ** 
-s6            86.138     82.554   1.043  0.29760    
+(Intercept)  155.187      2.931  52.939  &lt; 2e-16 ***
+age          -41.218     68.609  -0.601 0.548449    
+sex         -243.303     69.257  -3.513 0.000512 ***
+bmi          543.278     73.538   7.388 1.51e-12 ***
+bp           319.650     74.568   4.287 2.45e-05 ***
+s1          -644.234    469.257  -1.373 0.170822    
+s2           453.101    376.895   1.202 0.230243    
+s3            70.601    237.469   0.297 0.766440    
+s4            75.509    182.043   0.415 0.678598    
+s5           763.669    193.096   3.955 9.57e-05 ***
+s6            65.702     75.679   0.868 0.386000    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 55.76 on 298 degrees of freedom
-Multiple R-squared:  0.514, Adjusted R-squared:  0.4977 
-F-statistic: 31.52 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 51.32 on 298 degrees of freedom
+Multiple R-squared:  0.5576,    Adjusted R-squared:  0.5428 
+F-statistic: 37.56 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
@@ -347,7 +348,7 @@ F-statistic: 31.52 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rmse_value1 <span class="ot">&lt;-</span> <span class="fu">rmse</span>(test1<span class="sc">$</span>diabetes, test1<span class="sc">$</span>pred)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rmse_value1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 50.94385</code></pre>
+<pre><code>[1] 60.90464</code></pre>
 </div>
 </div>
 </section>
@@ -619,7 +620,7 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree, test2)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 66.01878</code></pre>
+<pre><code>[1] 69.65225</code></pre>
 </div>
 </div>
 </section>
@@ -633,7 +634,7 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_es, test2)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 63.83403</code></pre>
+<pre><code>[1] 63.17078</code></pre>
 </div>
 </div>
 </section>
@@ -652,34 +653,39 @@ rpart(formula = diabetes ~ ., data = train2, method = "anova",
     control = rpart.control(cp = 0))
 
 Variables actually used in tree construction:
-[1] age bmi bp  s1  s3  s5  s6  sex
+[1] age bmi bp  s1  s2  s3  s4  s5  sex
 
-Root node error: 1837475/309 = 5946.5
+Root node error: 1883751/309 = 6096.3
 
 n= 309 
 
            CP nsplit rel error  xerror     xstd
-1  0.30682252      0   1.00000 1.00593 0.056131
-2  0.08660424      1   0.69318 0.76918 0.056690
-3  0.07254135      2   0.60657 0.67402 0.049604
-4  0.03421388      3   0.53403 0.62325 0.045401
-5  0.01674210      4   0.49982 0.59225 0.044558
-6  0.01507277      5   0.48308 0.63499 0.047838
-7  0.01384186      6   0.46800 0.63260 0.047707
-8  0.01161186      8   0.44032 0.64626 0.050217
-9  0.01003228      9   0.42871 0.69422 0.055590
-10 0.00888206     10   0.41868 0.69273 0.055967
-11 0.00773887     11   0.40979 0.70179 0.056862
-12 0.00761874     14   0.38658 0.72176 0.057951
-13 0.00612866     16   0.37134 0.71640 0.058394
-14 0.00422984     17   0.36521 0.72639 0.058708
-15 0.00308279     18   0.36098 0.72477 0.058470
-16 0.00248901     19   0.35790 0.73788 0.059072
-17 0.00246050     20   0.35541 0.73898 0.059031
-18 0.00147870     21   0.35295 0.73944 0.059003
-19 0.00117010     22   0.35147 0.74346 0.059397
-20 0.00084143     23   0.35030 0.74490 0.059352
-21 0.00000000     24   0.34946 0.74622 0.059480</code></pre>
+1  0.30703401      0   1.00000 1.00262 0.057970
+2  0.11280955      1   0.69297 0.71202 0.049688
+3  0.05107592      2   0.58016 0.62016 0.046654
+4  0.03086610      3   0.52908 0.63591 0.052426
+5  0.02802604      4   0.49821 0.61860 0.053651
+6  0.01965335      5   0.47019 0.60648 0.053169
+7  0.01615870      6   0.45054 0.59185 0.051451
+8  0.01549677      7   0.43438 0.60878 0.052069
+9  0.01340475      8   0.41888 0.61812 0.053332
+10 0.00986608      9   0.40547 0.63185 0.052344
+11 0.00957495     10   0.39561 0.63168 0.050067
+12 0.00890724     11   0.38603 0.63899 0.050726
+13 0.00869876     12   0.37713 0.63611 0.050103
+14 0.00848759     13   0.36843 0.63954 0.050311
+15 0.00779610     14   0.35994 0.64064 0.050531
+16 0.00759252     15   0.35214 0.63494 0.050162
+17 0.00752188     16   0.34455 0.63018 0.050176
+18 0.00703369     17   0.33703 0.63479 0.050162
+19 0.00335593     18   0.33000 0.63659 0.049476
+20 0.00325705     19   0.32664 0.64363 0.049762
+21 0.00252541     20   0.32338 0.64443 0.050001
+22 0.00224810     21   0.32086 0.64580 0.050030
+23 0.00215707     23   0.31636 0.64664 0.050002
+24 0.00196893     24   0.31420 0.64665 0.050049
+25 0.00083045     25   0.31224 0.64245 0.049889
+26 0.00000000     26   0.31140 0.64227 0.049896</code></pre>
 </div>
 </div>
 <ol start="2" type="1">
@@ -709,7 +715,7 @@ n= 309
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_prune, test2)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 63.62428</code></pre>
+<pre><code>[1] 64.4516</code></pre>
 </div>
 </div>
 </section>
@@ -772,19 +778,19 @@ Attaching package: 'h2o'</code></pre>
 H2O is not running yet, starting it now...
 
 Note:  In case of errors look at the following log files:
-    C:\Users\drsau\AppData\Local\Temp\Rtmp2JTDLN\file8ec13324f15/h2o_drsau_started_from_r.out
-    C:\Users\drsau\AppData\Local\Temp\Rtmp2JTDLN\file8ec66c46be6/h2o_drsau_started_from_r.err
+    C:\Users\drsau\AppData\Local\Temp\RtmpWU3COf\file2af04abe7097/h2o_drsau_started_from_r.out
+    C:\Users\drsau\AppData\Local\Temp\RtmpWU3COf\file2af012af7c2d/h2o_drsau_started_from_r.err
 
 
 Starting H2O JVM and connecting:  Connection successful!
 
 R is connected to the H2O cluster: 
-    H2O cluster uptime:         4 seconds 205 milliseconds 
+    H2O cluster uptime:         3 seconds 746 milliseconds 
     H2O cluster timezone:       Asia/Singapore 
     H2O data parsing timezone:  UTC 
     H2O cluster version:        3.44.0.3 
     H2O cluster version age:    6 months and 24 days 
-    H2O cluster name:           H2O_started_from_R_drsau_ibb542 
+    H2O cluster name:           H2O_started_from_R_drsau_kuf691 
     H2O cluster total nodes:    1 
     H2O cluster total memory:   1.76 GB 
     H2O cluster total cores:    8 
@@ -824,9 +830,9 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(consultation.frame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Class 'H2OFrame' &lt;environment: 0x00000234d519f040&gt; 
+<pre><code>Class 'H2OFrame' &lt;environment: 0x00000220f1bb5b30&gt; 
  - attr(*, "op")= chr "Parse"
- - attr(*, "id")= chr "consultation_sid_85ab_1"
+ - attr(*, "id")= chr "consultation_sid_a8c3_1"
  - attr(*, "eval")= logi FALSE
  - attr(*, "nrow")= int 5962
  - attr(*, "ncol")= int 6
@@ -890,7 +896,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |=================                                                     |  24%
+  |====================                                                  |  28%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -924,7 +930,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2059348</code></pre>
+<pre><code>[1] 0.2017157</code></pre>
 </div>
 </div>
 </section>
@@ -953,7 +959,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |======================                                                |  32%
+  |=========================                                             |  36%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -967,7 +973,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 </div>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.203332</code></pre>
+<pre><code>[1] 0.2015891</code></pre>
 </div>
 </div>
 </section>
@@ -999,7 +1005,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |=====================================================                 |  76%
+  |=========================================                             |  58%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -1013,7 +1019,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2049963</code></pre>
+<pre><code>[1] 0.2028324</code></pre>
 </div>
 </div>
 </section>
