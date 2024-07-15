@@ -118,8 +118,17 @@ window.Quarto = {
   <li><a href="#definition-of-machine-learning" id="toc-definition-of-machine-learning" class="nav-link" data-scroll-target="#definition-of-machine-learning"><span class="header-section-number">1.1</span> Definition of Machine Learning</a></li>
   <li><a href="#different-tasks-of-machine-learning" id="toc-different-tasks-of-machine-learning" class="nav-link" data-scroll-target="#different-tasks-of-machine-learning"><span class="header-section-number">1.2</span> Different Tasks of Machine Learning</a>
   <ul>
-  <li><a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning"><span class="header-section-number">1.2.1</span> Supervised Learning</a></li>
-  <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning"><span class="header-section-number">1.2.2</span> Unsupervised Learning</a></li>
+  <li><a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning"><span class="header-section-number">1.2.1</span> Supervised Learning</a>
+  <ul class="collapse">
+  <li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification"><span class="header-section-number">1.2.1.1</span> Classification</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">1.2.1.2</span> Regression</a></li>
+  </ul></li>
+  <li><a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning"><span class="header-section-number">1.2.2</span> Unsupervised Learning</a>
+  <ul class="collapse">
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">1.2.2.1</span> Clustering</a></li>
+  <li><a href="#association" id="toc-association" class="nav-link" data-scroll-target="#association"><span class="header-section-number">1.2.2.2</span> Association</a></li>
+  <li><a href="#dimension-reduction" id="toc-dimension-reduction" class="nav-link" data-scroll-target="#dimension-reduction"><span class="header-section-number">1.2.2.3</span> Dimension Reduction</a></li>
+  </ul></li>
   <li><a href="#reinforcement-learning" id="toc-reinforcement-learning" class="nav-link" data-scroll-target="#reinforcement-learning"><span class="header-section-number">1.2.3</span> Reinforcement Learning</a></li>
   </ul></li>
   </ul></li>
@@ -132,23 +141,22 @@ window.Quarto = {
   <li><a href="#build-the-linear-regression-model" id="toc-build-the-linear-regression-model" class="nav-link" data-scroll-target="#build-the-linear-regression-model"><span class="header-section-number">2.5</span> Build the Linear Regression Model</a></li>
   <li><a href="#summarize-the-model" id="toc-summarize-the-model" class="nav-link" data-scroll-target="#summarize-the-model"><span class="header-section-number">2.6</span> Summarize the Model</a></li>
   <li><a href="#evaluate-the-model" id="toc-evaluate-the-model" class="nav-link" data-scroll-target="#evaluate-the-model"><span class="header-section-number">2.7</span> Evaluate the Model</a></li>
-  <li><a href="#interpretation-of-results" id="toc-interpretation-of-results" class="nav-link" data-scroll-target="#interpretation-of-results"><span class="header-section-number">2.8</span> Interpretation of Results</a></li>
-  <li><a href="#performance-metrics" id="toc-performance-metrics" class="nav-link" data-scroll-target="#performance-metrics"><span class="header-section-number">2.9</span> Performance Metrics</a>
+  <li><a href="#performance-metrics" id="toc-performance-metrics" class="nav-link" data-scroll-target="#performance-metrics"><span class="header-section-number">2.8</span> Performance Metrics</a>
   <ul>
-  <li><a href="#r-squared" id="toc-r-squared" class="nav-link" data-scroll-target="#r-squared"><span class="header-section-number">2.9.1</span> R-Squared</a>
+  <li><a href="#r-squared" id="toc-r-squared" class="nav-link" data-scroll-target="#r-squared"><span class="header-section-number">2.8.1</span> R-Squared</a>
   <ul class="collapse">
-  <li><a href="#observed-data-points" id="toc-observed-data-points" class="nav-link" data-scroll-target="#observed-data-points"><span class="header-section-number">2.9.1.1</span> Observed Data Points</a></li>
-  <li><a href="#calculate-predicted-values-haty" id="toc-calculate-predicted-values-haty" class="nav-link" data-scroll-target="#calculate-predicted-values-haty"><span class="header-section-number">2.9.1.2</span> Calculate Predicted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
-  <li><a href="#calculate-residuals-errors" id="toc-calculate-residuals-errors" class="nav-link" data-scroll-target="#calculate-residuals-errors"><span class="header-section-number">2.9.1.3</span> Calculate Residuals (Errors)</a></li>
-  <li><a href="#sum-of-squared-residuals-ssr" id="toc-sum-of-squared-residuals-ssr" class="nav-link" data-scroll-target="#sum-of-squared-residuals-ssr"><span class="header-section-number">2.9.1.4</span> Sum of Squared Residuals (SSR)</a></li>
-  <li><a href="#total-sum-of-squares-sst" id="toc-total-sum-of-squares-sst" class="nav-link" data-scroll-target="#total-sum-of-squares-sst"><span class="header-section-number">2.9.1.5</span> Total Sum of Squares (SST)</a></li>
-  <li><a href="#calculate-r-squared-r²" id="toc-calculate-r-squared-r²" class="nav-link" data-scroll-target="#calculate-r-squared-r²"><span class="header-section-number">2.9.1.6</span> Calculate R-squared (R²)</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">2.9.1.7</span> Conclusion</a></li>
+  <li><a href="#observed-data-points" id="toc-observed-data-points" class="nav-link" data-scroll-target="#observed-data-points"><span class="header-section-number">2.8.1.1</span> Observed Data Points</a></li>
+  <li><a href="#calculate-predicted-values-haty" id="toc-calculate-predicted-values-haty" class="nav-link" data-scroll-target="#calculate-predicted-values-haty"><span class="header-section-number">2.8.1.2</span> Calculate Predicted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+  <li><a href="#calculate-residuals-errors" id="toc-calculate-residuals-errors" class="nav-link" data-scroll-target="#calculate-residuals-errors"><span class="header-section-number">2.8.1.3</span> Calculate Residuals (Errors)</a></li>
+  <li><a href="#sum-of-squared-residuals-ssr" id="toc-sum-of-squared-residuals-ssr" class="nav-link" data-scroll-target="#sum-of-squared-residuals-ssr"><span class="header-section-number">2.8.1.4</span> Sum of Squared Residuals (SSR)</a></li>
+  <li><a href="#total-sum-of-squares-sst" id="toc-total-sum-of-squares-sst" class="nav-link" data-scroll-target="#total-sum-of-squares-sst"><span class="header-section-number">2.8.1.5</span> Total Sum of Squares (SST)</a></li>
+  <li><a href="#calculate-r-squared-r²" id="toc-calculate-r-squared-r²" class="nav-link" data-scroll-target="#calculate-r-squared-r²"><span class="header-section-number">2.8.1.6</span> Calculate R-squared (R²)</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">2.8.1.7</span> Conclusion</a></li>
   </ul></li>
-  <li><a href="#root-mean-squared-error-rmse" id="toc-root-mean-squared-error-rmse" class="nav-link" data-scroll-target="#root-mean-squared-error-rmse"><span class="header-section-number">2.9.2</span> Root Mean Squared Error (RMSE)</a></li>
-  <li><a href="#mean-absolute-error-mae" id="toc-mean-absolute-error-mae" class="nav-link" data-scroll-target="#mean-absolute-error-mae"><span class="header-section-number">2.9.3</span> Mean Absolute Error (MAE)</a>
+  <li><a href="#root-mean-squared-error-rmse" id="toc-root-mean-squared-error-rmse" class="nav-link" data-scroll-target="#root-mean-squared-error-rmse"><span class="header-section-number">2.8.2</span> Root Mean Squared Error (RMSE)</a></li>
+  <li><a href="#mean-absolute-error-mae" id="toc-mean-absolute-error-mae" class="nav-link" data-scroll-target="#mean-absolute-error-mae"><span class="header-section-number">2.8.3</span> Mean Absolute Error (MAE)</a>
   <ul class="collapse">
-  <li><a href="#steps-to-calculate-mae" id="toc-steps-to-calculate-mae" class="nav-link" data-scroll-target="#steps-to-calculate-mae"><span class="header-section-number">2.9.3.1</span> Steps to Calculate MAE</a></li>
+  <li><a href="#steps-to-calculate-mae" id="toc-steps-to-calculate-mae" class="nav-link" data-scroll-target="#steps-to-calculate-mae"><span class="header-section-number">2.8.3.1</span> Steps to Calculate MAE</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -168,7 +176,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#export-the-tree" id="toc-export-the-tree" class="nav-link" data-scroll-target="#export-the-tree"><span class="header-section-number">3.9</span> Export the Tree</a></li>
   </ul></li>
-  <li><a href="#neural-network_regression" id="toc-neural-network_regression" class="nav-link" data-scroll-target="#neural-network_regression"><span class="header-section-number">4</span> Neural Network_Regression</a>
+  <li><a href="#neural-network-regression" id="toc-neural-network-regression" class="nav-link" data-scroll-target="#neural-network-regression"><span class="header-section-number">4</span> Neural Network Regression</a>
   <ul>
   <li><a href="#install-and-load-required-packages-1" id="toc-install-and-load-required-packages-1" class="nav-link" data-scroll-target="#install-and-load-required-packages-1"><span class="header-section-number">4.1</span> Install and Load Required Packages</a></li>
   <li><a href="#initialize-h2o" id="toc-initialize-h2o" class="nav-link" data-scroll-target="#initialize-h2o"><span class="header-section-number">4.2</span> Initialize H2O</a></li>
@@ -232,15 +240,40 @@ window.Quarto = {
 <h2 data-number="1.2" class="anchored" data-anchor-id="different-tasks-of-machine-learning"><span class="header-section-number">1.2</span> Different Tasks of Machine Learning</h2>
 <section id="supervised-learning" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="supervised-learning"><span class="header-section-number">1.2.1</span> Supervised Learning</h3>
-<p>Supervised learning is a type of machine learning where the model is trained on labeled data. This means that for each training example, there is a corresponding correct output. The model learns to map inputs to outputs by finding patterns in the data.</p>
-<p>One common example of supervised learning is email spam detection. In this case, the model is trained on a dataset of emails labeled as “spam” or “not spam.” By learning from these labeled examples, the model can predict whether new, unseen emails are spam or not.</p>
-<p>Another example is predicting housing prices based on features such as the size of the house, the number of bedrooms, and its location. The model learns from historical data where the house prices are known and uses this information to predict prices for new houses.</p>
+<p>Supervised learning is a type of machine learning where the model is trained on a labeled dataset. The goal is to learn a mapping from inputs to outputs based on the provided labels. There are two primary tasks under supervised learning: classification and regression.</p>
+<section id="classification" class="level4" data-number="1.2.1.1">
+<h4 data-number="1.2.1.1" class="anchored" data-anchor-id="classification"><span class="header-section-number">1.2.1.1</span> Classification</h4>
+<p>Classification is the task of predicting a category or class label for a given input. The model is trained on a dataset where each example is labeled with the correct class. The objective is to learn from these examples and accurately classify new, unseen data.</p>
+<p>An example of classification is dividing the socks by color. In this scenario, the model could be trained to recognize different colors of socks. Given a pile of socks, the model would sort them into categories such as red, blue, green, etc.</p>
+<p>This task is useful in various applications, such as spam detection in emails (classifying emails as spam or not spam), handwriting recognition (classifying handwritten digits), and medical diagnosis (classifying whether a patient has a particular disease based on symptoms).</p>
+</section>
+<section id="regression" class="level4" data-number="1.2.1.2">
+<h4 data-number="1.2.1.2" class="anchored" data-anchor-id="regression"><span class="header-section-number">1.2.1.2</span> Regression</h4>
+<p>Regression is the task of predicting a continuous value for a given input. Unlike classification, which predicts discrete labels, regression predicts numerical values.</p>
+<p>An example of regression is dividing the ties by length. In this case, the model could be trained to predict the length of ties based on features such as brand, fabric, or style. Given a set of ties, the model would estimate their lengths and sort them accordingly.</p>
+<p>Regression tasks are common in various fields, such as predicting house prices based on features like location, size, and number of bedrooms, forecasting stock prices based on historical data, and estimating the amount of rainfall based on weather conditions.</p>
+</section>
 </section>
 <section id="unsupervised-learning" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="unsupervised-learning"><span class="header-section-number">1.2.2</span> Unsupervised Learning</h3>
-<p>Unsupervised learning deals with unlabeled data, meaning the model tries to learn the patterns and structure from the data without any specific guidance on what the outputs should be. One of the primary tasks in unsupervised learning is clustering. Clustering algorithms group similar data points together based on their features.</p>
-<p>For instance, in customer segmentation, a company can use clustering to group customers with similar purchasing behaviors, helping them tailor marketing strategies to different customer groups.</p>
-<p>Another example is dimensionality reduction, where techniques like Principal Component Analysis (PCA) are used to reduce the number of variables in a dataset while retaining as much information as possible. This is particularly useful for visualizing high-dimensional data or for speeding up other machine learning algorithms by reducing computational complexity.</p>
+<p>Unsupervised learning deals with unlabeled data, meaning the model tries to learn the patterns and structure from the data without any specific guidance on what the outputs should be. There are several tasks under unsupervised learning, including clustering, association, and dimension reduction.</p>
+<section id="clustering" class="level4" data-number="1.2.2.1">
+<h4 data-number="1.2.2.1" class="anchored" data-anchor-id="clustering"><span class="header-section-number">1.2.2.1</span> Clustering</h4>
+<p>Clustering is a technique used to group similar data points based on their characteristics. This is useful in various scenarios where identifying natural groupings in data can provide insights or aid decision-making.</p>
+<p>Suppose you have a pile of clothes, and you want to organize them by similarity, such as color, type, or fabric. Clustering algorithms can automatically group similar items together, making it easier to organize and manage your wardrobe. For example, all the red shirts might be grouped in one cluster, while all the blue jeans might be in another.</p>
+</section>
+<section id="association" class="level4" data-number="1.2.2.2">
+<h4 data-number="1.2.2.2" class="anchored" data-anchor-id="association"><span class="header-section-number">1.2.2.2</span> Association</h4>
+<p>Association learning identifies relationships between variables in a dataset. It is often used to find patterns or associations between different items that occur together.</p>
+<p>For example, in the context of clothing, association can help find hidden dependencies, such as which items of clothing are often worn together. If you frequently wear a certain shirt with a specific pair of pants, an association learning algorithm can identify this pattern.</p>
+<p>This information can be useful for making recommendations or optimizing your wardrobe choices. For instance, a system could suggest pairing items that you have not previously considered, based on the associations it has learned from your past choices.</p>
+</section>
+<section id="dimension-reduction" class="level4" data-number="1.2.2.3">
+<h4 data-number="1.2.2.3" class="anchored" data-anchor-id="dimension-reduction"><span class="header-section-number">1.2.2.3</span> Dimension Reduction</h4>
+<p>Dimension reduction is a process used to reduce the number of variables under consideration, making the data simpler to analyze and visualize. This is particularly helpful when dealing with high-dimensional data.</p>
+<p>In the context of clothing, dimension reduction can help generalize and simplify the task of making outfits from a large collection of clothes. By reducing the complexity of the data, you can identify the most important features that contribute to making good outfits.</p>
+<p>For example, you might reduce the data to a few key dimensions such as color, style, and occasion, which can help you mix and match clothing items more effectively to create the best outfits from your given clothes.</p>
+</section>
 </section>
 <section id="reinforcement-learning" class="level3" data-number="1.2.3">
 <h3 data-number="1.2.3" class="anchored" data-anchor-id="reinforcement-learning"><span class="header-section-number">1.2.3</span> Reinforcement Learning</h3>
@@ -315,28 +348,28 @@ Call:
 lm(formula = diabetes ~ ., data = train1)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--134.50  -35.88    1.68   36.07  136.58 
+     Min       1Q   Median       3Q      Max 
+-159.452  -38.411   -3.467   39.637  145.426 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  155.187      2.931  52.939  &lt; 2e-16 ***
-age          -41.218     68.609  -0.601 0.548449    
-sex         -243.303     69.257  -3.513 0.000512 ***
-bmi          543.278     73.538   7.388 1.51e-12 ***
-bp           319.650     74.568   4.287 2.45e-05 ***
-s1          -644.234    469.257  -1.373 0.170822    
-s2           453.101    376.895   1.202 0.230243    
-s3            70.601    237.469   0.297 0.766440    
-s4            75.509    182.043   0.415 0.678598    
-s5           763.669    193.096   3.955 9.57e-05 ***
-s6            65.702     75.679   0.868 0.386000    
+(Intercept)  152.651      3.145  48.539  &lt; 2e-16 ***
+age          -44.618     73.101  -0.610 0.542093    
+sex         -276.968     73.721  -3.757 0.000207 ***
+bmi          528.355     80.744   6.544 2.62e-10 ***
+bp           336.868     83.206   4.049 6.57e-05 ***
+s1          -334.711    561.406  -0.596 0.551494    
+s2           133.321    454.364   0.293 0.769403    
+s3          -160.373    283.423  -0.566 0.571925    
+s4            22.365    205.289   0.109 0.913322    
+s5           611.364    219.082   2.791 0.005601 ** 
+s6            77.042     79.402   0.970 0.332693    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 51.32 on 298 degrees of freedom
-Multiple R-squared:  0.5576,    Adjusted R-squared:  0.5428 
-F-statistic: 37.56 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 55.02 on 298 degrees of freedom
+Multiple R-squared:  0.5154,    Adjusted R-squared:  0.4992 
+F-statistic:  31.7 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
@@ -348,22 +381,15 @@ F-statistic: 37.56 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rmse_value1 <span class="ot">&lt;-</span> <span class="fu">rmse</span>(test1<span class="sc">$</span>diabetes, test1<span class="sc">$</span>pred)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rmse_value1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 60.90464</code></pre>
+<pre><code>[1] 52.80042</code></pre>
 </div>
 </div>
+<p><strong>RMSE:</strong> The root mean squared error (RMSE) measures the average deviation of predictions from the actual values. A lower RMSE indicates a better fit of the model.</p>
 </section>
-<section id="interpretation-of-results" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="interpretation-of-results"><span class="header-section-number">2.8</span> Interpretation of Results</h2>
-<ul>
-<li><strong>Coefficients:</strong> The “Estimate” column in the summary output lists the coefficients (slopes) for each attribute, which indicates the relationship between the predictor and the outcome variable.</li>
-<li><strong>Residuals:</strong> The residuals indicate how well the model fits the data, represented by the vertical distances between the actual data points and the regression line.</li>
-<li><strong>RMSE:</strong> The root mean squared error (RMSE) measures the average deviation of predictions from the actual values. A lower RMSE indicates a better fit of the model.</li>
-</ul>
-</section>
-<section id="performance-metrics" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="performance-metrics"><span class="header-section-number">2.9</span> Performance Metrics</h2>
-<section id="r-squared" class="level3" data-number="2.9.1">
-<h3 data-number="2.9.1" class="anchored" data-anchor-id="r-squared"><span class="header-section-number">2.9.1</span> R-Squared</h3>
+<section id="performance-metrics" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="performance-metrics"><span class="header-section-number">2.8</span> Performance Metrics</h2>
+<section id="r-squared" class="level3" data-number="2.8.1">
+<h3 data-number="2.8.1" class="anchored" data-anchor-id="r-squared"><span class="header-section-number">2.8.1</span> R-Squared</h3>
 <p>R-squared, also known as the coefficient of determination, represents the squared correlation between the observed outcome values and the predicted values by the model. It indicates how well the model explains the variability of the response data around its mean. The value of R-squared ranges from 0 to 1:</p>
 <ul>
 <li><strong>Higher R2</strong>: Indicates a better fit of the model, meaning it explains a higher proportion of the variance in the outcome variable.</li>
@@ -374,17 +400,13 @@ R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
 \]</span></p>
 <ul>
 <li><span class="math inline">\(y_i\)</span> are the observed values.</li>
-<li><span class="math inline">\(\hat{y}\_i\)</span> are the predicted values from the regression model.</li>
+<li><span class="math inline">\(\hat{y}_i\)</span> are the predicted values from the regression model.</li>
 <li><span class="math inline">\(\bar{y}\)</span> is the mean of the observed values.</li>
-<li><span class="math inline">\(\sum (y_i - \hat{y}\_i)^2\)</span> is the sum of the squared residuals (SSR).</li>
+<li><span class="math inline">\(\sum (y_i - \hat{y}_i)^2\)</span> is the sum of the squared residuals (SSR).</li>
 <li><span class="math inline">\(\sum (y_i - \bar{y})^2\)</span> is the total sum of squares (SST).</li>
 </ul>
-<p>To calculate R-squared (R²), we need to understand how well the regression line predicts the actual data points. The given equation of the regression line is:</p>
-<p><span class="math display">\[
-\hat{y} = 0.143 + 1.229x
-\]</span></p>
-<section id="observed-data-points" class="level4" data-number="2.9.1.1">
-<h4 data-number="2.9.1.1" class="anchored" data-anchor-id="observed-data-points"><span class="header-section-number">2.9.1.1</span> Observed Data Points</h4>
+<section id="observed-data-points" class="level4" data-number="2.8.1.1">
+<h4 data-number="2.8.1.1" class="anchored" data-anchor-id="observed-data-points"><span class="header-section-number">2.8.1.1</span> Observed Data Points</h4>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Inputs/Graph.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
@@ -397,9 +419,13 @@ R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
 <li>(4, 6)</li>
 <li>(6, 7)</li>
 </ul>
+<p>To calculate R-squared (R²), we need to understand how well the regression line predicts the actual data points. The given equation of the regression line is:</p>
+<p><span class="math display">\[
+\hat{y} = 0.143 + 1.229x
+\]</span></p>
 </section>
-<section id="calculate-predicted-values-haty" class="level4" data-number="2.9.1.2">
-<h4 data-number="2.9.1.2" class="anchored" data-anchor-id="calculate-predicted-values-haty"><span class="header-section-number">2.9.1.2</span> Calculate Predicted Values (<span class="math inline">\(\hat{y}\)</span>)</h4>
+<section id="calculate-predicted-values-haty" class="level4" data-number="2.8.1.2">
+<h4 data-number="2.8.1.2" class="anchored" data-anchor-id="calculate-predicted-values-haty"><span class="header-section-number">2.8.1.2</span> Calculate Predicted Values (<span class="math inline">\(\hat{y}\)</span>)</h4>
 <p>Use the regression line equation to calculate the predicted values for each ( x ):</p>
 <p>For <span class="math inline">\(x = 2\)</span>:</p>
 <p><span class="math display">\[
@@ -418,23 +444,23 @@ R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
 \hat{y} = 0.143 + 1.229 \times 6 = 7.517 \
 \]</span></p>
 </section>
-<section id="calculate-residuals-errors" class="level4" data-number="2.9.1.3">
-<h4 data-number="2.9.1.3" class="anchored" data-anchor-id="calculate-residuals-errors"><span class="header-section-number">2.9.1.3</span> Calculate Residuals (Errors)</h4>
+<section id="calculate-residuals-errors" class="level4" data-number="2.8.1.3">
+<h4 data-number="2.8.1.3" class="anchored" data-anchor-id="calculate-residuals-errors"><span class="header-section-number">2.8.1.3</span> Calculate Residuals (Errors)</h4>
 <p>The residual for each point is the difference between the actual ( y ) value and the predicted ( y ) value:</p>
 <p>For (2, 2): <span class="math display">\[ r_1 = y_1 - \hat{y}_1 = 2 - 2.601 = -0.601 \]</span></p>
 <p>For (3, 4): <span class="math display">\[ r_2 = y_2 - \hat{y}_2 = 4 - 3.83 = 0.17 \]</span></p>
 <p>For (4, 6): <span class="math display">\[ r_3 = y_3 - \hat{y}_3 = 6 - 5.059 = 0.941 \]</span></p>
 <p>For (6, 7): <span class="math display">\[ r_4 = y_4 - \hat{y}_4 = 7 - 7.517 = -0.517 \]</span></p>
 </section>
-<section id="sum-of-squared-residuals-ssr" class="level4" data-number="2.9.1.4">
-<h4 data-number="2.9.1.4" class="anchored" data-anchor-id="sum-of-squared-residuals-ssr"><span class="header-section-number">2.9.1.4</span> Sum of Squared Residuals (SSR)</h4>
+<section id="sum-of-squared-residuals-ssr" class="level4" data-number="2.8.1.4">
+<h4 data-number="2.8.1.4" class="anchored" data-anchor-id="sum-of-squared-residuals-ssr"><span class="header-section-number">2.8.1.4</span> Sum of Squared Residuals (SSR)</h4>
 <p>Calculate the sum of the squared residuals:</p>
 <p><span class="math display">\[
 SSR = (-0.601)^2 + (0.17)^2 + (0.941)^2 + (-0.517)^2 = 1.542871
 \]</span></p>
 </section>
-<section id="total-sum-of-squares-sst" class="level4" data-number="2.9.1.5">
-<h4 data-number="2.9.1.5" class="anchored" data-anchor-id="total-sum-of-squares-sst"><span class="header-section-number">2.9.1.5</span> Total Sum of Squares (SST)</h4>
+<section id="total-sum-of-squares-sst" class="level4" data-number="2.8.1.5">
+<h4 data-number="2.8.1.5" class="anchored" data-anchor-id="total-sum-of-squares-sst"><span class="header-section-number">2.8.1.5</span> Total Sum of Squares (SST)</h4>
 <p>Calculate the mean of the observed <span class="math inline">\(y\)</span> values:</p>
 <p><span class="math display">\[
 \bar{y} = \frac{2 + 4 + 6 + 7}{4} = 4.75
@@ -444,20 +470,20 @@ SSR = (-0.601)^2 + (0.17)^2 + (0.941)^2 + (-0.517)^2 = 1.542871
 SST = (2 - 4.75)^2 + (4 - 4.75)^2 + (6 - 4.75)^2 + (7 - 4.75)^2 = 14.75
 \]</span></p>
 </section>
-<section id="calculate-r-squared-r²" class="level4" data-number="2.9.1.6">
-<h4 data-number="2.9.1.6" class="anchored" data-anchor-id="calculate-r-squared-r²"><span class="header-section-number">2.9.1.6</span> Calculate R-squared (R²)</h4>
+<section id="calculate-r-squared-r²" class="level4" data-number="2.8.1.6">
+<h4 data-number="2.8.1.6" class="anchored" data-anchor-id="calculate-r-squared-r²"><span class="header-section-number">2.8.1.6</span> Calculate R-squared (R²)</h4>
 <p>Finally, calculate R-squared using the formula:</p>
 <p><span class="math display">\[
 R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 \]</span></p>
 </section>
-<section id="conclusion" class="level4" data-number="2.9.1.7">
-<h4 data-number="2.9.1.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.9.1.7</span> Conclusion</h4>
+<section id="conclusion" class="level4" data-number="2.8.1.7">
+<h4 data-number="2.8.1.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.8.1.7</span> Conclusion</h4>
 <p>The R-squared value of 0.895 indicates that approximately 89.5% of the variance in the number of hours spent at the university per day can be explained by the number of lectures per day. This shows a strong relationship between the two variables in this example.</p>
 </section>
 </section>
-<section id="root-mean-squared-error-rmse" class="level3" data-number="2.9.2">
-<h3 data-number="2.9.2" class="anchored" data-anchor-id="root-mean-squared-error-rmse"><span class="header-section-number">2.9.2</span> Root Mean Squared Error (RMSE)</h3>
+<section id="root-mean-squared-error-rmse" class="level3" data-number="2.8.2">
+<h3 data-number="2.8.2" class="anchored" data-anchor-id="root-mean-squared-error-rmse"><span class="header-section-number">2.8.2</span> Root Mean Squared Error (RMSE)</h3>
 <p>RMSE measures the average prediction error made by the model in predicting the outcome for an observation. It is calculated as the square root of the average squared differences between the predicted values and the actual values. RMSE is sensitive to outliers because it squares the errors, giving more weight to larger errors. The formula for RMSE is:</p>
 <p><span class="math display">\[
 \text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^n (y_i - \hat{y_i})^2}
@@ -467,8 +493,8 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <li><strong>Higher RMSE</strong>: Indicates larger differences between the predicted and actual values, meaning a poorer fit.</li>
 </ul>
 </section>
-<section id="mean-absolute-error-mae" class="level3" data-number="2.9.3">
-<h3 data-number="2.9.3" class="anchored" data-anchor-id="mean-absolute-error-mae"><span class="header-section-number">2.9.3</span> Mean Absolute Error (MAE)</h3>
+<section id="mean-absolute-error-mae" class="level3" data-number="2.8.3">
+<h3 data-number="2.8.3" class="anchored" data-anchor-id="mean-absolute-error-mae"><span class="header-section-number">2.8.3</span> Mean Absolute Error (MAE)</h3>
 <p>MAE measures the average magnitude of the errors in a set of predictions, without considering their direction (i.e., without squaring them). It is calculated as the average of the absolute differences between the predicted values and the actual values. MAE is less sensitive to outliers compared to RMSE. The formula for MAE is:</p>
 <p><span class="math display">\[
 \text{MAE} = \frac{1}{n} \sum_{i=1}^n |y_i - \hat{y_i}|
@@ -477,8 +503,8 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <li><strong>Lower MAE</strong>: Indicates a better fit of the model, meaning the predictions are closer to the actual values.</li>
 <li><strong>Higher MAE</strong>: Indicates a poorer fit, meaning the predictions are further from the actual values.</li>
 </ul>
-<section id="steps-to-calculate-mae" class="level4" data-number="2.9.3.1">
-<h4 data-number="2.9.3.1" class="anchored" data-anchor-id="steps-to-calculate-mae"><span class="header-section-number">2.9.3.1</span> Steps to Calculate MAE</h4>
+<section id="steps-to-calculate-mae" class="level4" data-number="2.8.3.1">
+<h4 data-number="2.8.3.1" class="anchored" data-anchor-id="steps-to-calculate-mae"><span class="header-section-number">2.8.3.1</span> Steps to Calculate MAE</h4>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  Actual Predicted
@@ -549,6 +575,7 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 </section>
 <section id="decision-tree" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Decision Tree</h1>
+<p>It is a machine learning technique used to model and predict continuous target variables. It constructs a tree-like model of decisions and their possible consequences, allowing for interpretable analysis of complex relationships in the data.</p>
 <section id="install-and-load-required-packages" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="install-and-load-required-packages"><span class="header-section-number">3.1</span> Install and Load Required Packages</h2>
 <div class="cell">
@@ -593,14 +620,16 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 </section>
 <section id="build-the-regression-tree" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="build-the-regression-tree"><span class="header-section-number">3.5</span> Build the Regression Tree</h2>
-<p>Build a regression tree using the <code>rpart</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>reg_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> ., <span class="at">data =</span> train2, <span class="at">method =</span> <span class="st">"anova"</span>, <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>reg_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> .,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train2,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"anova"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> <span class="dv">0</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plot-the-decision-tree" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="plot-the-decision-tree"><span class="header-section-number">3.6</span> Plot the Decision Tree</h2>
-<p>Plot and visualize the decision tree:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg_tree)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(reg_tree, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -615,26 +644,35 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 </section>
 <section id="evaluate-the-tree" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="evaluate-the-tree"><span class="header-section-number">3.7</span> Evaluate the Tree</h2>
-<p>Evaluate the tree using the test set and calculate the root mean squared error (RMSE):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree, test2)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 69.65225</code></pre>
+<pre><code>[1] 70.20131</code></pre>
 </div>
 </div>
 </section>
 <section id="prune-the-tree" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="prune-the-tree"><span class="header-section-number">3.8</span> Prune the Tree</h2>
+<p>Pruning is an essential technique used in decision tree algorithms to reduce the complexity of the model and prevent overfitting. Overfitting occurs when a decision tree model becomes too complex and captures noise in the training data rather than the underlying patterns.</p>
+<p><em>Pre Pruning</em> involves halting the growth of the decision tree early based on certain criteria before it becomes too complex. This method sets thresholds for the tree-building process, such as maximum tree depth, minimum number of samples required to split a node, or minimum number of samples in a leaf node.</p>
+<p>For example, if the maximum depth is set to a specific value, the tree will stop growing when it reaches that depth, even if further splits could improve accuracy on the training data. This early stopping helps prevent the tree from growing excessively and overfitting the training data.</p>
+<p><em>Post Pruning</em> is the process of trimming a fully grown decision tree after it has been built. This technique involves first allowing the tree to grow to its full depth, capturing all possible splits, and then removing branches that do not provide significant power to the model.</p>
+<p>Post pruning can be done using various methods, such as reducing the number of leaf nodes or merging leaf nodes that do not add much predictive value. The goal is to simplify the tree by removing parts that may have been added due to noise in the training data, thus enhancing the model’s ability to generalize.</p>
+<p><em>Cost Complexity Pruning</em> is a specific type of post-pruning that involves evaluating the trade-off between the complexity of the tree and its performance on the training data. This method introduces a complexity parameter, often denoted as <span class="math inline">\(\alpha\)</span>, which penalizes the tree’s complexity by adding a cost term that increases with the number of leaf nodes.</p>
+<p>The pruning process involves finding the optimal value of <span class="math inline">\(\alpha\)</span> that balances model accuracy and simplicity. Trees are pruned by removing branches that contribute less to reducing the cost complexity criterion, thus resulting in a more balanced and generalizable model.</p>
 <section id="pre-pruning" class="level3" data-number="3.8.1">
 <h3 data-number="3.8.1" class="anchored" data-anchor-id="pre-pruning"><span class="header-section-number">3.8.1</span> Pre-pruning</h3>
-<p>Perform pre-pruning by specifying parameters like <code>maxdepth</code>, <code>minsplit</code>, and <code>minbucket</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>reg_tree_es <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> ., <span class="at">data =</span> train2, <span class="at">method =</span> <span class="st">"anova"</span>, <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> <span class="dv">0</span>, <span class="at">maxdepth =</span> <span class="dv">6</span>, <span class="at">minsplit =</span> <span class="dv">70</span>))</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_es, test2)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>reg_tree_es <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> .,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train2,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"anova"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> <span class="dv">0</span>, <span class="at">maxdepth =</span> <span class="dv">6</span>, <span class="at">minsplit =</span> <span class="dv">70</span>))</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_es, test2)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 63.17078</code></pre>
+<pre><code>[1] 64.41974</code></pre>
 </div>
 </div>
 </section>
@@ -653,39 +691,34 @@ rpart(formula = diabetes ~ ., data = train2, method = "anova",
     control = rpart.control(cp = 0))
 
 Variables actually used in tree construction:
-[1] age bmi bp  s1  s2  s3  s4  s5  sex
+[1] age bmi bp  s1  s2  s5  s6 
 
-Root node error: 1883751/309 = 6096.3
+Root node error: 1784360/309 = 5774.6
 
 n= 309 
 
-           CP nsplit rel error  xerror     xstd
-1  0.30703401      0   1.00000 1.00262 0.057970
-2  0.11280955      1   0.69297 0.71202 0.049688
-3  0.05107592      2   0.58016 0.62016 0.046654
-4  0.03086610      3   0.52908 0.63591 0.052426
-5  0.02802604      4   0.49821 0.61860 0.053651
-6  0.01965335      5   0.47019 0.60648 0.053169
-7  0.01615870      6   0.45054 0.59185 0.051451
-8  0.01549677      7   0.43438 0.60878 0.052069
-9  0.01340475      8   0.41888 0.61812 0.053332
-10 0.00986608      9   0.40547 0.63185 0.052344
-11 0.00957495     10   0.39561 0.63168 0.050067
-12 0.00890724     11   0.38603 0.63899 0.050726
-13 0.00869876     12   0.37713 0.63611 0.050103
-14 0.00848759     13   0.36843 0.63954 0.050311
-15 0.00779610     14   0.35994 0.64064 0.050531
-16 0.00759252     15   0.35214 0.63494 0.050162
-17 0.00752188     16   0.34455 0.63018 0.050176
-18 0.00703369     17   0.33703 0.63479 0.050162
-19 0.00335593     18   0.33000 0.63659 0.049476
-20 0.00325705     19   0.32664 0.64363 0.049762
-21 0.00252541     20   0.32338 0.64443 0.050001
-22 0.00224810     21   0.32086 0.64580 0.050030
-23 0.00215707     23   0.31636 0.64664 0.050002
-24 0.00196893     24   0.31420 0.64665 0.050049
-25 0.00083045     25   0.31224 0.64245 0.049889
-26 0.00000000     26   0.31140 0.64227 0.049896</code></pre>
+          CP nsplit rel error  xerror     xstd
+1  0.3271105      0   1.00000 1.00666 0.063641
+2  0.0685642      1   0.67289 0.76458 0.060839
+3  0.0567830      2   0.60433 0.76206 0.061687
+4  0.0278820      3   0.54754 0.72294 0.057214
+5  0.0192070      4   0.51966 0.72236 0.060848
+6  0.0149122      5   0.50045 0.73816 0.061521
+7  0.0128354      6   0.48554 0.72899 0.061192
+8  0.0115321      7   0.47271 0.71830 0.061215
+9  0.0112510      8   0.46117 0.71180 0.061979
+10 0.0106949     10   0.43867 0.71013 0.061982
+11 0.0100720     11   0.42798 0.71069 0.061931
+12 0.0095936     13   0.40783 0.71734 0.062164
+13 0.0095586     14   0.39824 0.71603 0.062615
+14 0.0065711     15   0.38868 0.71540 0.064328
+15 0.0053469     16   0.38211 0.71546 0.062024
+16 0.0047042     17   0.37676 0.72820 0.062421
+17 0.0046265     18   0.37206 0.73079 0.063126
+18 0.0032340     20   0.36281 0.72416 0.062745
+19 0.0031938     21   0.35957 0.72227 0.062758
+20 0.0023314     23   0.35318 0.72266 0.062763
+21 0.0000000     24   0.35085 0.72352 0.062664</code></pre>
 </div>
 </div>
 <ol start="2" type="1">
@@ -705,7 +738,7 @@ n= 309
 <li>Find the best cp value that minimizes the cross-validated error:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>bestcp <span class="ot">&lt;-</span> reg_tree<span class="sc">$</span>cptable[<span class="fu">which.min</span>(reg_tree<span class="sc">$</span>cptable[,<span class="st">"xerror"</span>]),<span class="st">"CP"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>bestcp <span class="ot">&lt;-</span> reg_tree<span class="sc">$</span>cptable[<span class="fu">which.min</span>(reg_tree<span class="sc">$</span>cptable[, <span class="st">"xerror"</span>]), <span class="st">"CP"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
 <li>Build the pruned tree and evaluate it:</li>
@@ -715,7 +748,7 @@ n= 309
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_prune, test2)</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.4516</code></pre>
+<pre><code>[1] 69.67534</code></pre>
 </div>
 </div>
 </section>
@@ -728,8 +761,12 @@ n= 309
 </div>
 </section>
 </section>
-<section id="neural-network_regression" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Neural Network_Regression</h1>
+<section id="neural-network-regression" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Neural Network Regression</h1>
+<p>Neural Network Regression is a type of machine learning model used to predict continuous outcomes using artificial neural networks (ANNs). Neural networks, inspired by the structure and function of the human brain, consist of interconnected layers of nodes, or neurons, that process input data to produce a desired output.</p>
+<p>The architecture of a neural network typically includes an input layer, one or more hidden layers, and an output layer. Each layer contains multiple neurons, and each neuron in a layer is connected to every neuron in the subsequent layer.</p>
+<p>The neurons process information by applying weights to the inputs, summing them up, and passing the result through an activation function. This process, known as forward propagation, continues until the output layer produces a prediction.</p>
+<p>In regression tasks, the output layer typically has a single neuron that provides the continuous numerical prediction.</p>
 <section id="install-and-load-required-packages-1" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="install-and-load-required-packages-1"><span class="header-section-number">4.1</span> Install and Load Required Packages</h2>
 <div class="cell">
@@ -772,27 +809,19 @@ Attaching package: 'h2o'</code></pre>
 <h2 data-number="4.2" class="anchored" data-anchor-id="initialize-h2o"><span class="header-section-number">4.2</span> Initialize H2O</h2>
 <p>Before building the model, initialize the H2O instance:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h2o.init</span>(<span class="at">nthreads=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">max_mem_size=</span><span class="st">"2G"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h2o.init</span>(<span class="at">nthreads =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max_mem_size =</span> <span class="st">"2G"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-H2O is not running yet, starting it now...
-
-Note:  In case of errors look at the following log files:
-    C:\Users\drsau\AppData\Local\Temp\RtmpWU3COf\file2af04abe7097/h2o_drsau_started_from_r.out
-    C:\Users\drsau\AppData\Local\Temp\RtmpWU3COf\file2af012af7c2d/h2o_drsau_started_from_r.err
-
-
-Starting H2O JVM and connecting:  Connection successful!
+<pre><code> Connection successful!
 
 R is connected to the H2O cluster: 
-    H2O cluster uptime:         3 seconds 746 milliseconds 
+    H2O cluster uptime:         46 minutes 30 seconds 
     H2O cluster timezone:       Asia/Singapore 
     H2O data parsing timezone:  UTC 
     H2O cluster version:        3.44.0.3 
     H2O cluster version age:    6 months and 24 days 
-    H2O cluster name:           H2O_started_from_R_drsau_kuf691 
+    H2O cluster name:           H2O_started_from_R_drsau_mpu976 
     H2O cluster total nodes:    1 
-    H2O cluster total memory:   1.76 GB 
+    H2O cluster total memory:   1.53 GB 
     H2O cluster total cores:    8 
     H2O cluster allowed cores:  8 
     H2O cluster healthy:        TRUE 
@@ -830,9 +859,9 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(consultation.frame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Class 'H2OFrame' &lt;environment: 0x00000220f1bb5b30&gt; 
+<pre><code>Class 'H2OFrame' &lt;environment: 0x00000246e219a518&gt; 
  - attr(*, "op")= chr "Parse"
- - attr(*, "id")= chr "consultation_sid_a8c3_1"
+ - attr(*, "id")= chr "consultation_sid_ab87_1"
  - attr(*, "eval")= logi FALSE
  - attr(*, "nrow")= int 5962
  - attr(*, "ncol")= int 6
@@ -858,7 +887,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <p>Normalize the columns “Experience”, “Rating”, and “Fees” as they are in different ranges:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>normalize <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span> ((x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)))</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>((x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)))</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>consultation.frame<span class="sc">$</span>Experience.norm <span class="ot">&lt;-</span> <span class="fu">normalize</span>(consultation.frame<span class="sc">$</span>Experience)</span>
@@ -880,12 +909,12 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <p>Build the neural network model with default parameters:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>), </span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>, </span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3, </span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>, </span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>, </span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>), </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span></span>
 <span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -896,7 +925,11 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |====================                                                  |  28%
+  |=============                                                         |  18%
+  |                                                                            
+  |==================================                                    |  48%
+  |                                                                            
+  |=======================================================               |  78%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -930,7 +963,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2017157</code></pre>
+<pre><code>[1] 0.1974098</code></pre>
 </div>
 </div>
 </section>
@@ -939,16 +972,16 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <p>Add early stopping parameters to the model:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>), </span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>, </span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3, </span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>, </span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>, </span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>), </span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>, </span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_metric =</span> <span class="st">"rmse"</span>, </span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_rounds =</span> <span class="dv">3</span>, </span>
-<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_tolerance =</span> <span class="fl">0.05</span>, </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>,</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_metric =</span> <span class="st">"rmse"</span>,</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_rounds =</span> <span class="dv">3</span>,</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_tolerance =</span> <span class="fl">0.05</span>,</span>
 <span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">score_interval =</span> <span class="dv">1</span></span>
 <span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -959,7 +992,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |=========================                                             |  36%
+  |===========================                                           |  38%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -973,7 +1006,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 </div>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2015891</code></pre>
+<pre><code>[1] 0.1961016</code></pre>
 </div>
 </div>
 </section>
@@ -982,19 +1015,19 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <p>Add dropout regularization to improve generalization:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>), </span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>, </span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3, </span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>, </span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>, </span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>), </span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>, </span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_metric =</span> <span class="st">"rmse"</span>, </span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_rounds =</span> <span class="dv">3</span>, </span>
-<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_tolerance =</span> <span class="fl">0.05</span>, </span>
-<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">score_interval =</span> <span class="dv">1</span>, </span>
-<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">activation =</span> <span class="st">"RectifierWithDropout"</span>, </span>
-<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden_dropout_ratio =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>), </span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>,</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_metric =</span> <span class="st">"rmse"</span>,</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_rounds =</span> <span class="dv">3</span>,</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_tolerance =</span> <span class="fl">0.05</span>,</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">score_interval =</span> <span class="dv">1</span>,</span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">activation =</span> <span class="st">"RectifierWithDropout"</span>,</span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden_dropout_ratio =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
 <span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">input_dropout_ratio =</span> <span class="fl">0.1</span></span>
 <span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1005,7 +1038,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |=========================================                             |  58%
+  |==============================================================        |  88%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -1019,7 +1052,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 </div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2028324</code></pre>
+<pre><code>[1] 0.1989094</code></pre>
 </div>
 </div>
 </section>

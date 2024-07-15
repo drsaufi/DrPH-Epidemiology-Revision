@@ -32,19 +32,44 @@ In machine learning, a computer program is said to learn from experience (E), wi
 
 ### Supervised Learning
 
-Supervised learning is a type of machine learning where the model is trained on labeled data. This means that for each training example, there is a corresponding correct output. The model learns to map inputs to outputs by finding patterns in the data.
+Supervised learning is a type of machine learning where the model is trained on a labeled dataset. The goal is to learn a mapping from inputs to outputs based on the provided labels. There are two primary tasks under supervised learning: classification and regression.
 
-One common example of supervised learning is email spam detection. In this case, the model is trained on a dataset of emails labeled as "spam" or "not spam." By learning from these labeled examples, the model can predict whether new, unseen emails are spam or not.
+#### Classification
+Classification is the task of predicting a category or class label for a given input. The model is trained on a dataset where each example is labeled with the correct class. The objective is to learn from these examples and accurately classify new, unseen data. 
 
-Another example is predicting housing prices based on features such as the size of the house, the number of bedrooms, and its location. The model learns from historical data where the house prices are known and uses this information to predict prices for new houses.
+An example of classification is dividing the socks by color. In this scenario, the model could be trained to recognize different colors of socks. Given a pile of socks, the model would sort them into categories such as red, blue, green, etc. 
+
+This task is useful in various applications, such as spam detection in emails (classifying emails as spam or not spam), handwriting recognition (classifying handwritten digits), and medical diagnosis (classifying whether a patient has a particular disease based on symptoms).
+
+#### Regression
+Regression is the task of predicting a continuous value for a given input. Unlike classification, which predicts discrete labels, regression predicts numerical values. 
+
+An example of regression is dividing the ties by length. In this case, the model could be trained to predict the length of ties based on features such as brand, fabric, or style. Given a set of ties, the model would estimate their lengths and sort them accordingly. 
+
+Regression tasks are common in various fields, such as predicting house prices based on features like location, size, and number of bedrooms, forecasting stock prices based on historical data, and estimating the amount of rainfall based on weather conditions.
 
 ### Unsupervised Learning
 
-Unsupervised learning deals with unlabeled data, meaning the model tries to learn the patterns and structure from the data without any specific guidance on what the outputs should be. One of the primary tasks in unsupervised learning is clustering. Clustering algorithms group similar data points together based on their features.
+Unsupervised learning deals with unlabeled data, meaning the model tries to learn the patterns and structure from the data without any specific guidance on what the outputs should be. There are several tasks under unsupervised learning, including clustering, association, and dimension reduction.
 
-For instance, in customer segmentation, a company can use clustering to group customers with similar purchasing behaviors, helping them tailor marketing strategies to different customer groups.
+#### Clustering
+Clustering is a technique used to group similar data points based on their characteristics. This is useful in various scenarios where identifying natural groupings in data can provide insights or aid decision-making. 
 
-Another example is dimensionality reduction, where techniques like Principal Component Analysis (PCA) are used to reduce the number of variables in a dataset while retaining as much information as possible. This is particularly useful for visualizing high-dimensional data or for speeding up other machine learning algorithms by reducing computational complexity.
+Suppose you have a pile of clothes, and you want to organize them by similarity, such as color, type, or fabric. Clustering algorithms can automatically group similar items together, making it easier to organize and manage your wardrobe. For example, all the red shirts might be grouped in one cluster, while all the blue jeans might be in another.
+
+#### Association
+Association learning identifies relationships between variables in a dataset. It is often used to find patterns or associations between different items that occur together. 
+
+For example, in the context of clothing, association can help find hidden dependencies, such as which items of clothing are often worn together. If you frequently wear a certain shirt with a specific pair of pants, an association learning algorithm can identify this pattern. 
+
+This information can be useful for making recommendations or optimizing your wardrobe choices. For instance, a system could suggest pairing items that you have not previously considered, based on the associations it has learned from your past choices.
+
+#### Dimension Reduction
+Dimension reduction is a process used to reduce the number of variables under consideration, making the data simpler to analyze and visualize. This is particularly helpful when dealing with high-dimensional data. 
+
+In the context of clothing, dimension reduction can help generalize and simplify the task of making outfits from a large collection of clothes. By reducing the complexity of the data, you can identify the most important features that contribute to making good outfits. 
+
+For example, you might reduce the data to a few key dimensions such as color, style, and occasion, which can help you mix and match clothing items more effectively to create the best outfits from your given clothes.
 
 ### Reinforcement Learning
 
@@ -112,11 +137,7 @@ rmse_value1 <- rmse(test1$diabetes, test1$pred)
 print(rmse_value1)
 ```
 
-## Interpretation of Results
-
--   **Coefficients:** The "Estimate" column in the summary output lists the coefficients (slopes) for each attribute, which indicates the relationship between the predictor and the outcome variable.
--   **Residuals:** The residuals indicate how well the model fits the data, represented by the vertical distances between the actual data points and the regression line.
--   **RMSE:** The root mean squared error (RMSE) measures the average deviation of predictions from the actual values. A lower RMSE indicates a better fit of the model.
+**RMSE:** The root mean squared error (RMSE) measures the average deviation of predictions from the actual values. A lower RMSE indicates a better fit of the model.
 
 ## Performance Metrics
 
@@ -132,16 +153,10 @@ R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
 $$
 
 -   $y_i$ are the observed values.
--   $\hat{y}\_i$ are the predicted values from the regression model.
+-   $\hat{y}_i$ are the predicted values from the regression model.
 -   $\bar{y}$ is the mean of the observed values.
--   $\sum (y_i - \hat{y}\_i)^2$ is the sum of the squared residuals (SSR).
+-   $\sum (y_i - \hat{y}_i)^2$ is the sum of the squared residuals (SSR).
 -   $\sum (y_i - \bar{y})^2$ is the total sum of squares (SST).
-
-To calculate R-squared (R²), we need to understand how well the regression line predicts the actual data points. The given equation of the regression line is:
-
-$$
-\hat{y} = 0.143 + 1.229x
-$$
 
 #### Observed Data Points
 
@@ -153,6 +168,12 @@ From the graph, we can see the observed data points are:
 -   (3, 4)
 -   (4, 6)
 -   (6, 7)
+
+To calculate R-squared (R²), we need to understand how well the regression line predicts the actual data points. The given equation of the regression line is:
+
+$$
+\hat{y} = 0.143 + 1.229x
+$$
 
 #### Calculate Predicted Values ($\hat{y}$)
 
@@ -265,7 +286,7 @@ print(df)
 
 # If you want to display the table in a nicely formatted way, you can use the kable function from the knitr package
 library(knitr)
-kable(df, col.names = c("Actual (yi)", "Predicted (ŷi)"), align = 'c')
+kable(df, col.names = c("Actual (yi)", "Predicted (ŷi)"), align = "c")
 ```
 
 1.  **Calculate the Absolute Differences**
@@ -297,6 +318,7 @@ Divide the sum of the absolute differences by the number of observations. This g
 So, the Mean Absolute Error (MAE) for this example is 0.2. This value indicates that, on average, the model's predictions are off by 0.2 units from the actual values.
 
 # Decision Tree
+It is a machine learning technique used to model and predict continuous target variables. It constructs a tree-like model of decisions and their possible consequences, allowing for interpretable analysis of complex relationships in the data.
 
 ## Install and Load Required Packages
 
@@ -329,15 +351,15 @@ test2 <- diabetes[-sample_ind2, ]
 
 ## Build the Regression Tree
 
-Build a regression tree using the `rpart` function:
-
 ```{r}
-reg_tree <- rpart(diabetes ~ ., data = train2, method = "anova", control = rpart.control(cp = 0))
+reg_tree <- rpart(diabetes ~ .,
+  data = train2,
+  method = "anova",
+  control = rpart.control(cp = 0)
+)
 ```
 
 ## Plot the Decision Tree
-
-Plot and visualize the decision tree:
 
 ```{r}
 plot(reg_tree)
@@ -346,21 +368,34 @@ text(reg_tree, cex = 0.5)
 
 ## Evaluate the Tree
 
-Evaluate the tree using the test set and calculate the root mean squared error (RMSE):
-
 ```{r}
 test2$pred <- predict(reg_tree, test2)
 rmse(test2$diabetes, test2$pred)
 ```
 
 ## Prune the Tree
+Pruning is an essential technique used in decision tree algorithms to reduce the complexity of the model and prevent overfitting. Overfitting occurs when a decision tree model becomes too complex and captures noise in the training data rather than the underlying patterns.
+
+*Pre Pruning* involves halting the growth of the decision tree early based on certain criteria before it becomes too complex. This method sets thresholds for the tree-building process, such as maximum tree depth, minimum number of samples required to split a node, or minimum number of samples in a leaf node. 
+
+For example, if the maximum depth is set to a specific value, the tree will stop growing when it reaches that depth, even if further splits could improve accuracy on the training data. This early stopping helps prevent the tree from growing excessively and overfitting the training data.
+
+*Post Pruning* is the process of trimming a fully grown decision tree after it has been built. This technique involves first allowing the tree to grow to its full depth, capturing all possible splits, and then removing branches that do not provide significant power to the model. 
+
+Post pruning can be done using various methods, such as reducing the number of leaf nodes or merging leaf nodes that do not add much predictive value. The goal is to simplify the tree by removing parts that may have been added due to noise in the training data, thus enhancing the model's ability to generalize.
+
+*Cost Complexity Pruning* is a specific type of post-pruning that involves evaluating the trade-off between the complexity of the tree and its performance on the training data. This method introduces a complexity parameter, often denoted as $\alpha$, which penalizes the tree's complexity by adding a cost term that increases with the number of leaf nodes. 
+
+The pruning process involves finding the optimal value of $\alpha$ that balances model accuracy and simplicity. Trees are pruned by removing branches that contribute less to reducing the cost complexity criterion, thus resulting in a more balanced and generalizable model.
 
 ### Pre-pruning
 
-Perform pre-pruning by specifying parameters like `maxdepth`, `minsplit`, and `minbucket`:
-
 ```{r}
-reg_tree_es <- rpart(diabetes ~ ., data = train2, method = "anova", control = rpart.control(cp = 0, maxdepth = 6, minsplit = 70))
+reg_tree_es <- rpart(diabetes ~ .,
+  data = train2,
+  method = "anova",
+  control = rpart.control(cp = 0, maxdepth = 6, minsplit = 70))
+
 test2$pred2 <- predict(reg_tree_es, test2)
 rmse(test2$diabetes, test2$pred2)
 ```
@@ -384,7 +419,7 @@ plotcp(reg_tree)
 3.  Find the best cp value that minimizes the cross-validated error:
 
 ```{r}
-bestcp <- reg_tree$cptable[which.min(reg_tree$cptable[,"xerror"]),"CP"]
+bestcp <- reg_tree$cptable[which.min(reg_tree$cptable[, "xerror"]), "CP"]
 ```
 
 4.  Build the pruned tree and evaluate it:
@@ -403,7 +438,14 @@ Create a postscript file of the tree for generating a PDF:
 post(reg_tree_prune, file = "reg_tree_prune.ps", title = "Regression Tree for Diabetes Dataset")
 ```
 
-# Neural Network_Regression
+# Neural Network Regression
+Neural Network Regression is a type of machine learning model used to predict continuous outcomes using artificial neural networks (ANNs). Neural networks, inspired by the structure and function of the human brain, consist of interconnected layers of nodes, or neurons, that process input data to produce a desired output.
+
+The architecture of a neural network typically includes an input layer, one or more hidden layers, and an output layer. Each layer contains multiple neurons, and each neuron in a layer is connected to every neuron in the subsequent layer. 
+
+The neurons process information by applying weights to the inputs, summing them up, and passing the result through an activation function. This process, known as forward propagation, continues until the output layer produces a prediction. 
+
+In regression tasks, the output layer typically has a single neuron that provides the continuous numerical prediction.
 
 ## Install and Load Required Packages
 
@@ -417,7 +459,7 @@ library(Metrics)
 Before building the model, initialize the H2O instance:
 
 ```{r}
-h2o.init(nthreads=-1, max_mem_size="2G")
+h2o.init(nthreads = -1, max_mem_size = "2G")
 ```
 
 ## Load the Dataset
@@ -443,7 +485,7 @@ Normalize the columns "Experience", "Rating", and "Fees" as they are in differen
 
 ```{r}
 normalize <- function(x) {
-  return ((x - min(x)) / (max(x) - min(x)))
+  return((x - min(x)) / (max(x) - min(x)))
 }
 
 consultation.frame$Experience.norm <- normalize(consultation.frame$Experience)
@@ -467,12 +509,12 @@ Build the neural network model with default parameters:
 
 ```{r}
 nn <- h2o.deeplearning(
-  x = c(1, 4, 5, 7, 8), 
-  y = 9, 
-  training_frame = train3, 
-  epochs = 500, 
-  mini_batch_size = 32, 
-  hidden = c(20, 20), 
+  x = c(1, 4, 5, 7, 8),
+  y = 9,
+  training_frame = train3,
+  epochs = 500,
+  mini_batch_size = 32,
+  hidden = c(20, 20),
   seed = 1
 )
 ```
@@ -500,16 +542,16 @@ Add early stopping parameters to the model:
 
 ```{r}
 nn <- h2o.deeplearning(
-  x = c(1, 4, 5, 7, 8), 
-  y = 9, 
-  training_frame = train3, 
-  epochs = 500, 
-  mini_batch_size = 32, 
-  hidden = c(20, 20), 
-  seed = 1, 
-  stopping_metric = "rmse", 
-  stopping_rounds = 3, 
-  stopping_tolerance = 0.05, 
+  x = c(1, 4, 5, 7, 8),
+  y = 9,
+  training_frame = train3,
+  epochs = 500,
+  mini_batch_size = 32,
+  hidden = c(20, 20),
+  seed = 1,
+  stopping_metric = "rmse",
+  stopping_rounds = 3,
+  stopping_tolerance = 0.05,
   score_interval = 1
 )
 
@@ -523,19 +565,19 @@ Add dropout regularization to improve generalization:
 
 ```{r}
 nn <- h2o.deeplearning(
-  x = c(1, 4, 5, 7, 8), 
-  y = 9, 
-  training_frame = train3, 
-  epochs = 500, 
-  mini_batch_size = 32, 
-  hidden = c(20, 20), 
-  seed = 1, 
-  stopping_metric = "rmse", 
-  stopping_rounds = 3, 
-  stopping_tolerance = 0.05, 
-  score_interval = 1, 
-  activation = "RectifierWithDropout", 
-  hidden_dropout_ratio = c(0.5, 0.5), 
+  x = c(1, 4, 5, 7, 8),
+  y = 9,
+  training_frame = train3,
+  epochs = 500,
+  mini_batch_size = 32,
+  hidden = c(20, 20),
+  seed = 1,
+  stopping_metric = "rmse",
+  stopping_rounds = 3,
+  stopping_tolerance = 0.05,
+  score_interval = 1,
+  activation = "RectifierWithDropout",
+  hidden_dropout_ratio = c(0.5, 0.5),
   input_dropout_ratio = 0.1
 )
 
