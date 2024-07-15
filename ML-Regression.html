@@ -290,21 +290,18 @@ window.Quarto = {
 <h2 data-number="2.1" class="anchored" data-anchor-id="install-required-packages"><span class="header-section-number">2.1</span> Install Required Packages</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'Metrics' was built under R version 4.4.1</code></pre>
-</div>
 </div>
 </section>
 <section id="load-the-dataset" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="load-the-dataset"><span class="header-section-number">2.2</span> Load the Dataset</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diabetes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/diabetes.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>diabetes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/diabetes.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="examine-the-dataset" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="examine-the-dataset"><span class="header-section-number">2.3</span> Examine the Dataset</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(diabetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(diabetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   442 obs. of  11 variables:
  $ age     : num  0.03808 -0.00188 0.0853 -0.08906 0.00538 ...
@@ -325,23 +322,23 @@ window.Quarto = {
 <h2 data-number="2.4" class="anchored" data-anchor-id="split-the-data"><span class="header-section-number">2.4</span> Split the Data</h2>
 <p>Split the data into training and testing sets with a ratio of 70:30:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sample_ind1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(diabetes), <span class="fu">nrow</span>(diabetes) <span class="sc">*</span> <span class="fl">0.7</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>train1 <span class="ot">&lt;-</span> diabetes[sample_ind1, ]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>test1 <span class="ot">&lt;-</span> diabetes[<span class="sc">-</span>sample_ind1, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sample_ind1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(diabetes), <span class="fu">nrow</span>(diabetes) <span class="sc">*</span> <span class="fl">0.7</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>train1 <span class="ot">&lt;-</span> diabetes[sample_ind1, ]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>test1 <span class="ot">&lt;-</span> diabetes[<span class="sc">-</span>sample_ind1, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="build-the-linear-regression-model" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="build-the-linear-regression-model"><span class="header-section-number">2.5</span> Build the Linear Regression Model</h2>
 <p>Create the linear regression model using the training set:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lr.mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(diabetes <span class="sc">~</span> ., <span class="at">data =</span> train1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lr.mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(diabetes <span class="sc">~</span> ., <span class="at">data =</span> train1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="summarize-the-model" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="summarize-the-model"><span class="header-section-number">2.6</span> Summarize the Model</h2>
 <p>Display the summary of the model to understand the coefficients and residuals:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lr.mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lr.mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -349,27 +346,27 @@ lm(formula = diabetes ~ ., data = train1)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--159.452  -38.411   -3.467   39.637  145.426 
+-152.821  -37.681    0.866   36.828  149.041 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  152.651      3.145  48.539  &lt; 2e-16 ***
-age          -44.618     73.101  -0.610 0.542093    
-sex         -276.968     73.721  -3.757 0.000207 ***
-bmi          528.355     80.744   6.544 2.62e-10 ***
-bp           336.868     83.206   4.049 6.57e-05 ***
-s1          -334.711    561.406  -0.596 0.551494    
-s2           133.321    454.364   0.293 0.769403    
-s3          -160.373    283.423  -0.566 0.571925    
-s4            22.365    205.289   0.109 0.913322    
-s5           611.364    219.082   2.791 0.005601 ** 
-s6            77.042     79.402   0.970 0.332693    
+(Intercept)  153.270      3.100  49.442  &lt; 2e-16 ***
+age           -8.843     71.122  -0.124 0.901133    
+sex         -218.349     74.363  -2.936 0.003581 ** 
+bmi          588.632     77.235   7.621 3.37e-13 ***
+bp           301.090     79.336   3.795 0.000179 ***
+s1          -223.601    511.377  -0.437 0.662245    
+s2            11.729    423.983   0.028 0.977948    
+s3           -82.785    257.829  -0.321 0.748371    
+s4           189.377    200.289   0.946 0.345160    
+s5           489.822    206.865   2.368 0.018531 *  
+s6            95.807     80.676   1.188 0.235956    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 55.02 on 298 degrees of freedom
-Multiple R-squared:  0.5154,    Adjusted R-squared:  0.4992 
-F-statistic:  31.7 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 54.18 on 298 degrees of freedom
+Multiple R-squared:  0.5364,    Adjusted R-squared:  0.5209 
+F-statistic: 34.48 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>
@@ -377,11 +374,11 @@ F-statistic:  31.7 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2 data-number="2.7" class="anchored" data-anchor-id="evaluate-the-model"><span class="header-section-number">2.7</span> Evaluate the Model</h2>
 <p>Perform predictions on the test set and evaluate the model’s performance using RMSE (Root Mean Squared Error):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>test1<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lr.mod, <span class="at">newdata =</span> test1)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rmse_value1 <span class="ot">&lt;-</span> <span class="fu">rmse</span>(test1<span class="sc">$</span>diabetes, test1<span class="sc">$</span>pred)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rmse_value1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>test1<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lr.mod, <span class="at">newdata =</span> test1)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rmse_value1 <span class="ot">&lt;-</span> <span class="fu">rmse</span>(test1<span class="sc">$</span>diabetes, test1<span class="sc">$</span>pred)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(rmse_value1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 52.80042</code></pre>
+<pre><code>[1] 54.91249</code></pre>
 </div>
 </div>
 <p><strong>RMSE:</strong> The root mean squared error (RMSE) measures the average deviation of predictions from the actual values. A lower RMSE indicates a better fit of the model.</p>
@@ -579,20 +576,20 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <section id="install-and-load-required-packages" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="install-and-load-required-packages"><span class="header-section-number">3.1</span> Install and Load Required Packages</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-the-dataset-1" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="load-the-dataset-1"><span class="header-section-number">3.2</span> Load the Dataset</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>diabetes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/diabetes.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>diabetes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/diabetes.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="examine-the-dataset-structure" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="examine-the-dataset-structure"><span class="header-section-number">3.3</span> Examine the Dataset Structure</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(diabetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(diabetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   442 obs. of  11 variables:
  $ age     : num  0.03808 -0.00188 0.0853 -0.08906 0.00538 ...
@@ -613,26 +610,26 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <h2 data-number="3.4" class="anchored" data-anchor-id="split-the-dataset"><span class="header-section-number">3.4</span> Split the Dataset</h2>
 <p>Split the dataset into training (70%) and test (30%) sets. The training set is used for training and creating the model. The test set is to evaluate the accuracy of the model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sample_ind2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(diabetes), <span class="fu">nrow</span>(diabetes) <span class="sc">*</span> <span class="fl">0.7</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>train2 <span class="ot">&lt;-</span> diabetes[sample_ind2, ]</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>test2 <span class="ot">&lt;-</span> diabetes[<span class="sc">-</span>sample_ind2, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sample_ind2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(diabetes), <span class="fu">nrow</span>(diabetes) <span class="sc">*</span> <span class="fl">0.7</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>train2 <span class="ot">&lt;-</span> diabetes[sample_ind2, ]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>test2 <span class="ot">&lt;-</span> diabetes[<span class="sc">-</span>sample_ind2, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="build-the-regression-tree" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="build-the-regression-tree"><span class="header-section-number">3.5</span> Build the Regression Tree</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>reg_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> .,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train2,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"anova"</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> <span class="dv">0</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>reg_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> .,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train2,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"anova"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> <span class="dv">0</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plot-the-decision-tree" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="plot-the-decision-tree"><span class="header-section-number">3.6</span> Plot the Decision Tree</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg_tree)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(reg_tree, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg_tree)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(reg_tree, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -645,10 +642,10 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <section id="evaluate-the-tree" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="evaluate-the-tree"><span class="header-section-number">3.7</span> Evaluate the Tree</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree, test2)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree, test2)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 70.20131</code></pre>
+<pre><code>[1] 66.88259</code></pre>
 </div>
 </div>
 </section>
@@ -664,15 +661,16 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <section id="pre-pruning" class="level3" data-number="3.8.1">
 <h3 data-number="3.8.1" class="anchored" data-anchor-id="pre-pruning"><span class="header-section-number">3.8.1</span> Pre-pruning</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>reg_tree_es <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> .,</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train2,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"anova"</span>,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> <span class="dv">0</span>, <span class="at">maxdepth =</span> <span class="dv">6</span>, <span class="at">minsplit =</span> <span class="dv">70</span>))</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_es, test2)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>reg_tree_es <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> .,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> train2,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"anova"</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> <span class="dv">0</span>, <span class="at">maxdepth =</span> <span class="dv">6</span>, <span class="at">minsplit =</span> <span class="dv">70</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_es, test2)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 64.41974</code></pre>
+<pre><code>[1] 61.6287</code></pre>
 </div>
 </div>
 </section>
@@ -683,7 +681,7 @@ R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
 <li>Display the cp table:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printcp</span>(reg_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printcp</span>(reg_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Regression tree:
@@ -691,41 +689,38 @@ rpart(formula = diabetes ~ ., data = train2, method = "anova",
     control = rpart.control(cp = 0))
 
 Variables actually used in tree construction:
-[1] age bmi bp  s1  s2  s5  s6 
+[1] age bmi bp  s2  s3  s4  s5  s6 
 
-Root node error: 1784360/309 = 5774.6
+Root node error: 1820664/309 = 5892.1
 
 n= 309 
 
           CP nsplit rel error  xerror     xstd
-1  0.3271105      0   1.00000 1.00666 0.063641
-2  0.0685642      1   0.67289 0.76458 0.060839
-3  0.0567830      2   0.60433 0.76206 0.061687
-4  0.0278820      3   0.54754 0.72294 0.057214
-5  0.0192070      4   0.51966 0.72236 0.060848
-6  0.0149122      5   0.50045 0.73816 0.061521
-7  0.0128354      6   0.48554 0.72899 0.061192
-8  0.0115321      7   0.47271 0.71830 0.061215
-9  0.0112510      8   0.46117 0.71180 0.061979
-10 0.0106949     10   0.43867 0.71013 0.061982
-11 0.0100720     11   0.42798 0.71069 0.061931
-12 0.0095936     13   0.40783 0.71734 0.062164
-13 0.0095586     14   0.39824 0.71603 0.062615
-14 0.0065711     15   0.38868 0.71540 0.064328
-15 0.0053469     16   0.38211 0.71546 0.062024
-16 0.0047042     17   0.37676 0.72820 0.062421
-17 0.0046265     18   0.37206 0.73079 0.063126
-18 0.0032340     20   0.36281 0.72416 0.062745
-19 0.0031938     21   0.35957 0.72227 0.062758
-20 0.0023314     23   0.35318 0.72266 0.062763
-21 0.0000000     24   0.35085 0.72352 0.062664</code></pre>
+1  0.3281563      0   1.00000 1.00242 0.059732
+2  0.0921090      1   0.67184 0.73714 0.057189
+3  0.0422466      2   0.57973 0.67864 0.048659
+4  0.0316215      3   0.53749 0.65379 0.048291
+5  0.0289986      4   0.50587 0.67844 0.050662
+6  0.0236439      5   0.47687 0.68152 0.050739
+7  0.0186459      6   0.45322 0.69292 0.054344
+8  0.0142218      7   0.43458 0.65830 0.052499
+9  0.0098827      8   0.42036 0.66134 0.052413
+10 0.0072759      9   0.41047 0.68675 0.055289
+11 0.0071312     12   0.38865 0.70290 0.056765
+12 0.0060334     15   0.36725 0.72753 0.058614
+13 0.0056323     16   0.36122 0.74207 0.058918
+14 0.0037602     20   0.33869 0.74900 0.059239
+15 0.0036143     22   0.33117 0.75608 0.059032
+16 0.0026501     23   0.32756 0.75665 0.058967
+17 0.0013865     24   0.32490 0.75998 0.059482
+18 0.0000000     25   0.32352 0.76010 0.059480</code></pre>
 </div>
 </div>
 <ol start="2" type="1">
 <li>Plot the cp values against the cross-validated error:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(reg_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotcp</span>(reg_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -738,17 +733,17 @@ n= 309
 <li>Find the best cp value that minimizes the cross-validated error:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>bestcp <span class="ot">&lt;-</span> reg_tree<span class="sc">$</span>cptable[<span class="fu">which.min</span>(reg_tree<span class="sc">$</span>cptable[, <span class="st">"xerror"</span>]), <span class="st">"CP"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>bestcp <span class="ot">&lt;-</span> reg_tree<span class="sc">$</span>cptable[<span class="fu">which.min</span>(reg_tree<span class="sc">$</span>cptable[, <span class="st">"xerror"</span>]), <span class="st">"CP"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
 <li>Build the pruned tree and evaluate it:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>reg_tree_prune <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> ., <span class="at">data =</span> train2, <span class="at">method =</span> <span class="st">"anova"</span>, <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> bestcp))</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_prune, test2)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>reg_tree_prune <span class="ot">&lt;-</span> <span class="fu">rpart</span>(diabetes <span class="sc">~</span> ., <span class="at">data =</span> train2, <span class="at">method =</span> <span class="st">"anova"</span>, <span class="at">control =</span> <span class="fu">rpart.control</span>(<span class="at">cp =</span> bestcp))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>test2<span class="sc">$</span>pred3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(reg_tree_prune, test2)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test2<span class="sc">$</span>diabetes, test2<span class="sc">$</span>pred3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 69.67534</code></pre>
+<pre><code>[1] 63.27752</code></pre>
 </div>
 </div>
 </section>
@@ -757,7 +752,9 @@ n= 309
 <h2 data-number="3.9" class="anchored" data-anchor-id="export-the-tree"><span class="header-section-number">3.9</span> Export the Tree</h2>
 <p>Create a postscript file of the tree for generating a PDF:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">post</span>(reg_tree_prune, <span class="at">file =</span> <span class="st">"reg_tree_prune.ps"</span>, <span class="at">title =</span> <span class="st">"Regression Tree for Diabetes Dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">post</span>(reg_tree_prune,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"reg_tree_prune.ps"</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Regression Tree for Diabetes Dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -770,56 +767,25 @@ n= 309
 <section id="install-and-load-required-packages-1" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="install-and-load-required-packages-1"><span class="header-section-number">4.1</span> Install and Load Required Packages</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(h2o)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-----------------------------------------------------------------------
-
-Your next step is to start H2O:
-    &gt; h2o.init()
-
-For H2O package documentation, ask for help:
-    &gt; ??h2o
-
-After starting H2O, you can use the Web UI at http://localhost:54321
-For more information visit https://docs.h2o.ai
-
-----------------------------------------------------------------------</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'h2o'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    cor, sd, var</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    %*%, %in%, &amp;&amp;, ||, apply, as.factor, as.numeric, colnames,
-    colnames&lt;-, ifelse, is.character, is.factor, is.numeric, log,
-    log10, log1p, log2, round, signif, trunc</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(h2o)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Metrics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="initialize-h2o" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="initialize-h2o"><span class="header-section-number">4.2</span> Initialize H2O</h2>
 <p>Before building the model, initialize the H2O instance:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h2o.init</span>(<span class="at">nthreads =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max_mem_size =</span> <span class="st">"2G"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">h2o.init</span>(<span class="at">nthreads =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">max_mem_size =</span> <span class="st">"2G"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Connection successful!
 
 R is connected to the H2O cluster: 
-    H2O cluster uptime:         46 minutes 30 seconds 
+    H2O cluster uptime:         5 minutes 31 seconds 
     H2O cluster timezone:       Asia/Singapore 
     H2O data parsing timezone:  UTC 
     H2O cluster version:        3.44.0.3 
     H2O cluster version age:    6 months and 24 days 
-    H2O cluster name:           H2O_started_from_R_drsau_mpu976 
+    H2O cluster name:           H2O_started_from_R_drsau_uzh458 
     H2O cluster total nodes:    1 
     H2O cluster total memory:   1.53 GB 
     H2O cluster total cores:    8 
@@ -831,19 +797,14 @@ R is connected to the H2O cluster:
     H2O Internal Security:      FALSE 
     R Version:                  R version 4.4.0 (2024-04-24 ucrt) </code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in h2o.clusterInfo(): 
-Your H2O cluster version is (6 months and 24 days) old. There may be a newer version available.
-Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html</code></pre>
-</div>
 </div>
 </section>
 <section id="load-the-dataset-2" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="load-the-dataset-2"><span class="header-section-number">4.3</span> Load the Dataset</h2>
 <p>Load the dataset into R and convert it to an H2O frame:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>consultation <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/consultation_fee.csv"</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>consultation.frame <span class="ot">&lt;-</span> <span class="fu">as.h2o</span>(consultation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>consultation <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Datasets/consultation_fee.csv"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>consultation.frame <span class="ot">&lt;-</span> <span class="fu">as.h2o</span>(consultation)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   |                                                                            
@@ -857,11 +818,11 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <h2 data-number="4.4" class="anchored" data-anchor-id="examine-the-data"><span class="header-section-number">4.4</span> Examine the Data</h2>
 <p>Check the structure of the data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(consultation.frame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(consultation.frame)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Class 'H2OFrame' &lt;environment: 0x00000246e219a518&gt; 
+<pre><code>Class 'H2OFrame' &lt;environment: 0x000001c60154c468&gt; 
  - attr(*, "op")= chr "Parse"
- - attr(*, "id")= chr "consultation_sid_ab87_1"
+ - attr(*, "id")= chr "consultation_sid_bb85_1"
  - attr(*, "eval")= logi FALSE
  - attr(*, "nrow")= int 5962
  - attr(*, "ncol")= int 6
@@ -886,50 +847,47 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <h2 data-number="4.5" class="anchored" data-anchor-id="normalize-the-data"><span class="header-section-number">4.5</span> Normalize the Data</h2>
 <p>Normalize the columns “Experience”, “Rating”, and “Fees” as they are in different ranges:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>normalize <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>((x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)))</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>consultation.frame<span class="sc">$</span>Experience.norm <span class="ot">&lt;-</span> <span class="fu">normalize</span>(consultation.frame<span class="sc">$</span>Experience)</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>consultation.frame<span class="sc">$</span>Rating.norm <span class="ot">&lt;-</span> <span class="fu">normalize</span>(consultation.frame<span class="sc">$</span>Rating)</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>consultation.frame<span class="sc">$</span>Fees.norm <span class="ot">&lt;-</span> <span class="fu">normalize</span>(consultation.frame<span class="sc">$</span>Fees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>normalize <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>((x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x)))</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>consultation.frame<span class="sc">$</span>Experience.norm <span class="ot">&lt;-</span> <span class="fu">normalize</span>(consultation.frame<span class="sc">$</span>Experience)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>consultation.frame<span class="sc">$</span>Rating.norm <span class="ot">&lt;-</span> <span class="fu">normalize</span>(consultation.frame<span class="sc">$</span>Rating)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>consultation.frame<span class="sc">$</span>Fees.norm <span class="ot">&lt;-</span> <span class="fu">normalize</span>(consultation.frame<span class="sc">$</span>Fees)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="split-the-data-into-training-and-test-sets" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="split-the-data-into-training-and-test-sets"><span class="header-section-number">4.6</span> Split the Data into Training and Test Sets</h2>
 <p>Split the data into training (70%) and test (30%) sets:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">h2o.splitFrame</span>(consultation.frame, <span class="at">ratios =</span> <span class="fl">0.7</span>)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>train3 <span class="ot">&lt;-</span> split[[<span class="dv">1</span>]]</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>test3 <span class="ot">&lt;-</span> split[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>split <span class="ot">&lt;-</span> <span class="fu">h2o.splitFrame</span>(consultation.frame, <span class="at">ratios =</span> <span class="fl">0.7</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>train3 <span class="ot">&lt;-</span> split[[<span class="dv">1</span>]]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>test3 <span class="ot">&lt;-</span> split[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="build-the-neural-network-model" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="build-the-neural-network-model"><span class="header-section-number">4.7</span> Build the Neural Network Model</h2>
 <p>Build the neural network model with default parameters:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span></span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in .h2o.processResponseWarnings(res): Dropping bad and constant columns: [Qualification, Place, Profile].</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |=============                                                         |  18%
+  |====                                                                  |   6%
   |                                                                            
-  |==================================                                    |  48%
+  |=====================                                                 |  30%
   |                                                                            
-  |=======================================================               |  78%
+  |==========================================                            |  60%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -939,7 +897,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <h2 data-number="4.8" class="anchored" data-anchor-id="plot-the-scoring-history"><span class="header-section-number">4.8</span> Plot the Scoring History</h2>
 <p>Visualize the scoring history of the model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -953,7 +911,7 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <h2 data-number="4.9" class="anchored" data-anchor-id="make-predictions-and-evaluate-the-model"><span class="header-section-number">4.9</span> Make Predictions and Evaluate the Model</h2>
 <p>Perform predictions on the test data and evaluate the model’s performance using RMSE:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>pred1 <span class="ot">&lt;-</span> <span class="fu">h2o.predict</span>(nn, test3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>pred1 <span class="ot">&lt;-</span> <span class="fu">h2o.predict</span>(nn, test3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   |                                                                            
@@ -961,9 +919,9 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1974098</code></pre>
+<pre><code>[1] 0.2028319</code></pre>
 </div>
 </div>
 </section>
@@ -971,19 +929,18 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <h2 data-number="4.10" class="anchored" data-anchor-id="implement-early-stopping"><span class="header-section-number">4.10</span> Implement Early Stopping</h2>
 <p>Add early stopping parameters to the model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>,</span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_metric =</span> <span class="st">"rmse"</span>,</span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_rounds =</span> <span class="dv">3</span>,</span>
-<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_tolerance =</span> <span class="fl">0.05</span>,</span>
-<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">score_interval =</span> <span class="dv">1</span></span>
-<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>,</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_metric =</span> <span class="st">"rmse"</span>,</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_rounds =</span> <span class="dv">3</span>,</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_tolerance =</span> <span class="fl">0.05</span>,</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">score_interval =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in .h2o.processResponseWarnings(res): Dropping bad and constant columns: [Qualification, Place, Profile].</code></pre>
 </div>
@@ -992,11 +949,11 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |===========================                                           |  38%
+  |============================                                          |  40%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>pred2 <span class="ot">&lt;-</span> <span class="fu">h2o.predict</span>(nn, test3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>pred2 <span class="ot">&lt;-</span> <span class="fu">h2o.predict</span>(nn, test3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   |                                                                            
@@ -1004,9 +961,9 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1961016</code></pre>
+<pre><code>[1] 0.2028753</code></pre>
 </div>
 </div>
 </section>
@@ -1014,22 +971,21 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
 <h2 data-number="4.11" class="anchored" data-anchor-id="implement-dropout-regularization"><span class="header-section-number">4.11</span> Implement Dropout Regularization</h2>
 <p>Add dropout regularization to improve generalization:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>,</span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_metric =</span> <span class="st">"rmse"</span>,</span>
-<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_rounds =</span> <span class="dv">3</span>,</span>
-<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_tolerance =</span> <span class="fl">0.05</span>,</span>
-<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">score_interval =</span> <span class="dv">1</span>,</span>
-<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">activation =</span> <span class="st">"RectifierWithDropout"</span>,</span>
-<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden_dropout_ratio =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
-<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">input_dropout_ratio =</span> <span class="fl">0.1</span></span>
-<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="fu">h2o.deeplearning</span>(</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="dv">9</span>,</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">training_frame =</span> train3,</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">epochs =</span> <span class="dv">500</span>,</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">mini_batch_size =</span> <span class="dv">32</span>,</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>),</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">1</span>,</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_metric =</span> <span class="st">"rmse"</span>,</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_rounds =</span> <span class="dv">3</span>,</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping_tolerance =</span> <span class="fl">0.05</span>,</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">score_interval =</span> <span class="dv">1</span>,</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">activation =</span> <span class="st">"RectifierWithDropout"</span>,</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">hidden_dropout_ratio =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">input_dropout_ratio =</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in .h2o.processResponseWarnings(res): Dropping bad and constant columns: [Qualification, Place, Profile].</code></pre>
 </div>
@@ -1038,11 +994,11 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |==============================================================        |  88%
+  |===========================================================           |  84%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>pred3 <span class="ot">&lt;-</span> <span class="fu">h2o.predict</span>(nn, test3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>pred3 <span class="ot">&lt;-</span> <span class="fu">h2o.predict</span>(nn, test3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   |                                                                            
@@ -1050,9 +1006,9 @@ Please download and install the latest version from: https://h2o-release.s3.amaz
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(test3<span class="sc">$</span>Fees.norm, pred3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1989094</code></pre>
+<pre><code>[1] 0.203673</code></pre>
 </div>
 </div>
 </section>

@@ -85,7 +85,7 @@ To build and evaluate a linear regression model to predict the progression of di
 
 ## Install Required Packages
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(Metrics)
 ```
 
@@ -322,7 +322,7 @@ It is a machine learning technique used to model and predict continuous target v
 
 ## Install and Load Required Packages
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(rpart)
 library(Metrics)
 ```
@@ -394,7 +394,8 @@ The pruning process involves finding the optimal value of $\alpha$ that balances
 reg_tree_es <- rpart(diabetes ~ .,
   data = train2,
   method = "anova",
-  control = rpart.control(cp = 0, maxdepth = 6, minsplit = 70))
+  control = rpart.control(cp = 0, maxdepth = 6, minsplit = 70)
+)
 
 test2$pred2 <- predict(reg_tree_es, test2)
 rmse(test2$diabetes, test2$pred2)
@@ -435,7 +436,9 @@ rmse(test2$diabetes, test2$pred3)
 Create a postscript file of the tree for generating a PDF:
 
 ```{r}
-post(reg_tree_prune, file = "reg_tree_prune.ps", title = "Regression Tree for Diabetes Dataset")
+post(reg_tree_prune,
+  file = "reg_tree_prune.ps",
+  title = "Regression Tree for Diabetes Dataset")
 ```
 
 # Neural Network Regression
@@ -449,7 +452,7 @@ In regression tasks, the output layer typically has a single neuron that provide
 
 ## Install and Load Required Packages
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(h2o)
 library(Metrics)
 ```
@@ -458,7 +461,7 @@ library(Metrics)
 
 Before building the model, initialize the H2O instance:
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 h2o.init(nthreads = -1, max_mem_size = "2G")
 ```
 
@@ -466,7 +469,7 @@ h2o.init(nthreads = -1, max_mem_size = "2G")
 
 Load the dataset into R and convert it to an H2O frame:
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 consultation <- read.csv("Datasets/consultation_fee.csv")
 consultation.frame <- as.h2o(consultation)
 ```
@@ -499,6 +502,7 @@ Split the data into training (70%) and test (30%) sets:
 
 ```{r}
 split <- h2o.splitFrame(consultation.frame, ratios = 0.7)
+
 train3 <- split[[1]]
 test3 <- split[[2]]
 ```
@@ -507,7 +511,7 @@ test3 <- split[[2]]
 
 Build the neural network model with default parameters:
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 nn <- h2o.deeplearning(
   x = c(1, 4, 5, 7, 8),
   y = 9,
@@ -515,8 +519,7 @@ nn <- h2o.deeplearning(
   epochs = 500,
   mini_batch_size = 32,
   hidden = c(20, 20),
-  seed = 1
-)
+  seed = 1)
 ```
 
 ## Plot the Scoring History
@@ -552,8 +555,7 @@ nn <- h2o.deeplearning(
   stopping_metric = "rmse",
   stopping_rounds = 3,
   stopping_tolerance = 0.05,
-  score_interval = 1
-)
+  score_interval = 1)
 
 pred2 <- h2o.predict(nn, test3)
 rmse(test3$Fees.norm, pred2)
@@ -578,8 +580,7 @@ nn <- h2o.deeplearning(
   score_interval = 1,
   activation = "RectifierWithDropout",
   hidden_dropout_ratio = c(0.5, 0.5),
-  input_dropout_ratio = 0.1
-)
+  input_dropout_ratio = 0.1)
 
 pred3 <- h2o.predict(nn, test3)
 rmse(test3$Fees.norm, pred3)
