@@ -542,8 +542,7 @@ Random intercept model estimates the effect of predictors on the likelihood of r
 
 ```{r}
 ri_mod <- glmer(
-  antemed ~ magec + magecsq + meduc2 + meduc3 + wealthc +
-    (1 | comm),
+  antemed ~ magec + magecsq + meduc2 + meduc3 + wealthc + (1 | comm),
   data = antenatal,
   family = binomial("logit"),
   glmerControl(calc.derivs = FALSE)
@@ -1159,7 +1158,9 @@ Random effect represents the deviation of individual groups (patients) from the 
 
 ```{r, warning=FALSE, message=FALSE}
 # Random effect
-mod_toe1@u %>% tidy() %>% datatable()
+mod_toe1@u %>%
+  tidy() %>%
+  datatable()
 ```
 
 ::: callout-note
