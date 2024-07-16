@@ -1,0 +1,300 @@
+---
+title: "Machine Learning Classification"
+author: "DrPH Epidemiology 2023/2024"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+editor: visual
+---
+
+# Steps of Analysis
+
+To perform predictive analytics using a machine learning approach, a researcher can follow a systematic process to ensure accurate and reliable results.
+
+![](Inputs/ML%20Classification.png){fig-align="center"}
+
+## Explore and Understand the Data
+
+The first step is to explore and understand the dataset. This involves collecting the data and performing initial analyses to gain insights into its structure and characteristics.
+
+The researcher should examine summary statistics to understand the central tendencies and variability of the data. Visualizations such as histograms, scatter plots, and box plots can help identify patterns, trends, and potential outliers.
+
+Identifying the independent variables (features) and the dependent variable (target) that needs to be predicted is essential for the subsequent steps in the analysis.
+
+## Prepare the Data for Modelling
+
+The next step is to prepare it for modeling. Data preparation involves cleaning the data by handling missing values through imputation or removal, removing duplicates, and correcting inconsistencies.
+
+The dataset is then split into training and testing sets, typically with an 80/20 split, to allow for model training and evaluation on separate data.
+
+## Model Building
+
+With the data prepared, the researcher can proceed to model building using various machine learning algorithms. Three common models for classification tasks are decision trees, k-nearest neighbors (k-NN), and artificial neural networks (ANN).
+
+### Decision Tree
+
+A decision tree is a flowchart-like structure where internal nodes represent feature tests, branches represent the outcomes of these tests, and leaf nodes represent class labels. The model is trained by selecting the best features that partition the data to maximize information gain, resulting in a tree structure that can be used to make predictions on new data.
+
+### k-Nearest Neighbors (k-NN)
+
+The k-NN algorithm classifies a data point based on the majority class of its k nearest neighbors in the feature space. Distance metrics, such as Euclidean distance, are used to find the closest neighbors.
+
+### Artificial Neural Network (ANN)
+
+An ANN is inspired by the biological neural networks in the human brain. It consists of interconnected layers of neurons, including input, hidden, and output layers. Each connection has a weight that is adjusted during training. The ANN learns complex patterns by adjusting these weights through a process called backpropagation. The activation functions in the neurons determine whether they should be activated, influencing the final output of the network.
+
+## Model Evaluation
+
+The final step is to evaluate the performance of the trained models using the test data. This involves using metrics such as accuracy, precision, recall, and F1 score, which are derived from the confusion matrix.
+
+The confusion matrix provides a detailed breakdown of the true positive, false positive, true negative, and false negative predictions. Additionally, cross-validation techniques, such as k-fold cross-validation, can be used to ensure the robustness and generalizability of the model.
+
+By splitting the data into different training and testing sets multiple times, the researcher can assess how well the model performs on various subsets of the data, leading to a more reliable evaluation of its predictive power.
+
+# Setting Up the Environment
+
+```{r, warning=FALSE, message=FALSE}
+# Load libraries
+library(mlbench)
+library(plyr)
+library(rpart)
+library(rpart.plot)
+library(class)
+library(neuralnet)
+library(caret)
+```
+
+# Dataset
+
+The Pima Indian Diabetes Dataset consists of medical diagnostic reports for 768 individuals from a population living near Arizona, USA. All participants in the dataset are female, at least 21 years old, and of Pima Indian heritage. The dataset is used to predict whether or not a patient has diabetes based on various diagnostic measurements.
+
+```{r}
+data(PimaIndiansDiabetes)
+
+str(PimaIndiansDiabetes)
+
+summary(PimaIndiansDiabetes)
+```
+
+## Data Preparation
+
+```{r}
+pima <- PimaIndiansDiabetes
+
+pima1 <- pima[pima["glucose"] != 0 & pima["pressure"] != 0 &
+  pima["triceps"] != 0 & pima["mass"] != 0, ]
+```
+
+Data now left with 532 samples. Split into 80% of training and another 20% for testing.
+
+## Divide Data into Training and Test Dataset
+
+```{r}
+sRow <- floor(nrow(pima1) * .8)
+
+trainData <- pima1[1:sRow, ]
+
+testData <- pima1[(sRow + 1):nrow(pima1), ]
+```
+
+# Decision Tree
+
+## Model Building
+
+```{r}
+DTmodel <- rpart(diabetes ~ ., 
+                 data = trainData, 
+                 method = "class", 
+                 parms = list(split = "information"))
+
+prp(DTmodel, roundint = FALSE, digits = 0)
+```
+
+**Interpretation**:
+
+1.  The decision tree for predicting diabetes primarily splits the data based on glucose levels, with glucose \< 154.5 being the root node.
+
+2.  If glucose is below this threshold, further splits involve mass, age, pedigree, insulin, pregnant, and pressure to refine predictions.
+
+3.  For instance, low mass or younger age tends to predict negative for diabetes, whereas high glucose levels predict positive.
+
+4.  Other variables like pedigree and insulin levels further refine these predictions.
+
+5.  This tree highlights glucose as the most influential variable, with other factors progressively contributing to the accuracy of diabetes classification.
+
+## Model Evaluation
+
+```{r}
+DTpred <- predict(DTmodel, testData, type = "class")
+
+confusionMatrix(DTpred, testData$diabetes, positive = "pos")
+```
+
+**Interpretation**:
+
+1.  Accuracy of 80.37% indicates that 80.37% of the predictions made by the model are correct.
+
+2.  Recall (Sensitivity) of 63.16% means that the model correctly identified 63.16% of the actual positive cases.
+
+3.  Precision (Positive Predictive Value) of 77.42% means that 77.42% of the instances predicted as positive by the model were indeed positive.
+
+# k-Nearest Neighbors
+
+## Data Normalization
+
+```{r}
+pima2 <- pima1
+
+normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
+}
+```
+
+## Model Building
+
+```{r}
+pima2[1:8] <- as.data.frame(lapply(pima2[1:8], normalize))
+
+trainDataN <- pima2[1:sRow, ]
+
+testDataN <- pima2[(sRow + 1):nrow(pima2), ]
+
+KNNpred <- knn(
+  train = trainDataN[, 1:8], 
+  test = testDataN[, 1:8],
+  cl = trainDataN[, 9], 
+  k = 7
+)
+```
+
+## Model Evaluation
+
+```{r}
+confusionMatrix(KNNpred, testDataN$diabetes, positive = "pos")
+```
+
+**Interpretation**:
+
+1.  Accuracy of 77.57% indicates that 77.57% of the predictions made by the model are correct.
+
+2.  Recall (Sensitivity) of 52.63% means that the model correctly identified 52.63% of the actual positive cases.
+
+3.  Precision (Positive Predictive Value) of 76.92% means that 76.92% of the instances predicted as positive by the model were indeed positive.
+
+# Artificial Neural Network
+
+## Model Building with 1 Layer
+
+```{r}
+NNmodel <- neuralnet(diabetes ~ pregnant + glucose + pressure + triceps + insulin +
+  mass + pedigree + age, 
+  data = trainDataN, 
+  hidden = 1, 
+  linear.output = FALSE)
+
+plot(NNmodel)
+```
+
+![](Inputs/NNmodel.png){fig-align="center"}
+
+**Interpretation**:
+
+1.  The artificial neural network (ANN) model visualized in the provided plot is trained to predict diabetes based on several input features: pregnant, glucose, pressure, triceps, insulin, mass, pedigree, and age.
+
+2.  The model consists of a single hidden layer with one neuron, indicating a relatively simple network structure. The connections between the input features and the hidden neuron show the weights (both positive and negative), reflecting the contribution of each feature to the model's decision-making process.
+
+3.  The model outputs two possible predictions: pos (positive for diabetes) and neg (negative for diabetes).
+
+4.  The weights and biases associated with each input highlight the influence of each variable on the prediction, with glucose and mass appearing to have significant weights.
+
+5.  The error value and the number of steps indicate the model's training performance and the iterations it underwent to minimize the error.
+
+## Model Prediction
+
+```{r}
+predicted <- predict(NNmodel, testDataN, type = "class")
+
+NNpred <- ifelse(max.col(predicted) == 1, "neg", "pos")
+```
+
+## Model Evaluation
+
+```{r}
+confusionMatrix(factor(NNpred), testDataN$diabetes, positive = "pos")
+```
+
+**Interpretation**:
+
+1.  Accuracy of 81.31% indicates that 81.31% of the predictions made by the model are correct.
+
+2.  Recall (Sensitivity) of 65.79% means that the model correctly identified 65.79% of the actual positive cases.
+
+3.  Precision (Positive Predictive Value) of 78.12% means that 78.12% of the instances predicted as positive by the model were indeed positive.
+
+# Model Comparison
+
+```{r, echo=FALSE}
+# Load necessary libraries
+library(tibble)
+library(knitr)
+library(kableExtra)
+
+# Create a data frame with the comparison metrics
+comparison_df <- tibble::tibble(
+  Metric = c("Accuracy", "Recall (Sensitivity)", "Precision (PPV)"),
+  `Decision Tree` = c(0.8037, 0.6316, 0.7742),
+  `K-Nearest Neighbor` = c(0.7757, 0.5263, 0.7692),
+  `Artificial Neural Network` = c(0.8131, 0.6579, 0.7812)
+)
+
+# Print the table
+kable(comparison_df, "html", caption = "Comparison of Evaluation Metrics for Machine Learning Models") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = FALSE)
+```
+
+**Interpretation**:
+
+Based on the comparison of three machine learning models—Decision Tree, K-Nearest Neighbor (k-NN), and Artificial Neural Network (ANN)—the ANN emerges as the best-performing model. It achieves the highest accuracy (81.31%), indicating its overall superior performance in correctly classifying instances. The ANN also has the highest sensitivity (65.79%) and positive predictive value (PPV) (78.12%), making it more effective in identifying true positive cases.
+
+# DT Cross Validation
+
+```{r}
+k <- 10
+
+DTaccuracy <- rep(NA, k)
+
+folds <- split(pima1, cut(1:nrow(pima1), k))
+
+for (i in 1:k) {
+  test <- ldply(folds[i], data.frame)
+  train <- ldply(folds[-i], data.frame)
+
+  test$.id <- NULL
+  train$.id <- NULL
+
+  DTmodel <- rpart(diabetes ~ ., 
+                   data = train, 
+                   method = "class", 
+                   parms = list(split = "information"))
+
+  DTpred <- predict(DTmodel, test, type = "class")
+
+  DTaccuracy[i] <- confusionMatrix(DTpred, test$diabetes, positive = "pos")$overall["Accuracy"]
+}
+```
+
+```{r}
+DTaccuracy
+mean(DTaccuracy)
+```

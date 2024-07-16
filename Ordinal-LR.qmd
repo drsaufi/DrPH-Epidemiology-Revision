@@ -1,0 +1,774 @@
+---
+title: "Ordinal Logistic Regression"
+subtitle: "Advanced Categorical Data Analysis"
+author: "Dr Muhammad Saufi"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+editor: visual
+include-after-body: "footer.html"
+---
+
+::: {.callout-note collapse="true"}
+# About This Document
+
+This document serves both learning and practical purposes. It is designed for educational use, aiming to enhance statistical analysis skills and provide clear, organized notes for future reference.
+:::
+
+# Introduction
+
+Ordinal logistic regression is a statistical analysis used for predicting an ordinal outcome based on one or more predictor variables. An ordinal outcome has categories with a natural order but unknown distances between categories, such as ratings (e.g., poor, fair, good, excellent).
+
+The dependent variable is ordinal, meaning it has a meaningful order. Examples include survey responses (e.g., strongly disagree to strongly agree) or educational attainment (e.g., high school, bachelor’s, master’s, doctorate).
+
+Ordinal logistic regression includes several models that are used to analyze ordinal data. The most common models are:
+
+1.  Adjacent-Category Logit Model
+2.  Continuation-Ratio Logit Model
+3.  Proportional Odds Model (Cumulative Logit Model)
+
+## Adjacent-Category Logit Model
+
+This model compares each response category with the next adjacent category. The model can be written as:
+
+$$
+\log \left( \frac{P(Y = j)}{P(Y = j+1)} \right) = \alpha_j + \beta X
+$$
+
+-   $Y$ is the ordinal response variable.
+-   $j$ is the category.
+-   $\alpha_j$ are the intercepts for the $j$-th category.
+-   $\beta$ is the coefficient for the predictor variable $X$.
+
+The model assumes that the log-odds do not depend on the specific category being compared. The model helps understand how the odds change from one category to the next adjacent category based on the predictor variables.
+
+## Continuation-Ratio Logit Model
+
+This model is used to compare each response category with all lower categories combined. The model can be written as:
+
+$$
+\log \left( \frac{P(Y = j)}{P(Y < j)} \right) = \alpha_j + \beta X
+$$
+
+-   $Y$ is the ordinal response variable.
+-   $j$ is the category.
+-   $\alpha_j$ are the intercepts for the $j$-th category.
+-   $\beta$ is the coefficient for the predictor variable $X$.
+
+Different constant terms and slopes are allowed, making it more flexible. The model compares the probability of being in a particular category to the probability of being in all lower categories combined, providing detailed insights into transitions between levels.
+
+## Proportional Odds Model (Cumulative Logit Model)
+
+The Proportional Odds Model is used to model the cumulative probabilities of the ordinal outcome variable. The model compares the cumulative probability of the response being in a category less than or equal to a specific value versus being in a higher category:
+
+$$
+\log \left( \frac{P(Y \leq j)}{P(Y > j)} \right) = \alpha_j + \beta X
+$$
+
+-   $Y$ is the ordinal response variable.
+-   $j$ is the category.
+-   $\alpha_j$ are the intercepts for the $j$-th category.
+-   $\beta$ is the coefficient for the predictor variable $X$.
+
+The relationship between predictors and the log-odds of being in a lower versus higher category is constant across all categories. The coefficients $\beta$ indicate the effect of the predictors on the log-odds of the outcome being at or below a certain category versus above it.
+
+# Setting Up the Environment
+
+Load the necessary libraries to ensure the R environment is equipped with the tools and functions required for efficient and effective analysis.
+
+```{r, warning=FALSE, message=FALSE}
+library(ordinal)    # to perform ordinal model
+library(tidyverse)  # data wrangling
+library(haven)      # to read statistical data
+library(broom)      # to tidy results
+library(gtsummary)
+library(VGAM)
+library(brant)
+```
+
+# Practical 1
+
+The `wine` dataset used in this exercise is used to illustrate how to apply cumulative link models (Proportional Odds Models) for analyzing ordinal data. This dataset contains 72 observations and 6 variables.
+
+1.  **response**: A numeric variable representing the response value.
+2.  **rating**: An ordinal factor variable with levels indicating the bitterness rating of the wine (from 1 to 5, with 1 being the least bitter and 5 being the most bitter).
+3.  **temp**: A factor variable indicating the temperature at which the wine was served (e.g., cold, warm).
+4.  **contact**: A factor variable indicating whether the wine had contact with air (e.g., yes, no).
+5.  **bottle**: A numeric variable representing different bottle codes.
+6.  **judge**: A factor variable representing different judges who rated the wine.
+
+## Data Reading and Exploration
+
+First, load the dataset and convert any labeled variables to factors. Then, perform exploratory data analysis to understand the data distribution and relationships between variables.
+
+```{r}
+# Reading the data
+data.o1 <- read_dta("Datasets/wine.dta")
+
+# Briefly examine the data
+glimpse(data.o1)
+```
+
+```{r}
+# Summarize the data
+summary(data.o1)
+```
+
+```{r}
+# Convert labeled variables to factor variables
+data.o2 <- data.o1
+data.o2 <- data.o2 %>% mutate(across(where(is.labelled), ~ as_factor(.x)))
+
+# Check the data structure after conversion
+glimpse(data.o2)
+```
+
+```{r}
+# Summarize the characteristics of the dataset by `rating`
+data.o2 %>%
+  select(response, temp, rating, contact) %>%
+  tbl_summary(by = rating)
+```
+
+## Estimation
+
+The objective is to estimate the cumulative link model (proportional odds model) using the `clm` function from the `ordinal` package. This involves estimating regression coefficients, standard errors, and p-values. The cumulative link model (logit link) is specified as:
+
+$$
+P(Y_i \leq j) = \theta_j - \beta_1(\text{temp}) - \beta_2(\text{contact})
+$$
+
+::: callout-note
+$\theta_j$ are the threshold parameters, and $\beta_1$ and $\beta_2$ are the regression coefficients for `temp` and `contact`, respectively.
+:::
+
+```{r}
+# Fit the cumulative link model
+mod.o1 <- clm(rating ~ temp + contact, data = data.o2)
+summary(mod.o1)
+```
+
+------------------------------------------------------------------------
+
+**Summary of Output**
+
+1.  Coefficients:
+
+    -   **tempwarm:** The estimated coefficient for `tempwarm` is 2.5031, meaning that having a warm temperature increases the log odds of being in a higher rating category by 2.5031, compared to the baseline category (cold temperature). The effect is statistically significant at the 0.001 level (p-value = 2.19e-06).
+
+    -   **contactyes:** The estimated coefficient for `contactyes` is 1.5278, meaning that having contact increases the log odds of being in a higher rating category by 1.5278, compared to the baseline category (no contact). The effect is statistically significant at the 0.01 level (p-value = 0.00135).
+
+2.  Threshold Coefficients
+
+    -   **1\|2:** The threshold coefficient of -1.3444 separates the first category from the second. This value indicates the log odds of being in category 1 or lower versus category 2 or higher.
+
+    -   **2\|3:** The threshold coefficient of 1.2508 separates the second category from the third. This value indicates the log odds of being in category 2 or lower versus category 3 or higher.
+
+    -   **3\|4:** The threshold coefficient of 3.4669 separates the third category from the fourth. This value indicates the log odds of being in category 3 or lower versus category 4 or higher.
+
+    -   **4\|5:** The threshold coefficient of 5.0064 separates the fourth category from the fifth. This value indicates the log odds of being in category 4 or lower versus category 5.
+
+3.  Interpretation
+
+    -   **tempwarm:** The estimate is 2.5031 with a p-value of 2.19e-06, indicating a significant positive association between warmer temperature and higher bitterness ratings.
+
+    -   **contactyes:** The estimate is 1.5278 with a p-value of 0.00135, indicating a significant positive association between contact with air and higher bitterness ratings.
+
+```{r}
+# Tidy summary of the model
+tidy(mod.o1)
+```
+
+------------------------------------------------------------------------
+
+**Interpretation**
+
+1.  **1\|2:** The threshold separating category 1 from category 2 has a log-odds estimate of -1.34, which is statistically significant (p-value \< 0.01).
+
+2.  **2\|3:** The threshold separating category 2 from category 3 has a log-odds estimate of 1.25, which is statistically significant (p-value \< 0.01).
+
+3.  **3\|4:** The threshold separating category 3 from category 4 has a log-odds estimate of 3.47, which is statistically significant (p-value \< 0.001).
+
+4.  **4\|5:** The threshold separating category 4 from category 5 has a log-odds estimate of 5.01, which is statistically significant (p-value \< 0.001).
+
+5.  **tempwarm:** The log-odds of the response variable being in a higher category increase by 2.50 when the temperature is warm compared to cold. This effect is statistically significant (p-value \< 0.001).
+
+6.  **contactyes:** The log-odds of the response variable being in a higher category increase by 1.53 when there is contact compared to no contact. This effect is statistically significant (p-value \< 0.01).
+
+```{r}
+# Tidy summary with exponentiated coefficients and confidence intervals
+tidy(mod.o1, exponentiate = TRUE, conf.int = TRUE)
+```
+
+------------------------------------------------------------------------
+
+**Interpretation**
+
+1.  **1\|2:** The odds of being in category 1 or lower versus category 2 or higher are 0.261 times, indicating a decrease in odds, which is statistically significant.
+
+2.  **2\|3:** The odds of being in category 2 or lower versus category 3 or higher are 3.49 times, indicating an increase in odds, which is statistically significant.
+
+3.  **3\|4:** The odds of being in category 3 or lower versus category 4 or higher are 32 times, indicating a substantial increase in odds, which is statistically significant.
+
+4.  **4\|5:** The odds of being in category 4 or lower versus category 5 are 149 times, indicating a substantial increase in odds, which is statistically significant.
+
+5.  **tempwarm:** The odds of the response variable being in a higher category are 12.2 times higher when the temperature is warm compared to cold. This effect is statistically significant, and the confidence interval (4.53 to 36.4) indicates the range within which the true odds ratio is likely to fall with 95% confidence.
+
+6.  **contactyes:** The odds of the response variable being in a higher category are 4.61 times higher when there is contact compared to no contact. This effect is statistically significant, and the confidence interval (1.85 to 12.1) indicates the range within which the true odds ratio is likely to fall with 95% confidence.
+
+## Inferences
+
+The inferences from the fitted cumulative link model are performed by:
+
+1.  Checking Wald-based p-values
+2.  Calculating confidence intervals
+3.  Comparing models
+
+### Wald-Based P-Values
+
+Wald-based p-values test whether each parameter (regression coefficient) is significantly different from zero. These were already included in the `summary` and `tidy` outputs, showing which predictors are significant.
+
+### Calculating Confidence Intervals
+
+Confidence intervals provide a range of values within which the true parameter value is likely to fall. The confidence intervals were displayed in the previous `tidy` output with `conf.int = TRUE`.
+
+### Model Comparison using Likelihood Ratio Test
+
+Let's compare two nested models using the likelihood ratio test:
+
+1.  **Model `mod.o1b`:** A simpler model with only `temp` as the predictor.
+2.  **Model `mod.o1`:** A more complex model including both `temp` and `contact` as predictors.
+
+```{r}
+# Fit the simpler model
+mod.o1b <- clm(rating ~ temp, data = data.o2)
+
+# Perform the likelihood ratio test to compare models
+anova(mod.o1b, mod.o1, test = "Chisq")
+```
+
+------------------------------------------------------------------------
+
+**Summary of Output**
+
+-   The p-value of 0.0008902 is highly significant, indicating that adding `contact` to the model significantly improves the fit compared to the simpler model with only `temp`.
+
+-   Therefore, model `o1` (which includes both `temp` and `contact`) is preferred over model `o1b`.
+
+## Checking Proportional Odds Assumption
+
+The proportional odds assumption is crucial for the cumulative link model. It implies that the relationship between each pair of outcome groups is the same. There are two methods to check the proportional odds assumption.
+
+### Method 1: Using `nominal_test` Function
+
+The `ordinal::nominal_test()` function tests the ordinality of each predictor. If the p-value is greater than 0.05, it fails to reject the null hypothesis that the proportional odds assumption holds for that predictor.
+
+```{r}
+nominal_test(mod.o1)
+```
+
+------------------------------------------------------------------------
+
+**Interpretation:**
+
+-   For both `temp` and `contact`, the p-values are greater than 0.05 (0.3654 and 0.9040, respectively).
+
+-   This indicates that the assumption of proportional odds cannot be rejected for these variables, suggesting that the proportional odds assumption holds.
+
+### Method 2: Likelihood Ratio Test
+
+This method involves comparing two models:
+
+1.  **Model `mod.o1`**
+
+    -   This model includes the predictors `temp` and `contact` and assumes that the proportional odds assumption holds for all predictors.
+
+2.  **Model `mod.o1.nominal`:**
+
+    -   This model treats the predictor `contact` as having nominal effects, meaning it does not assume proportional odds for this predictor.
+
+    -   Instead, it allows the effect of `contact` to vary across different thresholds of the ordinal response variable.
+
+```{r}
+# Fit the nominal model
+mod.o1.nominal <- clm(rating ~ temp, nominal = ~contact, data = data.o2)
+```
+
+::: callout-note
+`nominal = ~contact` specifies that `contact` should be treated as having non-proportional effects.
+:::
+
+```{r}
+# Compare the two models using `anova` function
+anova(mod.o1, mod.o1.nominal)
+```
+
+------------------------------------------------------------------------
+
+**Interpretation:**
+
+-   The p-value is not significant at the 5% level, indicating that the more complex model (`o1.nominal`) does not provide a significantly better fit than the simpler model (`o1`).
+
+-   The proportional odds assumption holds for the predictor `contact`. Therefore, the simpler model (`o1`), which assumes proportional odds for `contact`, is adequate.
+
+## Prediction
+
+### Method 1: Predicting Probabilities for Existing Data
+
+This method focuses on predicting the probabilities (fitted probabilities) that each observation in the existing dataset falls into each response category.
+
+```{r}
+# Remove the outcome variable (`rating`)
+new.data1 <- data.o2 %>% select(-rating)
+```
+
+::: callout-note
+The outcome variable (`rating`) is removed from the dataset because it is the response variable we want to predict.
+:::
+
+```{r}
+# Predict the probabilities for each category
+prob.mod.o1 <- predict(mod.o1, newdata = new.data1)
+head(prob.mod.o1$fit)
+tail(prob.mod.o1$fit)
+```
+
+------------------------------------------------------------------------
+
+-   The rows correspond to different observations in the dataset.
+
+-   The columns represent the predicted probabilities for each response category (1 to 5).
+
+```{r}
+class.o1 <- predict(mod.o1, type = "class")
+head(class.o1)
+```
+
+------------------------------------------------------------------------
+
+-   The `predict` function with `type = 'class'` is used to predict the most likely category for each observation.
+
+-   This output shows the predicted most likely category for each observation, represented by the numbers 1 to 5.
+
+### Method 2: Predicting Probabilities for New Data {#prediction-method-2}
+
+This method involves predicting the probabilities that new data falls into each response category. This is useful for understanding model behavior under different conditions or for making predictions for hypothetical scenarios. Remember the categories of the outcome are:
+
+```{r}
+levels(data.o2$rating)
+```
+
+------------------------------------------------------------------------
+
+The linear predictor and predicted probabilites for these categories:
+
+1.  temp = cold, contact = no
+2.  temp = warm, contact = no
+3.  temp = cold, contact = yes
+4.  temp = warm, contact = yes
+
+```{r}
+# Create a new dataset that includes all combinations of the levels of the predictors
+new.data2 <- expand.grid(temp = levels(data.o2$temp), contact = levels(data.o2$contact))
+new.data2
+```
+
+------------------------------------------------------------------------
+
+-   This creates a new data frame with all combinations of `temp` and `contact`.
+
+```{r}
+# Get linear predictors for the new data
+lp.new.data2 <- predict(mod.o1, newdata = new.data2, type = "linear.predictor")
+
+# Get probabilities for the new data
+prob.new.data2 <- predict(mod.o1, newdata = new.data2, type = "prob")
+
+# View the results
+lp.new.data2
+prob.new.data2
+```
+
+------------------------------------------------------------------------
+
+-   **\$eta1 and \$eta2:** Linear predictors for each category.
+
+-   **\$fit:** Predicted probabilities for each category for the new data.
+
+```{r}
+# Combine the new data with the predicted probabilities for a comprehensive view
+cbind(new.data2, prob.new.data2)
+```
+
+### Method 3: Using `polr` Function from `MASS` Package
+
+This method involves using the `polr` function from the `MASS` package to fit a proportional odds model and then predict probabilities for each category of the ordinal response variable.
+
+```{r}
+# Fit the model
+mod_polr <- MASS::polr(rating ~ temp + contact, data = data.o2)
+summary(mod_polr)
+```
+
+------------------------------------------------------------------------
+
+-   The model is fitted using the `polr` function from the `MASS` package. The output provides the estimated coefficients for the predictors and the thresholds (intercepts) for the ordinal response variable.
+
+-   `tempwarm`: The coefficient for warm temperature, indicating a significant positive association with higher ratings.
+
+-   `contactyes`: The coefficient for contact with air, indicating a significant positive association with higher ratings.
+
+```{r}
+# Predict the probabilities for each category
+prob_polr <- predict(mod_polr, type = "probs")
+head(prob_polr)
+tail(prob_polr)
+```
+
+------------------------------------------------------------------------
+
+-   The `predict` function with `type = 'probs'` is used to obtain the predicted probabilities for each response category for each observation in the dataset.
+
+-   The rows correspond to different observations in the dataset.
+
+-   The columns represent the predicted probabilities for each response category (1 to 5).
+
+### Manual Calculation of Predictions
+
+Manually calculate the probabilities for an ordinal outcome using the coefficients from a cumulative link model `mod.o1`.
+
+#### Model Summary of `mod.o1`
+
+Review the model summary to get the coefficients for the predictors and the threshold values needed for calculations.
+
+```{r}
+# Model summary
+summary(mod.o1)
+```
+
+#### New Data for Prediction
+
+The new data points for which predictions are needed are defined using the previously generated new data from [Prediction: Method 2](#prediction-method-2).
+
+```{r}
+new.data2
+```
+
+#### Obtain Linear Predictors
+
+Use the `predict` function with `type = "linear.predictor"` to get the linear predictors for the new data points, represented by `eta1` and `eta2` in the output. Refer [Prediction: Method 2](#prediction-method-2).
+
+```{r}
+lp.new.data2
+```
+
+#### Extract Coefficients
+
+Extract the coefficients from the model that include the estimates for the thresholds and the predictor variables:
+
+-   Thresholds: 1\|2, 2\|3, 3\|4, 4\|5
+-   Predictors: tempwarm, contactyes
+
+```{r}
+coef.mod.o1 <- coef(mod.o1)
+coef.mod.o1
+```
+
+#### Calculate Linear Predictors for Each Observation
+
+For each new observation, calculate the linear predictors (bx) using the coefficients and the new data values. Using fourth observation as an example:
+
+```{r}
+lp.mod.o1.bx4 <- coef.mod.o1["tempwarm"] * 1 + coef.mod.o1["contactyes"] * 1
+lp.mod.o1.bx4
+```
+
+::: callout-note
+This calculates the linear predictor for the fourth observation, where `temp` is warm (coded as 1) and `contact` is yes (coded as 1).
+:::
+
+#### Calculate Logits
+
+Using the linear predictors (bx) and the thresholds, calculate the logits using the formula:
+
+$$
+\text{logit}(P(Y \leq j)) = \beta_{0j} - (\beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p)
+$$
+
+-   $\beta_{0j}$: Threshold coefficient for category $j$.
+-   $\beta_1, \beta_2, \ldots, \beta_p$: Coefficients for the predictor variables.
+-   $X_1, X_2, \ldots, X_p$: Values of the predictor variables.
+-   **Logit Calculation**: The linear predictor ($\beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p$) is subtracted from the threshold coefficient to get the logit.
+
+Given the threshold coefficients from the model summary:
+
+-   $\beta_{01|2} = -1.3444$
+-   $\beta_{02|3} = 1.2508$
+-   $\beta_{03|4} = 3.4669$
+-   $\beta_{04|5} = 5.0064$
+
+```{r}
+logit1 <- coef.mod.o1[1] - lp.mod.o1.bx4
+logit2 <- coef.mod.o1[2] - lp.mod.o1.bx4
+logit3 <- coef.mod.o1[3] - lp.mod.o1.bx4
+logit4 <- coef.mod.o1[4] - lp.mod.o1.bx4
+logit1
+logit2
+logit3
+logit4
+```
+
+#### Convert Logits to Probabilities
+
+The probabilities represent the cumulative probabilities for each threshold. The logistic function is used to convert logits (log-odds) into probabilities. The formula for the logistic function:
+
+$$
+\text{logit}^{-1}(x) = \frac{1}{1 + e^{-x}}
+$$
+
+::: callout-note
+$x$ is the logit value.
+:::
+
+```{r}
+pLeq1 <- 1 / (1 + exp(-logit1))
+pLeq2 <- 1 / (1 + exp(-logit2))
+pLeq3 <- 1 / (1 + exp(-logit3))
+pLeq4 <- 1 / (1 + exp(-logit4))
+```
+
+#### Calculate Category Probabilities
+
+To find the probability of each specific category, calculate the differences between the cumulative probabilities. This will give the probability of the response falling into each category.
+
+```{r}
+pMat <- cbind(
+  p1 = pLeq1,
+  p2 = pLeq2 - pLeq1,
+  p3 = pLeq3 - pLeq2,
+  p4 = pLeq4 - pLeq3,
+  p5 = 1 - pLeq4
+)
+pMat
+```
+
+#### Confirm Predictions with the Model
+
+Finally, confirm the manual calculations by comparing them with the predictions from the `predict` function using `type = "prob"`. Refer [Method 2](#method-2).
+
+```{r}
+prob.new.data2
+```
+
+# Practical 2
+
+The `lowbwt.dta` dataset used in this exercise is sourced from the Applied Logistic Regression book and involves data that are related to logistic regression models for ordinal outcomes.
+
+**Variables**:
+
+-   `id`: Identification number for each observation.
+-   `lbw`: Indicator variable for low birth weight.
+-   `age`: Age of the mother in years.
+-   `lwt`: Weight of the mother at the last menstrual period in pounds.
+-   `race`: Race of the mother.
+-   `smoke`: Smoking status during pregnancy.
+-   `ptl`: Number of previous premature labors.
+-   `hyper`: Presence of hypertension.
+-   `urirr`: Presence of uterine irritability.
+-   `pvft`: Physician visits during the first trimester.
+-   `weight`: Birth weight in grams.
+-   `agecat`: Age category of the mother.
+-   `wcat`: Weight category of the mother.
+-   `anyptl`: Indicator variable for any previous premature labor.
+-   `newpvft`: New variable for physician visits during the first trimester.
+
+## Data Reading and Exploration
+
+```{r}
+# Data reading
+data.o3 <- read_dta(("Datasets/lowbwt.dta"))
+
+# Data summary
+summary(data.o3)
+
+# Detailed view of the dataset
+glimpse(data.o3)
+```
+
+### Converting Variables to Factor Variables
+
+Since the dataset comes with labeled variables, convert to factor variables using the `mutate` and `across` functions from the `dplyr` package.
+
+```{r}
+# Copy into new dataset and keep original dataset
+data.o4 <- data.o3
+
+# Convert to factor variables
+data.o4 <- data.o4 %>%
+  mutate(across(where(is.labelled), ~ as_factor(.x)))
+
+summary(data.o4)
+glimpse(data.o4)
+```
+
+### Creating a Categorical Outcome Variable
+
+Create a categorical outcome variable using `cut` function. The variable `weight` is categorized into a 4-category variable `bwt4`.
+
+```{r}
+# Create categorical outcome variable
+data.o4 <- data.o4 %>%
+  mutate(bwt4 = cut(weight,
+    breaks = c(708, 2500, 2999, 3500, max(weight)),
+    labels = c("<=2500", "2501-3000", "3001-3500", ">3500")
+  ))
+
+# Summarize dataset by the newly created variable `bwt4`
+data.o4 %>%
+  select(bwt4, weight) %>%
+  group_by(bwt4) %>%
+  summarize_at(vars(weight), c(min = min, max = max))
+```
+
+### Creating an Ordinal Variable
+
+Create an ordinal variable and define the levels of the variable.
+
+```{r}
+# Create and define the levels of ordinal variable
+lev <- c(">3500", "3001-3500", "2501-3000", "<=2500")
+data.o4 <- data.o4 %>%
+  mutate(bwt4a = fct_relevel(bwt4, lev)) %>%
+  mutate(bwt4a = ordered(bwt4a, levels = lev))
+
+# Check the structure of the new variable
+str(data.o4$bwt4a)
+```
+
+```{r}
+# Check the levels of `bwt4`
+levels(data.o4$bwt4)
+```
+
+```{r}
+# Check the levels of `bwt4a`
+levels(data.o4$bwt4a)
+```
+
+## Baseline Logit Model
+
+The Baseline Logit Model, also known as the Multinomial Logistic Regression Model, is used to handle situations where the outcome variable is nominal with more than two categories. This model extends the binary logistic regression model to multiple categories by modeling the log-odds of each category relative to a baseline category.
+
+This exercise demonstrates how to replicate the baseline logit model (unconstrained) which requires a dataset with an outcome variable without ordering. In this dataset `data.o4`, a new variable `bwt4b` without ordering is created from `bwt4` by re-leveling the factors according to the specified levels (`lev`).
+
+```{r}
+# Create new variable and re-leveling according to the specified levels
+data.o4 <- data.o4 %>% mutate(bwt4b = fct_relevel(bwt4, lev))
+
+# Fit the model
+bl.mod <- vglm(formula = bwt4 ~ smoke, family = multinomial, data = data.o4)
+summary(bl.mod)
+```
+
+------------------------------------------------------------------------
+
+-   `smoke:1` with an estimate of 1.1914 implies a positive effect of smoking on the probability of being in the first category (`<=2500`) relative to the reference category (`>3500`).
+-   `smoke:2` and `smoke:3` have positive estimates, suggesting an increased likelihood of being in these categories as well due to smoking.
+
+```{r}
+# Calculate the exponentiated coefficients (RRR)
+exp(coef(bl.mod))
+```
+
+------------------------------------------------------------------------
+
+-   For `smoke:1`, the RRR is 3.2915, meaning smokers are about 3.29 times more likely to be in the lowest birth weight category (`<=2500`) compared to the reference category (`>3500`).
+
+## Continuation Ratio Model
+
+The Continuation Ratio Model is another approach to modeling ordinal response data, particularly useful when the response categories have a natural order and when the sequential nature of the response process makes clinical or logical sense. This model is different from other ordinal logistic models in that it models the log-odds of being in a particular category given that the respondent has not been in any previous categories. The model is used to analyze ordinal response data by comparing categories sequentially. In this case, the weight categories are compared in the following manner:
+
+1.  Compare `bwt >= 3500` vs. `bwt = 3000-3500`
+2.  Compare `bwt >= 3500` and `bwt = 3000-3500` vs. `bwt = 2500-3000`
+3.  Compare `bwt >= 3500` and `bwt = 3000-3500` and `bwt = 2500-3000` vs. `bwt < 2500`
+
+```{r}
+# Check the distribution of weight categories
+table(data.o4$bwt4)
+```
+
+### First Model
+
+```{r}
+# Filter the dataset to include only the weight categories `>3500` and `3001-3500`
+data.o4a <- data.o4 %>% 
+  filter(bwt4a == '>3500' | bwt4a == '3001-3500')
+
+# Check the distribution of weight categories
+table(data.o4a$bwt4a)
+
+# Fit the first model that predicts `bwt4a` based on `smoke`
+cr.mod1 <- glm(bwt4a ~ smoke, 
+               family = binomial(link ='logit'), 
+               data = data.o4a)
+
+summary(cr.mod1)
+```
+
+### Second Model
+
+```{r}
+# Filter the dataset to include the weight categories `>3500`, `3001-3500`, and `2501-3000`
+data.o4b <- data.o4 %>% 
+  filter(bwt4 == '>3500' | bwt4 == '3001-3500' | bwt4 == '2501-3000')
+
+# Recode `bwt4a` variable into a new variable `bwt4b`
+data.o4b <- data.o4b %>% 
+  mutate(bwt4b = ifelse(bwt4a == '>3500', 0, ifelse(bwt4a == '3001-3500', 0, 1)))
+
+# Check the distribution of weight categories
+table(data.o4b$bwt4b)
+
+# Fit the second model with the recoded `bwt4b` as the dependent variable and `smoke` as the independent variable
+cr.mod2 <- glm(bwt4b ~ smoke, 
+               family = binomial(link ='logit'), 
+               data = data.o4b)
+
+summary(cr.mod2)
+```
+
+#### Third Model
+
+```{r}
+# Recode `bwt4a` variable into `bwt4c` where all categories are grouped into a new variable
+data.o4c <- data.o4 %>%
+  mutate(bwt4c = fct_recode(bwt4a, 
+                            gp0 = '>3500',
+                            gp0 = '3001-3500',
+                            gp0 = '3001-3500',
+                            gp0 = '2501-3000'))
+
+# Check the distribution of weight categories
+table(data.o4c$bwt4c)
+
+# Fit the third model to compare the recoded groups with `smoke` as the predictor
+cr.mod3 <- glm(bwt4c ~ smoke, 
+               family = binomial(link ='logit'), 
+               data = data.o4c)
+
+summary(cr.mod3)
+```
+
+### Conclusion
+
+The three estimates from the different continuation-ratio models are quite similar, with values around 0.6. These estimates indicate that the odds of a birth in the next lower weight category relative to the higher weight categories among women who smoked during pregnancy is about 1.8 times that of women who did not smoke. In summary, smoking during pregnancy consistently increases the odds of having a baby in a lower weight category by approximately 1.8 times across the different comparisons made using the continuation-ratio model.
