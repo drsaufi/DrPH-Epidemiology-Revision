@@ -1,16 +1,24 @@
 ---
 title: "Data Visualization 01"
 author: "Dr Saufi"
-date: 29 May 2024
+date: last-modified
 format: 
-    html:
-      toc: true
-      toc-title: Contents
-      toc-location: left
-      toc-depth: 3
-      toc-expand: 1
-      number-sections: true
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-fold: true
+    code-summary: "Code"
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
 editor: visual
+include-after-body: "footer.html"
 ---
 
 # Prepare R Environment

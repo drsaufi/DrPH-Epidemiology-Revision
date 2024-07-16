@@ -11,9 +11,6 @@ format:
     toc-depth: 5
     toc-expand: 1
     number-sections: true
-    code-fold: true
-    code-summary: "Code"
-    code-link: true
     theme:
       light: united
       dark: cyborg
@@ -692,14 +689,16 @@ kable(res_fitmlog5, digits = 3) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
-***
+------------------------------------------------------------------------
+
 -   **`library(knitr)`** and **`library(kableExtra)`**: Load the necessary libraries for table formatting.
 -   **`kable(res_fitmlog5, digits = 3)`**: Creates a table with `res_fitmlog5` data, formatting the values to three decimal places.
 -   **`kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))`**: Applies styling options to the table for better presentation.
 
 **Interpretation**
 
-***
+------------------------------------------------------------------------
+
 -   **(Intercept):1**
 
     -   The log-odds of being in the "over a year ago" category relative to "never" are -1.824 when all predictors are at their reference levels.
@@ -708,239 +707,231 @@ kable(res_fitmlog5, digits = 3) %>%
 
 -   **symptd3 or more:1**
 
-    - The log-odds of being in the "over a year ago" category relative to "never" increase by 1.127 for those with symptoms 3 or more compared to less than 3. 
-    - The RRR indicates that the odds are 3.088 times higher. 
-    - The CIs suggest this estimate is statistically significant.
+    -   The log-odds of being in the "over a year ago" category relative to "never" increase by 1.127 for those with symptoms 3 or more compared to less than 3.
+    -   The RRR indicates that the odds are 3.088 times higher.
+    -   The CIs suggest this estimate is statistically significant.
 
 -   **pb:1**
 
-    - The log-odds of being in the "over a year ago" category relative to "never" decrease by 0.154 for each unit increase in perceived benefit. 
-    - The RRR indicates that the odds are 0.857 times lower. 
-    - The CIs suggest this estimate is statistically significant.
+    -   The log-odds of being in the "over a year ago" category relative to "never" decrease by 0.154 for each unit increase in perceived benefit.
+    -   The RRR indicates that the odds are 0.857 times lower.
+    -   The CIs suggest this estimate is statistically significant.
 
 -   **hist2yes:1**
 
-    - The log-odds of being in the "over a year ago" category relative to "never" increase by 1.063 for those with a family history of breast cancer compared to those without. 
-    - The RRR indicates that the odds are 2.896 times higher. 
-    - The CIs suggest this estimate is statistically significant.
+    -   The log-odds of being in the "over a year ago" category relative to "never" increase by 1.063 for those with a family history of breast cancer compared to those without.
+    -   The RRR indicates that the odds are 2.896 times higher.
+    -   The CIs suggest this estimate is statistically significant.
 
 -   **bse:1**
 
-    - The log-odds of being in the "over a year ago" category relative to "never" increase by 0.956 for those with breast self-exam training compared to those without. 
-    - The RRR indicates that the odds are 2.601 times higher. 
-    - The CIs suggest this estimate is marginally significant.
+    -   The log-odds of being in the "over a year ago" category relative to "never" increase by 0.956 for those with breast self-exam training compared to those without.
+    -   The RRR indicates that the odds are 2.601 times higher.
+    -   The CIs suggest this estimate is marginally significant.
 
 -   **detcd3 or more:1**
 
-    - The log-odds of being in the "over a year ago" category relative to "never" increase by 0.114 for those with detection likelihood 3 or more compared to less than 3. 
-    - The RRR indicates that the odds are 1.121 times higher. 
-    - The CIs suggest this estimate is not statistically significant.
+    -   The log-odds of being in the "over a year ago" category relative to "never" increase by 0.114 for those with detection likelihood 3 or more compared to less than 3.
+    -   The RRR indicates that the odds are 1.121 times higher.
+    -   The CIs suggest this estimate is not statistically significant.
 
-***
+------------------------------------------------------------------------
+
 -   **(Intercept):2**
 
-    - The log-odds of being in the "within a year" category relative to "never" are -2.624 when all predictors are at their reference levels. 
-    - The RRR indicates that the odds of being in the "within a year" category are 0.073 times those of "never". 
-    - The CIs suggest this estimate is statistically significant.
+    -   The log-odds of being in the "within a year" category relative to "never" are -2.624 when all predictors are at their reference levels.
+    -   The RRR indicates that the odds of being in the "within a year" category are 0.073 times those of "never".
+    -   The CIs suggest this estimate is statistically significant.
 
 -   **symptd3 or more:2**
 
-    - The log-odds of being in the "within a year" category relative to "never" increase by 2.095 for those with symptoms 3 or more compared to less than 3. 
-    - The RRR indicates that the odds are 8.123 times higher. 
-    - The CIs suggest this estimate is highly significant.
+    -   The log-odds of being in the "within a year" category relative to "never" increase by 2.095 for those with symptoms 3 or more compared to less than 3.
+    -   The RRR indicates that the odds are 8.123 times higher.
+    -   The CIs suggest this estimate is highly significant.
 
 -   **pb:2**
 
-    - The log-odds of being in the "within a year" category relative to "never" decrease by 0.249 for each unit increase in perceived benefit. 
-    - The RRR indicates that the odds are 0.779 times lower. 
-    - The CIs suggest this estimate is highly significant.
+    -   The log-odds of being in the "within a year" category relative to "never" decrease by 0.249 for each unit increase in perceived benefit.
+    -   The RRR indicates that the odds are 0.779 times lower.
+    -   The CIs suggest this estimate is highly significant.
 
 -   **hist2yes:2**
 
-    - The log-odds of being in the "within a year" category relative to "never" increase by 1.310 for those with a family history of breast cancer compared to those without. 
-    - The RRR indicates that the odds are 3.706 times higher. 
-    - The CIs suggest this estimate is statistically significant.
+    -   The log-odds of being in the "within a year" category relative to "never" increase by 1.310 for those with a family history of breast cancer compared to those without.
+    -   The RRR indicates that the odds are 3.706 times higher.
+    -   The CIs suggest this estimate is statistically significant.
 
 -   **bse:2**
 
-    - The log-odds of being in the "within a year" category relative to "never" increase by 1.237 for those with breast self-exam training compared to those without. 
-    - The RRR indicates that the odds are 3.445 times higher. 
-    - The CIs suggest this estimate is statistically significant.
+    -   The log-odds of being in the "within a year" category relative to "never" increase by 1.237 for those with breast self-exam training compared to those without.
+    -   The RRR indicates that the odds are 3.445 times higher.
+    -   The CIs suggest this estimate is statistically significant.
 
 -   **detcd3 or more:2**
 
-    - The log-odds of being in the "within a year" category relative to "never" increase by 0.885 for those with detection likelihood 3 or more compared to less than 3. 
-    - The RRR indicates that the odds are 2.423 times higher. 
-    - The CIs suggest this estimate is statistically significant.
+    -   The log-odds of being in the "within a year" category relative to "never" increase by 0.885 for those with detection likelihood 3 or more compared to less than 3.
+    -   The RRR indicates that the odds are 2.423 times higher.
+    -   The CIs suggest this estimate is statistically significant.
 
 ## Prediction
-### Predict the Log Odds 
-Predict the log odds for the given multinomial logistic regression model (`fitmlog1`). 
+
+### Predict the Log Odds
+
+Predict the log odds for the given multinomial logistic regression model (`fitmlog1`).
 
 ```{r}
 # Predicts the log odds and display the first 6 observations
 head(predict.vgam(fitmlog1, type = 'link'))
 ```
 
-***
-- **`predict.vgam(fitmlog1, type = 'link')`**: Predicts the log odds (logit values) for each observation using the model `fitmlog1`. The `type = 'link'` option specifies that the predictions should be on the logit (log-odds) scale.
-- **`head()`**: Displays the first 6 observations.
-- **log(mu[,1]/mu[,3])**: The predicted log odds of being in the "over a year ago" category vs. "never".
-- **log(mu[,2]/mu[,3])**: The predicted log odds of being in the "within a year" category vs. "never".
+------------------------------------------------------------------------
+
+-   **`predict.vgam(fitmlog1, type = 'link')`**: Predicts the log odds (logit values) for each observation using the model `fitmlog1`. The `type = 'link'` option specifies that the predictions should be on the logit (log-odds) scale.
+-   **`head()`**: Displays the first 6 observations.
+-   **log(mu\[,1\]/mu\[,3\])**: The predicted log odds of being in the "over a year ago" category vs. "never".
+-   **log(mu\[,2\]/mu\[,3\])**: The predicted log odds of being in the "within a year" category vs. "never".
 
 #### Manual Calculation of Log Odds
+
 Manually verify these predictions using the coefficients from the model and the values of the predictors for that observation.
 
-- **(Intercept):1**: -1.2504928
-- **(Intercept):2**: -0.9509763
-- **hist2yes:1**: 1.0093308
-- **hist2yes:2**: 1.2565379
+-   **(Intercept):1**: -1.2504928
+-   **(Intercept):2**: -0.9509763
+-   **hist2yes:1**: 1.0093308
+-   **hist2yes:2**: 1.2565379
 
 ```{r}
 head(dat.m1[1:3,])
 ```
 
 ##### 1st Observation (hist2 = no)
-Logit for "over a year ago" ([1]) vs "never" ([3]):
+
+Logit for "over a year ago" (\[1\]) vs "never" (\[3\]):
 
 $$
 \text{logit}(P(\text{me3} = 1)) = \beta_0^{[1]} + \beta_{\text{hist2yes}}^{[1]} \cdot \text{hist2}
-$$
-$$
+$$ $$
 = -1.2504928 + 1.0093308 \cdot 0
-$$
-$$
+$$ $$
 = -1.2504928 + 0
-$$
-$$
+$$ $$
 = -1.2504928
 $$
 
-***
-Logit for "within a year" ([2]) vs "never" ([3]):
+------------------------------------------------------------------------
+
+Logit for "within a year" (\[2\]) vs "never" (\[3\]):
 
 $$
 \text{logit}(P(\text{me3} = 2)) = \beta_0^{[2]} + \beta_{\text{hist2yes}}^{[2]} \cdot \text{hist2}
-$$
-$$
+$$ $$
 = -0.9509763 + 1.2565379 \cdot 0
-$$
-$$
+$$ $$
 = -0.9509763 + 0
-$$
-$$
+$$ $$
 = -0.9509763
 $$
 
 ##### 3rd Observation (hist2 = yes)
-Logit for "over a year ago" ([1]) vs "never" ([3]):
+
+Logit for "over a year ago" (\[1\]) vs "never" (\[3\]):
 
 $$
 \text{logit}(P(\text{me3} = 1)) = \beta_0^{[1]} + \beta_{\text{hist2yes}}^{[1]} \cdot \text{hist2}
-$$
-$$
+$$ $$
 = -1.2504928 + 1.0093308 \cdot 1
-$$
-$$
+$$ $$
 = -1.2504928 + 1.0093308
-$$
-$$
+$$ $$
 = -0.241162
 $$
 
-***
-Logit for "within a year" ([2]) vs "never" ([3]):
+------------------------------------------------------------------------
+
+Logit for "within a year" (\[2\]) vs "never" (\[3\]):
 
 $$
 \text{logit}(P(\text{me3} = 2)) = \beta_0^{[2]} + \beta_{\text{hist2yes}}^{[2]} \cdot \text{hist2}
-$$
-$$
+$$ $$
 = -0.9509763 + 1.2565379 \cdot 1
-$$
-$$
+$$ $$
 = -0.9509763 + 1.2565379
-$$
-$$
+$$ $$
 = 0.3053816
 $$
 
 ### Predict the Probability
+
 Using `fitmlog1` model, the log odds for the 1st observation:
 
-- Log odds for "over a year ago": -1.2504928
-- Log odds for "within a year": -0.9509763
+-   Log odds for "over a year ago": -1.2504928
+-   Log odds for "within a year": -0.9509763
 
 ```{r}
 # Predicts the probabilities for the first 6 observations
 head(predict.vgam(fitmlog1, type = 'response'))
 ```
 
-***
-- **`predict.vgam(fitmlog1, type = 'response')`**: Predicts the probabilities for each outcome category for the observations using the model `fitmlog1`. The `type = 'response'` option specifies that the predictions should be on the probability scale.
-- **`head()`**: Displays the first 6 observations.
-- **over.a.year.ago**: Probability of being in the "over a year ago" category.
-- **within.a.year**: Probability of being in the "within a year" category.
-- **never**: Probability of being in the "never" category.
+------------------------------------------------------------------------
+
+-   **`predict.vgam(fitmlog1, type = 'response')`**: Predicts the probabilities for each outcome category for the observations using the model `fitmlog1`. The `type = 'response'` option specifies that the predictions should be on the probability scale.
+-   **`head()`**: Displays the first 6 observations.
+-   **over.a.year.ago**: Probability of being in the "over a year ago" category.
+-   **within.a.year**: Probability of being in the "within a year" category.
+-   **never**: Probability of being in the "never" category.
 
 The calculations below demonstrate how to use the predicted log odds to derive the probabilities for each outcome category, ensuring that the probabilities sum to 1 for each observation.
 
 #### Probability of Being in the Reference Group ("Never")
+
 $$
 P(\text{me3} = \text{never}) = \frac{1}{1 + \exp(\text{logit}_{\text{over a year ago}}) + \exp(\text{logit}_{\text{within a year}})}
-$$
-$$
+$$ $$
 P(\text{me3} = \text{never}) = \frac{1}{1 + \exp(-1.2504928) + \exp(-0.9509763)}
-$$
-$$
+$$ $$
 = \frac{1}{1 + 0.2865693 + 0.3867897}
-$$
-$$
+$$ $$
 = \frac{1}{1.673359}
-$$
-$$
+$$ $$
 = 0.5978261
 $$
 
 #### Probability of Being in the "Over a Year Ago" Group
+
 $$
 P(\text{me3} = \text{over a year ago}) = \frac{\exp(\text{logit}_{\text{over a year ago}})}{1 + \exp(\text{logit}_{\text{over a year ago}}) + \exp(\text{logit}_{\text{within a year}})}
-$$
-$$
+$$ $$
 P(\text{me3} = \text{over a year ago}) = \frac{\exp(-1.2504928)}{1 + \exp(-1.2504928) + \exp(-0.9509763)}
-$$
-$$
+$$ $$
 = \frac{0.2865693}{1 + 0.2865693 + 0.3867897}
-$$
-$$
+$$ $$
 = \frac{0.2865693}{1.673359}
-$$
-$$
+$$ $$
 = 0.1711957
 $$
 
 #### Probability of Being in the "Within a Year" Group
+
 $$
 P(\text{me3} = \text{within a year}) = \frac{\exp(\text{logit}_{\text{within a year}})}{1 + \exp(\text{logit}_{\text{over a year ago}}) + \exp(\text{logit}_{\text{within a year}})}
-$$
-$$
+$$ $$
 P(\text{me3} = \text{within a year}) = \frac{\exp(-0.9509763)}{1 + \exp(-1.2504928) + \exp(-0.9509763)}
-$$
-$$
+$$ $$
 = \frac{0.3867897}{1 + 0.2865693 + 0.3867897}
-$$
-$$
+$$ $$
 = \frac{0.3867897}{1.673359}
-$$
-$$
+$$ $$
 = 0.2309783
 $$
 
 # Practical 3: Alternative Approach
+
 This exercise demonstrates an alternative approach to fitting a multinomial logistic regression model using the `multinom` function from the `nnet` package. It includes steps to fit the model, change the reference category, extract p-values, and compute confidence intervals.
 
 In the `VGAM::vglm` function, the reference group is the category with the largest number of observations. In contrast, the `nnet::multinom` function uses the category with the smallest number of observations as the reference group.
 
 ## Estimation
+
 ### Fitting the Model
 
 ```{r}
@@ -951,7 +942,7 @@ mlog_nnet1 <- multinom(me3 ~ hist2, data = dat.m3)
 summary(mlog_nnet1)
 ```
 
-:::{.callout-note}
+::: callout-note
 Note that the reference group here is "over.a.year.ago" instead of "never."
 :::
 
@@ -974,11 +965,12 @@ mlog_nnet2 <- multinom(me4~ hist2, data = dat.m4)
 summary(mlog_nnet2)
 ```
 
-:::{.callout-note}
+::: callout-note
 The reference category is changed to "never," which affects the interpretation of the coefficients.
 :::
 
 ## Inferences
+
 ### Getting P-Values
 
 ```{r}
@@ -992,9 +984,10 @@ colnames(p.val) <- c('p-val intercept', 'p-val hist')
 p.val
 ```
 
-***
-- **z.test**: z-values calculated by dividing coefficients by their standard errors.
-- **p.val**: Two-tailed p-values calculated from the z-values.
+------------------------------------------------------------------------
+
+-   **z.test**: z-values calculated by dividing coefficients by their standard errors.
+-   **p.val**: Two-tailed p-values calculated from the z-values.
 
 ### Confidence Intervals
 
@@ -1003,20 +996,24 @@ p.val
 confint(mlog_nnet2, level = 0.95)
 ```
 
-***
-- **Confidence intervals**: Provide a range within which the true coefficient values are expected to lie with 95% confidence.
+------------------------------------------------------------------------
+
+-   **Confidence intervals**: Provide a range within which the true coefficient values are expected to lie with 95% confidence.
 
 # Acknowledgment
+
 I would like to express my gratitude to [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/), Medical Epidemiologist and Statistician, and Professor in Epidemiology and Biostatistics at the School of Medical Sciences, Universiti Sains Malaysia, for his teaching and guidance on the subject matter.
 
 # References
-- Lecture on Multinomial Logistic Regression by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/).
-- [Applied Logistic Regression, Second Edition by Hosmer and Lemeshow, Chapter 8: Special Topics](https://stats.idre.ucla.edu/stata/examples/alr2/applied-logistic-regression-second-edition-by-hosmer-and-lemeshowchapter-8-special-topics/). UCLA Institute for Digital Research & Education.
-- [STAT 504: Analysis of Discrete Data, Lesson 11: Multinomial Logistic Regression](https://onlinecourses.science.psu.edu/stat504/node/171). Penn State Eberly College of Science.
-- [R Data Analysis Examples: Multinomial Logistic Regression](https://stats.idre.ucla.edu/r/dae/multinomial-logistic-regression/). UCLA Institute for Digital Research & Education.
-- [The mlogit Package: Multinomial Logit Models in R](https://cran.r-project.org/web/packages/mlogit/vignettes/mlogit.pdf). Croissant, Y. (2021).
-- Long, J. S., & Freese, J. "Models for Nominal Outcomes." In *Regression Models for Categorical Dependent Variables Using Stata* (3rd ed.). Stata Press.
-- Hosmer, D. W. Jr., Lemeshow, S., & Sturdivant, R. X. (2013). *Special Topics*. In *Applied Logistic Regression* (3rd ed.). Wiley.
+
+-   Lecture on Multinomial Logistic Regression by [Professor Dr. Kamarul Imran Musa](https://myanalytics.com.my/).
+-   [Applied Logistic Regression, Second Edition by Hosmer and Lemeshow, Chapter 8: Special Topics](https://stats.idre.ucla.edu/stata/examples/alr2/applied-logistic-regression-second-edition-by-hosmer-and-lemeshowchapter-8-special-topics/). UCLA Institute for Digital Research & Education.
+-   [STAT 504: Analysis of Discrete Data, Lesson 11: Multinomial Logistic Regression](https://onlinecourses.science.psu.edu/stat504/node/171). Penn State Eberly College of Science.
+-   [R Data Analysis Examples: Multinomial Logistic Regression](https://stats.idre.ucla.edu/r/dae/multinomial-logistic-regression/). UCLA Institute for Digital Research & Education.
+-   [The mlogit Package: Multinomial Logit Models in R](https://cran.r-project.org/web/packages/mlogit/vignettes/mlogit.pdf). Croissant, Y. (2021).
+-   Long, J. S., & Freese, J. "Models for Nominal Outcomes." In *Regression Models for Categorical Dependent Variables Using Stata* (3rd ed.). Stata Press.
+-   Hosmer, D. W. Jr., Lemeshow, S., & Sturdivant, R. X. (2013). *Special Topics*. In *Applied Logistic Regression* (3rd ed.). Wiley.
 
 # R Codes
+
 The R codes used in this analysis are available at the following GitHub repository: [DrPH-Epidemiology-Revision](https://github.com/drsaufi/DrPH-Epidemiology-Revision.git). This repository includes all scripts and data necessary to replicate the analyses presented in this work.
