@@ -11,9 +11,6 @@ format:
     toc-depth: 5
     toc-expand: 1
     number-sections: true
-    code-fold: true
-    code-summary: "Code"
-    code-link: true
     theme:
       light: united
       dark: cyborg
@@ -90,10 +87,10 @@ The relationship between predictors and the log-odds of being in a lower versus 
 Load the necessary libraries to ensure the R environment is equipped with the tools and functions required for efficient and effective analysis.
 
 ```{r, warning=FALSE, message=FALSE}
-library(ordinal) # to perform ordinal model
-library(tidyverse) # data wrangling
-library(haven) # to read statistical data
-library(broom) # to tidy results
+library(ordinal)    # to perform ordinal model
+library(tidyverse)  # data wrangling
+library(haven)      # to read statistical data
+library(broom)      # to tidy results
 library(gtsummary)
 library(VGAM)
 library(brant)
