@@ -23,14 +23,17 @@ include-after-body: "footer.html"
 ---
 
 # Introduction
+
 A transfer function, also known as an activation function, is a crucial component of a neural network. It determines the output of a neuron given an input or a set of inputs. The primary role of the transfer function is to introduce non-linearity into the network, enabling it to learn and model complex patterns in the data.
 
 # Types of Transfer Functions
 
 ## Linear Function
+
 Adds inputs coming into a neuron and produces an output directly proportional to the input.
 
 ## Sigmoid (Logical Activation) Function
+
 Maps input values to a range between 0 and 1.
 
 $$
@@ -38,12 +41,13 @@ Y_T = \frac{1}{1 + e^{-Y}}
 $$
 
 ## Tangent Hyperbolic Function (Tanh)
+
 Maps input values to a range between -1 and 1.
 
 # Example of Calculation
 
-- Inputs: $X_1 = 3$, $X_2 = 1$, $X_3 = 2$
-- Weights: $W_1 = 0.2$, $W_2 = 0.4$, $W_3 = 0.1$
+-   Inputs: $X_1 = 3$, $X_2 = 1$, $X_3 = 2$
+-   Weights: $W_1 = 0.2$, $W_2 = 0.4$, $W_3 = 0.1$
 
 ## Calculate the Weighted Sum (Y)
 
@@ -79,11 +83,11 @@ $$
 
 ## Summary
 
-- The weighted sum of the inputs ($Y$) is 1.2.
-- The sigmoid function transforms $Y$ into $Y_T \approx 0.77$.
+-   The weighted sum of the inputs ($Y$) is 1.2.
+-   The sigmoid function transforms $Y$ into $Y_T \approx 0.77$.
 
 ## Threshold Value
 
-- In the context of neural networks, a threshold value is often used to decide if a neuron should be activated or not.
-- Typically, for a sigmoid function, a common threshold is 0.5. If $Y_T$ is greater than 0.5, the neuron is considered activated (output 1); otherwise, it is not activated (output 0).
-- In this example, $Y_T = 0.77$, which is greater than 0.5, so the neuron would be activated.
+-   In the context of neural networks, a threshold value is often used to decide if a neuron should be activated or not.
+-   Typically, for a sigmoid function, a common threshold is 0.5. If $Y_T$ is greater than 0.5, the neuron is considered activated (output 1); otherwise, it is not activated (output 0).
+-   In this example, $Y_T = 0.77$, which is greater than 0.5, so the neuron would be activated.
