@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="DrPH Epidemiology 2023/2024">
 <meta name="dcterms.date" content="2024-07-17">
-<title>Machine Learning Classification</title>
+<title>Breast Cancer Survival Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -149,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Machine Learning Classification</h1>
+<h1 class="title">Breast Cancer Survival Analysis</h1>
 </div>
 
 
@@ -6633,23 +6633,23 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
 <pre><code>554 observations missing `Breast_surgery` have been removed. To include these observations, use `forcats::fct_na_value_to_level()` on `Breast_surgery` column before passing to `tbl_summary()`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="zwducsfygz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zwducsfygz table {
+<div id="zoccbnmiva" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zoccbnmiva table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zwducsfygz thead, #zwducsfygz tbody, #zwducsfygz tfoot, #zwducsfygz tr, #zwducsfygz td, #zwducsfygz th {
+#zoccbnmiva thead, #zoccbnmiva tbody, #zoccbnmiva tfoot, #zoccbnmiva tr, #zoccbnmiva td, #zoccbnmiva th {
   border-style: none;
 }
 
-#zwducsfygz p {
+#zoccbnmiva p {
   margin: 0;
   padding: 0;
 }
 
-#zwducsfygz .gt_table {
+#zoccbnmiva .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -6675,12 +6675,12 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_caption {
+#zoccbnmiva .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zwducsfygz .gt_title {
+#zoccbnmiva .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -6692,7 +6692,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-bottom-width: 0;
 }
 
-#zwducsfygz .gt_subtitle {
+#zoccbnmiva .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -6704,7 +6704,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-top-width: 0;
 }
 
-#zwducsfygz .gt_heading {
+#zoccbnmiva .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -6716,13 +6716,13 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_bottom_border {
+#zoccbnmiva .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_col_headings {
+#zoccbnmiva .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6737,7 +6737,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_col_heading {
+#zoccbnmiva .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6757,7 +6757,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   overflow-x: hidden;
 }
 
-#zwducsfygz .gt_column_spanner_outer {
+#zoccbnmiva .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6769,15 +6769,15 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   padding-right: 4px;
 }
 
-#zwducsfygz .gt_column_spanner_outer:first-child {
+#zoccbnmiva .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zwducsfygz .gt_column_spanner_outer:last-child {
+#zoccbnmiva .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zwducsfygz .gt_column_spanner {
+#zoccbnmiva .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -6789,11 +6789,11 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   width: 100%;
 }
 
-#zwducsfygz .gt_spanner_row {
+#zoccbnmiva .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zwducsfygz .gt_group_heading {
+#zoccbnmiva .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6819,7 +6819,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   text-align: left;
 }
 
-#zwducsfygz .gt_empty_group_heading {
+#zoccbnmiva .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -6834,15 +6834,15 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   vertical-align: middle;
 }
 
-#zwducsfygz .gt_from_md > :first-child {
+#zoccbnmiva .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zwducsfygz .gt_from_md > :last-child {
+#zoccbnmiva .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zwducsfygz .gt_row {
+#zoccbnmiva .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6861,7 +6861,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   overflow-x: hidden;
 }
 
-#zwducsfygz .gt_stub {
+#zoccbnmiva .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6874,7 +6874,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   padding-right: 5px;
 }
 
-#zwducsfygz .gt_stub_row_group {
+#zoccbnmiva .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -6888,15 +6888,15 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   vertical-align: top;
 }
 
-#zwducsfygz .gt_row_group_first td {
+#zoccbnmiva .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zwducsfygz .gt_row_group_first th {
+#zoccbnmiva .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zwducsfygz .gt_summary_row {
+#zoccbnmiva .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -6906,16 +6906,16 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   padding-right: 5px;
 }
 
-#zwducsfygz .gt_first_summary_row {
+#zoccbnmiva .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_first_summary_row.thick {
+#zoccbnmiva .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zwducsfygz .gt_last_summary_row {
+#zoccbnmiva .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6925,7 +6925,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_grand_summary_row {
+#zoccbnmiva .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -6935,7 +6935,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   padding-right: 5px;
 }
 
-#zwducsfygz .gt_first_grand_summary_row {
+#zoccbnmiva .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6945,7 +6945,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_last_grand_summary_row_top {
+#zoccbnmiva .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -6955,11 +6955,11 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_striped {
+#zoccbnmiva .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zwducsfygz .gt_table_body {
+#zoccbnmiva .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -6968,7 +6968,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_footnotes {
+#zoccbnmiva .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -6982,7 +6982,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_footnote {
+#zoccbnmiva .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -6991,7 +6991,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   padding-right: 5px;
 }
 
-#zwducsfygz .gt_sourcenotes {
+#zoccbnmiva .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -7005,7 +7005,7 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zwducsfygz .gt_sourcenote {
+#zoccbnmiva .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -7013,63 +7013,63 @@ Score (logrank) test = 65.68  on 2 df,   p=5e-15</code></pre>
   padding-right: 5px;
 }
 
-#zwducsfygz .gt_left {
+#zoccbnmiva .gt_left {
   text-align: left;
 }
 
-#zwducsfygz .gt_center {
+#zoccbnmiva .gt_center {
   text-align: center;
 }
 
-#zwducsfygz .gt_right {
+#zoccbnmiva .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zwducsfygz .gt_font_normal {
+#zoccbnmiva .gt_font_normal {
   font-weight: normal;
 }
 
-#zwducsfygz .gt_font_bold {
+#zoccbnmiva .gt_font_bold {
   font-weight: bold;
 }
 
-#zwducsfygz .gt_font_italic {
+#zoccbnmiva .gt_font_italic {
   font-style: italic;
 }
 
-#zwducsfygz .gt_super {
+#zoccbnmiva .gt_super {
   font-size: 65%;
 }
 
-#zwducsfygz .gt_footnote_marks {
+#zoccbnmiva .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zwducsfygz .gt_asterisk {
+#zoccbnmiva .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zwducsfygz .gt_indent_1 {
+#zoccbnmiva .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zwducsfygz .gt_indent_2 {
+#zoccbnmiva .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zwducsfygz .gt_indent_3 {
+#zoccbnmiva .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zwducsfygz .gt_indent_4 {
+#zoccbnmiva .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zwducsfygz .gt_indent_5 {
+#zoccbnmiva .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

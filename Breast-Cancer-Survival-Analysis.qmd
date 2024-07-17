@@ -1,5 +1,5 @@
 ---
-title: "Machine Learning Classification"
+title: "Breast Cancer Survival Analysis"
 author: "DrPH Epidemiology 2023/2024"
 date: last-modified
 format: 
