@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.4.555">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="DrPH Epidemiology 2023/2024">
-<meta name="dcterms.date" content="2024-07-15">
+<meta name="dcterms.date" content="2024-07-17">
 <title>Machine Learning Classification</title>
 <style>
 code{white-space: pre-wrap;}
@@ -147,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 15, 2024</p>
+      <p class="date">July 17, 2024</p>
     </div>
   </div>
   
@@ -261,10 +261,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="model-building-1" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="model-building-1">
 <span class="header-section-number">4.1</span> Model Building</h2>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DTmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>, </span>
-<span>                 data <span class="op">=</span> <span class="va">trainData</span>, </span>
-<span>                 method <span class="op">=</span> <span class="st">"class"</span>, </span>
-<span>                 parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>split <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DTmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">trainData</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"class"</span>,</span>
+<span>  parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>split <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/rpart.plot/man/prp.html">prp</a></span><span class="op">(</span><span class="va">DTmodel</span>, roundint <span class="op">=</span> <span class="cn">FALSE</span>, digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -343,9 +344,9 @@ Prediction neg pos
 <span><span class="va">testDataN</span> <span class="op">&lt;-</span> <span class="va">pima2</span><span class="op">[</span><span class="op">(</span><span class="va">sRow</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">pima2</span><span class="op">)</span>, <span class="op">]</span></span>
 <span></span>
 <span><span class="va">KNNpred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/class/man/knn.html">knn</a></span><span class="op">(</span></span>
-<span>  train <span class="op">=</span> <span class="va">trainDataN</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>, </span>
+<span>  train <span class="op">=</span> <span class="va">trainDataN</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>,</span>
 <span>  test <span class="op">=</span> <span class="va">testDataN</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>,</span>
-<span>  cl <span class="op">=</span> <span class="va">trainDataN</span><span class="op">[</span>, <span class="fl">9</span><span class="op">]</span>, </span>
+<span>  cl <span class="op">=</span> <span class="va">trainDataN</span><span class="op">[</span>, <span class="fl">9</span><span class="op">]</span>,</span>
 <span>  k <span class="op">=</span> <span class="fl">7</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -393,11 +394,12 @@ Prediction neg pos
 <section id="model-building-with-1-layer" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="model-building-with-1-layer">
 <span class="header-section-number">6.1</span> Model Building with 1 Layer</h2>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NNmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuralnet/man/neuralnet.html">neuralnet</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">pregnant</span> <span class="op">+</span> <span class="va">glucose</span> <span class="op">+</span> <span class="va">pressure</span> <span class="op">+</span> <span class="va">triceps</span> <span class="op">+</span> <span class="va">insulin</span> <span class="op">+</span></span>
-<span>  <span class="va">mass</span> <span class="op">+</span> <span class="va">pedigree</span> <span class="op">+</span> <span class="va">age</span>, </span>
-<span>  data <span class="op">=</span> <span class="va">trainDataN</span>, </span>
-<span>  hidden <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>  linear.output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">NNmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuralnet/man/neuralnet.html">neuralnet</a></span><span class="op">(</span></span>
+<span>  <span class="va">diabetes</span> <span class="op">~</span> <span class="va">pregnant</span> <span class="op">+</span> <span class="va">glucose</span> <span class="op">+</span> <span class="va">pressure</span> <span class="op">+</span> <span class="va">triceps</span> <span class="op">+</span> <span class="va">insulin</span> <span class="op">+</span> <span class="va">mass</span> <span class="op">+</span> <span class="va">pedigree</span> <span class="op">+</span> <span class="va">age</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">trainDataN</span>,</span>
+<span>  hidden <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  linear.output <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">NNmodel</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -466,28 +468,28 @@ Prediction neg pos
 <table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
 <caption>Comparison of Evaluation Metrics for Machine Learning Models</caption>
 <thead><tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Metric</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Decision Tree</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">K-Nearest Neighbor</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">Artificial Neural Network</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Model</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Accuracy</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Recall (Sensitivity)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Precision (PPV)</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Accuracy</td>
+<td style="text-align: left;">Decision Tree</td>
 <td style="text-align: right;">0.8037</td>
-<td style="text-align: right;">0.7757</td>
-<td style="text-align: right;">0.8131</td>
+<td style="text-align: right;">0.6316</td>
+<td style="text-align: right;">0.7742</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Recall (Sensitivity)</td>
-<td style="text-align: right;">0.6316</td>
+<td style="text-align: left;">K-Nearest Neighbor</td>
+<td style="text-align: right;">0.7757</td>
 <td style="text-align: right;">0.5263</td>
-<td style="text-align: right;">0.6579</td>
+<td style="text-align: right;">0.7692</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Precision (PPV)</td>
-<td style="text-align: right;">0.7742</td>
-<td style="text-align: right;">0.7692</td>
+<td style="text-align: left;">Artificial Neural Network</td>
+<td style="text-align: right;">0.8131</td>
+<td style="text-align: right;">0.6579</td>
 <td style="text-align: right;">0.7812</td>
 </tr>
 </tbody>
@@ -515,10 +517,11 @@ Prediction neg pos
 <span>  <span class="va">test</span><span class="op">$</span><span class="va">.id</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span>  <span class="va">train</span><span class="op">$</span><span class="va">.id</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span></span>
-<span>  <span class="va">DTmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>, </span>
-<span>                   data <span class="op">=</span> <span class="va">train</span>, </span>
-<span>                   method <span class="op">=</span> <span class="st">"class"</span>, </span>
-<span>                   parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>split <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">DTmodel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">train</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"class"</span>,</span>
+<span>    parms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>split <span class="op">=</span> <span class="st">"information"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span>  <span class="va">DTpred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">DTmodel</span>, <span class="va">test</span>, type <span class="op">=</span> <span class="st">"class"</span><span class="op">)</span></span>
 <span></span>
