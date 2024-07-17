@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Dr Muhammad Saufi">
+<meta name="dcterms.date" content="2024-07-17">
+<title>Machine Learning Regression</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="ML-Regression_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ML-Regression_files/libs/quarto-html/quarto.js"></script>
+<script src="ML-Regression_files/libs/quarto-html/popper.min.js"></script>
+<script src="ML-Regression_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ML-Regression_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ML-Regression_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ML-Regression_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="ML-Regression_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="ML-Regression_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ML-Regression_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ML-Regression_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="ML-Regression_files/libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="1"><h2 id="toc-title">Contents</h2>
+   
+  <ul>
+<li>
+<a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
+  <ul>
+<li><a href="#definition-of-machine-learning" id="toc-definition-of-machine-learning" class="nav-link" data-scroll-target="#definition-of-machine-learning"><span class="header-section-number">1.1</span> Definition of Machine Learning</a></li>
+  <li>
+<a href="#different-tasks-of-machine-learning" id="toc-different-tasks-of-machine-learning" class="nav-link" data-scroll-target="#different-tasks-of-machine-learning"><span class="header-section-number">1.2</span> Different Tasks of Machine Learning</a>
+  <ul>
+<li>
+<a href="#supervised-learning" id="toc-supervised-learning" class="nav-link" data-scroll-target="#supervised-learning"><span class="header-section-number">1.2.1</span> Supervised Learning</a>
+  <ul class="collapse">
+<li><a href="#classification" id="toc-classification" class="nav-link" data-scroll-target="#classification"><span class="header-section-number">1.2.1.1</span> Classification</a></li>
+  <li><a href="#regression" id="toc-regression" class="nav-link" data-scroll-target="#regression"><span class="header-section-number">1.2.1.2</span> Regression</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#unsupervised-learning" id="toc-unsupervised-learning" class="nav-link" data-scroll-target="#unsupervised-learning"><span class="header-section-number">1.2.2</span> Unsupervised Learning</a>
+  <ul class="collapse">
+<li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering"><span class="header-section-number">1.2.2.1</span> Clustering</a></li>
+  <li><a href="#association" id="toc-association" class="nav-link" data-scroll-target="#association"><span class="header-section-number">1.2.2.2</span> Association</a></li>
+  <li><a href="#dimension-reduction" id="toc-dimension-reduction" class="nav-link" data-scroll-target="#dimension-reduction"><span class="header-section-number">1.2.2.3</span> Dimension Reduction</a></li>
+  </ul>
+</li>
+  <li><a href="#reinforcement-learning" id="toc-reinforcement-learning" class="nav-link" data-scroll-target="#reinforcement-learning"><span class="header-section-number">1.2.3</span> Reinforcement Learning</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#linear-regression-analysis" id="toc-linear-regression-analysis" class="nav-link" data-scroll-target="#linear-regression-analysis"><span class="header-section-number">2</span> Linear Regression Analysis</a>
+  <ul>
+<li><a href="#install-required-packages" id="toc-install-required-packages" class="nav-link" data-scroll-target="#install-required-packages"><span class="header-section-number">2.1</span> Install Required Packages</a></li>
+  <li><a href="#load-the-dataset" id="toc-load-the-dataset" class="nav-link" data-scroll-target="#load-the-dataset"><span class="header-section-number">2.2</span> Load the Dataset</a></li>
+  <li><a href="#examine-the-dataset" id="toc-examine-the-dataset" class="nav-link" data-scroll-target="#examine-the-dataset"><span class="header-section-number">2.3</span> Examine the Dataset</a></li>
+  <li><a href="#split-the-data" id="toc-split-the-data" class="nav-link" data-scroll-target="#split-the-data"><span class="header-section-number">2.4</span> Split the Data</a></li>
+  <li><a href="#build-the-linear-regression-model" id="toc-build-the-linear-regression-model" class="nav-link" data-scroll-target="#build-the-linear-regression-model"><span class="header-section-number">2.5</span> Build the Linear Regression Model</a></li>
+  <li><a href="#summarize-the-model" id="toc-summarize-the-model" class="nav-link" data-scroll-target="#summarize-the-model"><span class="header-section-number">2.6</span> Summarize the Model</a></li>
+  <li><a href="#evaluate-the-model" id="toc-evaluate-the-model" class="nav-link" data-scroll-target="#evaluate-the-model"><span class="header-section-number">2.7</span> Evaluate the Model</a></li>
+  <li>
+<a href="#performance-metrics" id="toc-performance-metrics" class="nav-link" data-scroll-target="#performance-metrics"><span class="header-section-number">2.8</span> Performance Metrics</a>
+  <ul>
+<li>
+<a href="#r-squared" id="toc-r-squared" class="nav-link" data-scroll-target="#r-squared"><span class="header-section-number">2.8.1</span> R-Squared</a>
+  <ul class="collapse">
+<li><a href="#observed-data-points" id="toc-observed-data-points" class="nav-link" data-scroll-target="#observed-data-points"><span class="header-section-number">2.8.1.1</span> Observed Data Points</a></li>
+  <li><a href="#calculate-predicted-values-haty" id="toc-calculate-predicted-values-haty" class="nav-link" data-scroll-target="#calculate-predicted-values-haty"><span class="header-section-number">2.8.1.2</span> Calculate Predicted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+  <li><a href="#calculate-residuals-errors" id="toc-calculate-residuals-errors" class="nav-link" data-scroll-target="#calculate-residuals-errors"><span class="header-section-number">2.8.1.3</span> Calculate Residuals (Errors)</a></li>
+  <li><a href="#sum-of-squared-residuals-ssr" id="toc-sum-of-squared-residuals-ssr" class="nav-link" data-scroll-target="#sum-of-squared-residuals-ssr"><span class="header-section-number">2.8.1.4</span> Sum of Squared Residuals (SSR)</a></li>
+  <li><a href="#total-sum-of-squares-sst" id="toc-total-sum-of-squares-sst" class="nav-link" data-scroll-target="#total-sum-of-squares-sst"><span class="header-section-number">2.8.1.5</span> Total Sum of Squares (SST)</a></li>
+  <li><a href="#calculate-r-squared-r%C2%B2" id="toc-calculate-r-squared-r²" class="nav-link" data-scroll-target="#calculate-r-squared-r%C2%B2"><span class="header-section-number">2.8.1.6</span> Calculate R-squared (R²)</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">2.8.1.7</span> Conclusion</a></li>
+  </ul>
+</li>
+  <li><a href="#root-mean-squared-error-rmse" id="toc-root-mean-squared-error-rmse" class="nav-link" data-scroll-target="#root-mean-squared-error-rmse"><span class="header-section-number">2.8.2</span> Root Mean Squared Error (RMSE)</a></li>
+  <li>
+<a href="#mean-absolute-error-mae" id="toc-mean-absolute-error-mae" class="nav-link" data-scroll-target="#mean-absolute-error-mae"><span class="header-section-number">2.8.3</span> Mean Absolute Error (MAE)</a>
+  <ul class="collapse">
+<li><a href="#steps-to-calculate-mae" id="toc-steps-to-calculate-mae" class="nav-link" data-scroll-target="#steps-to-calculate-mae"><span class="header-section-number">2.8.3.1</span> Steps to Calculate MAE</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#decision-tree" id="toc-decision-tree" class="nav-link" data-scroll-target="#decision-tree"><span class="header-section-number">3</span> Decision Tree</a>
+  <ul>
+<li><a href="#install-and-load-required-packages" id="toc-install-and-load-required-packages" class="nav-link" data-scroll-target="#install-and-load-required-packages"><span class="header-section-number">3.1</span> Install and Load Required Packages</a></li>
+  <li><a href="#load-the-dataset-1" id="toc-load-the-dataset-1" class="nav-link" data-scroll-target="#load-the-dataset-1"><span class="header-section-number">3.2</span> Load the Dataset</a></li>
+  <li><a href="#examine-the-dataset-structure" id="toc-examine-the-dataset-structure" class="nav-link" data-scroll-target="#examine-the-dataset-structure"><span class="header-section-number">3.3</span> Examine the Dataset Structure</a></li>
+  <li><a href="#split-the-dataset" id="toc-split-the-dataset" class="nav-link" data-scroll-target="#split-the-dataset"><span class="header-section-number">3.4</span> Split the Dataset</a></li>
+  <li><a href="#build-the-regression-tree" id="toc-build-the-regression-tree" class="nav-link" data-scroll-target="#build-the-regression-tree"><span class="header-section-number">3.5</span> Build the Regression Tree</a></li>
+  <li><a href="#plot-the-decision-tree" id="toc-plot-the-decision-tree" class="nav-link" data-scroll-target="#plot-the-decision-tree"><span class="header-section-number">3.6</span> Plot the Decision Tree</a></li>
+  <li><a href="#evaluate-the-tree" id="toc-evaluate-the-tree" class="nav-link" data-scroll-target="#evaluate-the-tree"><span class="header-section-number">3.7</span> Evaluate the Tree</a></li>
+  <li>
+<a href="#prune-the-tree" id="toc-prune-the-tree" class="nav-link" data-scroll-target="#prune-the-tree"><span class="header-section-number">3.8</span> Prune the Tree</a>
+  <ul>
+<li><a href="#pre-pruning" id="toc-pre-pruning" class="nav-link" data-scroll-target="#pre-pruning"><span class="header-section-number">3.8.1</span> Pre-pruning</a></li>
+  <li><a href="#post-pruning" id="toc-post-pruning" class="nav-link" data-scroll-target="#post-pruning"><span class="header-section-number">3.8.2</span> Post-pruning</a></li>
+  </ul>
+</li>
+  <li><a href="#export-the-tree" id="toc-export-the-tree" class="nav-link" data-scroll-target="#export-the-tree"><span class="header-section-number">3.9</span> Export the Tree</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#neural-network-regression" id="toc-neural-network-regression" class="nav-link" data-scroll-target="#neural-network-regression"><span class="header-section-number">4</span> Neural Network Regression</a>
+  <ul>
+<li><a href="#install-and-load-required-packages-1" id="toc-install-and-load-required-packages-1" class="nav-link" data-scroll-target="#install-and-load-required-packages-1"><span class="header-section-number">4.1</span> Install and Load Required Packages</a></li>
+  <li><a href="#initialize-h2o" id="toc-initialize-h2o" class="nav-link" data-scroll-target="#initialize-h2o"><span class="header-section-number">4.2</span> Initialize H2O</a></li>
+  <li><a href="#load-the-dataset-2" id="toc-load-the-dataset-2" class="nav-link" data-scroll-target="#load-the-dataset-2"><span class="header-section-number">4.3</span> Load the Dataset</a></li>
+  <li><a href="#examine-the-data" id="toc-examine-the-data" class="nav-link" data-scroll-target="#examine-the-data"><span class="header-section-number">4.4</span> Examine the Data</a></li>
+  <li><a href="#normalize-the-data" id="toc-normalize-the-data" class="nav-link" data-scroll-target="#normalize-the-data"><span class="header-section-number">4.5</span> Normalize the Data</a></li>
+  <li><a href="#split-the-data-into-training-and-test-sets" id="toc-split-the-data-into-training-and-test-sets" class="nav-link" data-scroll-target="#split-the-data-into-training-and-test-sets"><span class="header-section-number">4.6</span> Split the Data into Training and Test Sets</a></li>
+  <li><a href="#build-the-neural-network-model" id="toc-build-the-neural-network-model" class="nav-link" data-scroll-target="#build-the-neural-network-model"><span class="header-section-number">4.7</span> Build the Neural Network Model</a></li>
+  <li><a href="#plot-the-scoring-history" id="toc-plot-the-scoring-history" class="nav-link" data-scroll-target="#plot-the-scoring-history"><span class="header-section-number">4.8</span> Plot the Scoring History</a></li>
+  <li><a href="#make-predictions-and-evaluate-the-model" id="toc-make-predictions-and-evaluate-the-model" class="nav-link" data-scroll-target="#make-predictions-and-evaluate-the-model"><span class="header-section-number">4.9</span> Make Predictions and Evaluate the Model</a></li>
+  <li><a href="#implement-early-stopping" id="toc-implement-early-stopping" class="nav-link" data-scroll-target="#implement-early-stopping"><span class="header-section-number">4.10</span> Implement Early Stopping</a></li>
+  <li><a href="#implement-dropout-regularization" id="toc-implement-dropout-regularization" class="nav-link" data-scroll-target="#implement-dropout-regularization"><span class="header-section-number">4.11</span> Implement Dropout Regularization</a></li>
+  </ul>
+</li>
+  </ul></nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">Machine Learning Regression</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr Muhammad Saufi </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 17, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header><section id="introduction" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Introduction</h1>
+<section id="definition-of-machine-learning" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="definition-of-machine-learning">
+<span class="header-section-number">1.1</span> Definition of Machine Learning</h2>
+<p>Machine learning is a study, design, and development of models and algorithms that enable computers to learn from data ad make predictions or decisions.</p>
+<p>Machine learning uses algorithms and computational power to determine if a relationships exists between data and labels.</p>
+<p>In machine learning, a computer program is said to learn from experience (E), with respect to some task (T), and some performance measure (P), if its performance on (T), as measured by (P), improve with experience (E).</p>
+</section><section id="different-tasks-of-machine-learning" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="different-tasks-of-machine-learning">
+<span class="header-section-number">1.2</span> Different Tasks of Machine Learning</h2>
+<section id="supervised-learning" class="level3" data-number="1.2.1"><h3 data-number="1.2.1" class="anchored" data-anchor-id="supervised-learning">
+<span class="header-section-number">1.2.1</span> Supervised Learning</h3>
+<p>Supervised learning is a type of machine learning where the model is trained on a labeled dataset. The goal is to learn a mapping from inputs to outputs based on the provided labels. There are two primary tasks under supervised learning: classification and regression.</p>
+<section id="classification" class="level4" data-number="1.2.1.1"><h4 data-number="1.2.1.1" class="anchored" data-anchor-id="classification">
+<span class="header-section-number">1.2.1.1</span> Classification</h4>
+<p>Classification is the task of predicting a category or class label for a given input. The model is trained on a dataset where each example is labeled with the correct class. The objective is to learn from these examples and accurately classify new, unseen data.</p>
+<p>An example of classification is dividing the socks by color. In this scenario, the model could be trained to recognize different colors of socks. Given a pile of socks, the model would sort them into categories such as red, blue, green, etc.</p>
+<p>This task is useful in various applications, such as spam detection in emails (classifying emails as spam or not spam), handwriting recognition (classifying handwritten digits), and medical diagnosis (classifying whether a patient has a particular disease based on symptoms).</p>
+</section><section id="regression" class="level4" data-number="1.2.1.2"><h4 data-number="1.2.1.2" class="anchored" data-anchor-id="regression">
+<span class="header-section-number">1.2.1.2</span> Regression</h4>
+<p>Regression is the task of predicting a continuous value for a given input. Unlike classification, which predicts discrete labels, regression predicts numerical values.</p>
+<p>An example of regression is dividing the ties by length. In this case, the model could be trained to predict the length of ties based on features such as brand, fabric, or style. Given a set of ties, the model would estimate their lengths and sort them accordingly.</p>
+<p>Regression tasks are common in various fields, such as predicting house prices based on features like location, size, and number of bedrooms, forecasting stock prices based on historical data, and estimating the amount of rainfall based on weather conditions.</p>
+</section></section><section id="unsupervised-learning" class="level3" data-number="1.2.2"><h3 data-number="1.2.2" class="anchored" data-anchor-id="unsupervised-learning">
+<span class="header-section-number">1.2.2</span> Unsupervised Learning</h3>
+<p>Unsupervised learning deals with unlabeled data, meaning the model tries to learn the patterns and structure from the data without any specific guidance on what the outputs should be. There are several tasks under unsupervised learning, including clustering, association, and dimension reduction.</p>
+<section id="clustering" class="level4" data-number="1.2.2.1"><h4 data-number="1.2.2.1" class="anchored" data-anchor-id="clustering">
+<span class="header-section-number">1.2.2.1</span> Clustering</h4>
+<p>Clustering is a technique used to group similar data points based on their characteristics. This is useful in various scenarios where identifying natural groupings in data can provide insights or aid decision-making.</p>
+<p>Suppose you have a pile of clothes, and you want to organize them by similarity, such as color, type, or fabric. Clustering algorithms can automatically group similar items together, making it easier to organize and manage your wardrobe. For example, all the red shirts might be grouped in one cluster, while all the blue jeans might be in another.</p>
+</section><section id="association" class="level4" data-number="1.2.2.2"><h4 data-number="1.2.2.2" class="anchored" data-anchor-id="association">
+<span class="header-section-number">1.2.2.2</span> Association</h4>
+<p>Association learning identifies relationships between variables in a dataset. It is often used to find patterns or associations between different items that occur together.</p>
+<p>For example, in the context of clothing, association can help find hidden dependencies, such as which items of clothing are often worn together. If you frequently wear a certain shirt with a specific pair of pants, an association learning algorithm can identify this pattern.</p>
+<p>This information can be useful for making recommendations or optimizing your wardrobe choices. For instance, a system could suggest pairing items that you have not previously considered, based on the associations it has learned from your past choices.</p>
+</section><section id="dimension-reduction" class="level4" data-number="1.2.2.3"><h4 data-number="1.2.2.3" class="anchored" data-anchor-id="dimension-reduction">
+<span class="header-section-number">1.2.2.3</span> Dimension Reduction</h4>
+<p>Dimension reduction is a process used to reduce the number of variables under consideration, making the data simpler to analyze and visualize. This is particularly helpful when dealing with high-dimensional data.</p>
+<p>In the context of clothing, dimension reduction can help generalize and simplify the task of making outfits from a large collection of clothes. By reducing the complexity of the data, you can identify the most important features that contribute to making good outfits.</p>
+<p>For example, you might reduce the data to a few key dimensions such as color, style, and occasion, which can help you mix and match clothing items more effectively to create the best outfits from your given clothes.</p>
+</section></section><section id="reinforcement-learning" class="level3" data-number="1.2.3"><h3 data-number="1.2.3" class="anchored" data-anchor-id="reinforcement-learning">
+<span class="header-section-number">1.2.3</span> Reinforcement Learning</h3>
+<p>Reinforcement learning involves training models to make sequences of decisions by rewarding desired behaviors and penalizing undesired ones. This type of learning is inspired by behavioral psychology and is used in environments where an agent interacts with its surroundings.</p>
+<p>An example of reinforcement learning is training a robot to navigate a maze. The robot receives positive rewards for making progress towards the exit and negative rewards for hitting walls or going in the wrong direction. Over time, the robot learns to find the most efficient path through the maze.</p>
+<p>Another example is in gaming, where reinforcement learning agents can learn to play games like chess by receiving rewards for winning and penalties for losing. They can increase their performance levels by continuously improving their strategies based on feedback from their actions.</p>
+</section></section></section><section id="linear-regression-analysis" class="level1" data-number="2"><h1 data-number="2">
+<span class="header-section-number">2</span> Linear Regression Analysis</h1>
+<p>To build and evaluate a linear regression model to predict the progression of diabetes using various attributes from the dataset.</p>
+<section id="install-required-packages" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="install-required-packages">
+<span class="header-section-number">2.1</span> Install Required Packages</h2>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mfrasco/Metrics">Metrics</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="load-the-dataset" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="load-the-dataset">
+<span class="header-section-number">2.2</span> Load the Dataset</h2>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diabetes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"Datasets/diabetes.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="examine-the-dataset" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="examine-the-dataset">
+<span class="header-section-number">2.3</span> Examine the Dataset</h2>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">diabetes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   442 obs. of  11 variables:
+ $ age     : num  0.03808 -0.00188 0.0853 -0.08906 0.00538 ...
+ $ sex     : num  0.0507 -0.0446 0.0507 -0.0446 -0.0446 ...
+ $ bmi     : num  0.0617 -0.0515 0.0445 -0.0116 -0.0364 ...
+ $ bp      : num  0.02187 -0.02633 -0.00567 -0.03666 0.02187 ...
+ $ s1      : num  -0.04422 -0.00845 -0.0456 0.01219 0.00393 ...
+ $ s2      : num  -0.0348 -0.0192 -0.0342 0.025 0.0156 ...
+ $ s3      : num  -0.0434 0.07441 -0.03236 -0.03604 0.00814 ...
+ $ s4      : num  -0.00259 -0.03949 -0.00259 0.03431 -0.00259 ...
+ $ s5      : num  0.01991 -0.06833 0.00286 0.02269 -0.03199 ...
+ $ s6      : num  -0.01765 -0.0922 -0.02593 -0.00936 -0.04664 ...
+ $ diabetes: num  151 75 141 206 135 97 138 63 110 310 ...</code></pre>
+</div>
+</div>
+</section><section id="split-the-data" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="split-the-data">
+<span class="header-section-number">2.4</span> Split the Data</h2>
+<p>Split the data into training and testing sets with a ratio of 70:30:</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sample_ind1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">diabetes</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">diabetes</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">train1</span> <span class="op">&lt;-</span> <span class="va">diabetes</span><span class="op">[</span><span class="va">sample_ind1</span>, <span class="op">]</span></span>
+<span><span class="va">test1</span> <span class="op">&lt;-</span> <span class="va">diabetes</span><span class="op">[</span><span class="op">-</span><span class="va">sample_ind1</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="build-the-linear-regression-model" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="build-the-linear-regression-model">
+<span class="header-section-number">2.5</span> Build the Linear Regression Model</h2>
+<p>Create the linear regression model using the training set:</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">lr.mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">train1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="summarize-the-model" class="level2" data-number="2.6"><h2 data-number="2.6" class="anchored" data-anchor-id="summarize-the-model">
+<span class="header-section-number">2.6</span> Summarize the Model</h2>
+<p>Display the summary of the model to understand the coefficients and residuals:</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lr.mod</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = diabetes ~ ., data = train1)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-148.173  -40.545   -3.707   38.469  133.755 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   149.626      3.083  48.528  &lt; 2e-16 ***
+age            18.239     72.327   0.252  0.80108    
+sex          -230.349     74.801  -3.079  0.00227 ** 
+bmi           455.902     80.564   5.659 3.58e-08 ***
+bp            406.474     75.875   5.357 1.69e-07 ***
+s1          -1164.887    498.231  -2.338  0.02005 *  
+s2            818.387    415.016   1.972  0.04954 *  
+s3            218.545    245.106   0.892  0.37331    
+s4            178.686    190.851   0.936  0.34990    
+s5            846.885    210.294   4.027 7.17e-05 ***
+s6             52.409     77.582   0.676  0.49986    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 53.99 on 298 degrees of freedom
+Multiple R-squared:  0.5054,    Adjusted R-squared:  0.4888 
+F-statistic: 30.45 on 10 and 298 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section><section id="evaluate-the-model" class="level2" data-number="2.7"><h2 data-number="2.7" class="anchored" data-anchor-id="evaluate-the-model">
+<span class="header-section-number">2.7</span> Evaluate the Model</h2>
+<p>Perform predictions on the test set and evaluate the model’s performance using RMSE (Root Mean Squared Error):</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">test1</span><span class="op">$</span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">lr.mod</span>, newdata <span class="op">=</span> <span class="va">test1</span><span class="op">)</span></span>
+<span><span class="va">rmse_value1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span><span class="op">(</span><span class="va">test1</span><span class="op">$</span><span class="va">diabetes</span>, <span class="va">test1</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">rmse_value1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 55.56879</code></pre>
+</div>
+</div>
+<p><strong>RMSE:</strong> The root mean squared error (RMSE) measures the average deviation of predictions from the actual values. A lower RMSE indicates a better fit of the model.</p>
+</section><section id="performance-metrics" class="level2" data-number="2.8"><h2 data-number="2.8" class="anchored" data-anchor-id="performance-metrics">
+<span class="header-section-number">2.8</span> Performance Metrics</h2>
+<section id="r-squared" class="level3" data-number="2.8.1"><h3 data-number="2.8.1" class="anchored" data-anchor-id="r-squared">
+<span class="header-section-number">2.8.1</span> R-Squared</h3>
+<p>R-squared, also known as the coefficient of determination, represents the squared correlation between the observed outcome values and the predicted values by the model. It indicates how well the model explains the variability of the response data around its mean. The value of R-squared ranges from 0 to 1:</p>
+<ul>
+<li>
+<strong>Higher R2</strong>: Indicates a better fit of the model, meaning it explains a higher proportion of the variance in the outcome variable.</li>
+<li>
+<strong>Lower R2</strong>: Indicates a poorer fit, meaning it explains a lower proportion of the variance.</li>
+</ul>
+<p><span class="math display">\[
+R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
+\]</span></p>
+<ul>
+<li>
+<span class="math inline">\(y_i\)</span> are the observed values.</li>
+<li>
+<span class="math inline">\(\hat{y}_i\)</span> are the predicted values from the regression model.</li>
+<li>
+<span class="math inline">\(\bar{y}\)</span> is the mean of the observed values.</li>
+<li>
+<span class="math inline">\(\sum (y_i - \hat{y}_i)^2\)</span> is the sum of the squared residuals (SSR).</li>
+<li>
+<span class="math inline">\(\sum (y_i - \bar{y})^2\)</span> is the total sum of squares (SST).</li>
+</ul>
+<section id="observed-data-points" class="level4" data-number="2.8.1.1"><h4 data-number="2.8.1.1" class="anchored" data-anchor-id="observed-data-points">
+<span class="header-section-number">2.8.1.1</span> Observed Data Points</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="Inputs/Graph.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>From the graph, we can see the observed data points are:</p>
+<ul>
+<li>(2, 2)</li>
+<li>(3, 4)</li>
+<li>(4, 6)</li>
+<li>(6, 7)</li>
+</ul>
+<p>To calculate R-squared (R²), we need to understand how well the regression line predicts the actual data points. The given equation of the regression line is:</p>
+<p><span class="math display">\[
+\hat{y} = 0.143 + 1.229x
+\]</span></p>
+</section><section id="calculate-predicted-values-haty" class="level4" data-number="2.8.1.2"><h4 data-number="2.8.1.2" class="anchored" data-anchor-id="calculate-predicted-values-haty">
+<span class="header-section-number">2.8.1.2</span> Calculate Predicted Values (<span class="math inline">\(\hat{y}\)</span>)</h4>
+<p>Use the regression line equation to calculate the predicted values for each ( x ):</p>
+<p>For <span class="math inline">\(x = 2\)</span>:</p>
+<p><span class="math display">\[
+\hat{y} = 0.143 + 1.229 \times 2 = 2.601 \
+\]</span></p>
+<p>For <span class="math inline">\(x = 3\)</span>:</p>
+<p><span class="math display">\[
+\hat{y} = 0.143 + 1.229 \times 3 = 3.83 \
+\]</span></p>
+<p>For <span class="math inline">\(x = 4\)</span>:</p>
+<p><span class="math display">\[
+\hat{y} = 0.143 + 1.229 \times 4 = 5.059 \
+\]</span></p>
+<p>For <span class="math inline">\(x = 6\)</span>:</p>
+<p><span class="math display">\[
+\hat{y} = 0.143 + 1.229 \times 6 = 7.517 \
+\]</span></p>
+</section><section id="calculate-residuals-errors" class="level4" data-number="2.8.1.3"><h4 data-number="2.8.1.3" class="anchored" data-anchor-id="calculate-residuals-errors">
+<span class="header-section-number">2.8.1.3</span> Calculate Residuals (Errors)</h4>
+<p>The residual for each point is the difference between the actual ( y ) value and the predicted ( y ) value:</p>
+<p>For (2, 2): <span class="math display">\[ r_1 = y_1 - \hat{y}_1 = 2 - 2.601 = -0.601 \]</span></p>
+<p>For (3, 4): <span class="math display">\[ r_2 = y_2 - \hat{y}_2 = 4 - 3.83 = 0.17 \]</span></p>
+<p>For (4, 6): <span class="math display">\[ r_3 = y_3 - \hat{y}_3 = 6 - 5.059 = 0.941 \]</span></p>
+<p>For (6, 7): <span class="math display">\[ r_4 = y_4 - \hat{y}_4 = 7 - 7.517 = -0.517 \]</span></p>
+</section><section id="sum-of-squared-residuals-ssr" class="level4" data-number="2.8.1.4"><h4 data-number="2.8.1.4" class="anchored" data-anchor-id="sum-of-squared-residuals-ssr">
+<span class="header-section-number">2.8.1.4</span> Sum of Squared Residuals (SSR)</h4>
+<p>Calculate the sum of the squared residuals:</p>
+<p><span class="math display">\[
+SSR = (-0.601)^2 + (0.17)^2 + (0.941)^2 + (-0.517)^2 = 1.542871
+\]</span></p>
+</section><section id="total-sum-of-squares-sst" class="level4" data-number="2.8.1.5"><h4 data-number="2.8.1.5" class="anchored" data-anchor-id="total-sum-of-squares-sst">
+<span class="header-section-number">2.8.1.5</span> Total Sum of Squares (SST)</h4>
+<p>Calculate the mean of the observed <span class="math inline">\(y\)</span> values:</p>
+<p><span class="math display">\[
+\bar{y} = \frac{2 + 4 + 6 + 7}{4} = 4.75
+\]</span></p>
+<p>Calculate the total sum of squares:</p>
+<p><span class="math display">\[
+SST = (2 - 4.75)^2 + (4 - 4.75)^2 + (6 - 4.75)^2 + (7 - 4.75)^2 = 14.75
+\]</span></p>
+</section><section id="calculate-r-squared-r²" class="level4" data-number="2.8.1.6"><h4 data-number="2.8.1.6" class="anchored" data-anchor-id="calculate-r-squared-r²">
+<span class="header-section-number">2.8.1.6</span> Calculate R-squared (R²)</h4>
+<p>Finally, calculate R-squared using the formula:</p>
+<p><span class="math display">\[
+R^2 = 1 - \frac{SSR}{SST} = 1 - \frac{1.542871}{14.75} = 1 - 0.105 = 0.895
+\]</span></p>
+</section><section id="conclusion" class="level4" data-number="2.8.1.7"><h4 data-number="2.8.1.7" class="anchored" data-anchor-id="conclusion">
+<span class="header-section-number">2.8.1.7</span> Conclusion</h4>
+<p>The R-squared value of 0.895 indicates that approximately 89.5% of the variance in the number of hours spent at the university per day can be explained by the number of lectures per day. This shows a strong relationship between the two variables in this example.</p>
+</section></section><section id="root-mean-squared-error-rmse" class="level3" data-number="2.8.2"><h3 data-number="2.8.2" class="anchored" data-anchor-id="root-mean-squared-error-rmse">
+<span class="header-section-number">2.8.2</span> Root Mean Squared Error (RMSE)</h3>
+<p>RMSE measures the average prediction error made by the model in predicting the outcome for an observation. It is calculated as the square root of the average squared differences between the predicted values and the actual values. RMSE is sensitive to outliers because it squares the errors, giving more weight to larger errors. The formula for RMSE is:</p>
+<p><span class="math display">\[
+\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^n (y_i - \hat{y_i})^2}
+\]</span></p>
+<ul>
+<li>
+<strong>Lower RMSE</strong>: Indicates that the model’s predictions are closer to the actual values, meaning a better fit.</li>
+<li>
+<strong>Higher RMSE</strong>: Indicates larger differences between the predicted and actual values, meaning a poorer fit.</li>
+</ul></section><section id="mean-absolute-error-mae" class="level3" data-number="2.8.3"><h3 data-number="2.8.3" class="anchored" data-anchor-id="mean-absolute-error-mae">
+<span class="header-section-number">2.8.3</span> Mean Absolute Error (MAE)</h3>
+<p>MAE measures the average magnitude of the errors in a set of predictions, without considering their direction (i.e., without squaring them). It is calculated as the average of the absolute differences between the predicted values and the actual values. MAE is less sensitive to outliers compared to RMSE. The formula for MAE is:</p>
+<p><span class="math display">\[
+\text{MAE} = \frac{1}{n} \sum_{i=1}^n |y_i - \hat{y_i}|
+\]</span></p>
+<ul>
+<li>
+<strong>Lower MAE</strong>: Indicates a better fit of the model, meaning the predictions are closer to the actual values.</li>
+<li>
+<strong>Higher MAE</strong>: Indicates a poorer fit, meaning the predictions are further from the actual values.</li>
+</ul>
+<section id="steps-to-calculate-mae" class="level4" data-number="2.8.3.1"><h4 data-number="2.8.3.1" class="anchored" data-anchor-id="steps-to-calculate-mae">
+<span class="header-section-number">2.8.3.1</span> Steps to Calculate MAE</h4>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Actual Predicted
+1      3       2.5
+2      7       7.1
+3      4       4.0
+4      5       5.2</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: center;">Actual (yi)</th>
+<th style="text-align: center;">Predicted (ŷi)</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">7.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ol type="1">
+<li><strong>Calculate the Absolute Differences</strong></li>
+</ol>
+<p>For each observation, subtract the predicted value from the actual value and take the absolute value of the result. This step ensures that all differences are positive.</p>
+<p>Sure, here is the modified text:</p>
+<ul>
+<li>For the first observation: <span class="math inline">\(|3 - 2.5| = 0.5\)</span>
+</li>
+<li>For the second observation: <span class="math inline">\(|7 - 7.1| = 0.1\)</span>
+</li>
+<li>For the third observation: <span class="math inline">\(|4 - 4.0| = 0.0\)</span>
+</li>
+<li>For the fourth observation: <span class="math inline">\(|5 - 5.2| = 0.2\)</span>
+</li>
+</ul>
+<ol start="2" type="1">
+<li><strong>Sum the Absolute Differences</strong></li>
+</ol>
+<p>Add up all the absolute differences calculated in the previous step.</p>
+<p><span class="math display">\[
+0.5 + 0.1 + 0.0 + 0.2 = 0.8
+\]</span></p>
+<ol start="3" type="1">
+<li><strong>Compute the Mean</strong></li>
+</ol>
+<p>Divide the sum of the absolute differences by the number of observations. This gives the mean absolute error.</p>
+<ul>
+<li>Number of observations (<span class="math inline">\(n\)</span>): 4</li>
+<li>MAE: <span class="math inline">\(\frac{0.8}{4} = 0.2\)</span>
+</li>
+</ul>
+<p>So, the Mean Absolute Error (MAE) for this example is 0.2. This value indicates that, on average, the model’s predictions are off by 0.2 units from the actual values.</p>
+</section></section></section></section><section id="decision-tree" class="level1" data-number="3"><h1 data-number="3">
+<span class="header-section-number">3</span> Decision Tree</h1>
+<p>It is a machine learning technique used to model and predict continuous target variables. It constructs a tree-like model of decisions and their possible consequences, allowing for interpretable analysis of complex relationships in the data.</p>
+<section id="install-and-load-required-packages" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="install-and-load-required-packages">
+<span class="header-section-number">3.1</span> Install and Load Required Packages</h2>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bethatkinson/rpart">rpart</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mfrasco/Metrics">Metrics</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="load-the-dataset-1" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="load-the-dataset-1">
+<span class="header-section-number">3.2</span> Load the Dataset</h2>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diabetes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"Datasets/diabetes.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="examine-the-dataset-structure" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="examine-the-dataset-structure">
+<span class="header-section-number">3.3</span> Examine the Dataset Structure</h2>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">diabetes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   442 obs. of  11 variables:
+ $ age     : num  0.03808 -0.00188 0.0853 -0.08906 0.00538 ...
+ $ sex     : num  0.0507 -0.0446 0.0507 -0.0446 -0.0446 ...
+ $ bmi     : num  0.0617 -0.0515 0.0445 -0.0116 -0.0364 ...
+ $ bp      : num  0.02187 -0.02633 -0.00567 -0.03666 0.02187 ...
+ $ s1      : num  -0.04422 -0.00845 -0.0456 0.01219 0.00393 ...
+ $ s2      : num  -0.0348 -0.0192 -0.0342 0.025 0.0156 ...
+ $ s3      : num  -0.0434 0.07441 -0.03236 -0.03604 0.00814 ...
+ $ s4      : num  -0.00259 -0.03949 -0.00259 0.03431 -0.00259 ...
+ $ s5      : num  0.01991 -0.06833 0.00286 0.02269 -0.03199 ...
+ $ s6      : num  -0.01765 -0.0922 -0.02593 -0.00936 -0.04664 ...
+ $ diabetes: num  151 75 141 206 135 97 138 63 110 310 ...</code></pre>
+</div>
+</div>
+</section><section id="split-the-dataset" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="split-the-dataset">
+<span class="header-section-number">3.4</span> Split the Dataset</h2>
+<p>Split the dataset into training (70%) and test (30%) sets. The training set is used for training and creating the model. The test set is to evaluate the accuracy of the model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sample_ind2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">diabetes</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">diabetes</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">train2</span> <span class="op">&lt;-</span> <span class="va">diabetes</span><span class="op">[</span><span class="va">sample_ind2</span>, <span class="op">]</span></span>
+<span><span class="va">test2</span> <span class="op">&lt;-</span> <span class="va">diabetes</span><span class="op">[</span><span class="op">-</span><span class="va">sample_ind2</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="build-the-regression-tree" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="build-the-regression-tree">
+<span class="header-section-number">3.5</span> Build the Regression Tree</h2>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reg_tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">train2</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"anova"</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.control.html">rpart.control</a></span><span class="op">(</span>cp <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="plot-the-decision-tree" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="plot-the-decision-tree">
+<span class="header-section-number">3.6</span> Plot the Decision Tree</h2>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">reg_tree</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="va">reg_tree</span>, cex <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ML-Regression_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="evaluate-the-tree" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="evaluate-the-tree">
+<span class="header-section-number">3.7</span> Evaluate the Tree</h2>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">test2</span><span class="op">$</span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">reg_tree</span>, <span class="va">test2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span><span class="op">(</span><span class="va">test2</span><span class="op">$</span><span class="va">diabetes</span>, <span class="va">test2</span><span class="op">$</span><span class="va">pred</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 65.03866</code></pre>
+</div>
+</div>
+</section><section id="prune-the-tree" class="level2" data-number="3.8"><h2 data-number="3.8" class="anchored" data-anchor-id="prune-the-tree">
+<span class="header-section-number">3.8</span> Prune the Tree</h2>
+<p>Pruning is an essential technique used in decision tree algorithms to reduce the complexity of the model and prevent overfitting. Overfitting occurs when a decision tree model becomes too complex and captures noise in the training data rather than the underlying patterns.</p>
+<p><em>Pre Pruning</em> involves halting the growth of the decision tree early based on certain criteria before it becomes too complex. This method sets thresholds for the tree-building process, such as maximum tree depth, minimum number of samples required to split a node, or minimum number of samples in a leaf node.</p>
+<p>For example, if the maximum depth is set to a specific value, the tree will stop growing when it reaches that depth, even if further splits could improve accuracy on the training data. This early stopping helps prevent the tree from growing excessively and overfitting the training data.</p>
+<p><em>Post Pruning</em> is the process of trimming a fully grown decision tree after it has been built. This technique involves first allowing the tree to grow to its full depth, capturing all possible splits, and then removing branches that do not provide significant power to the model.</p>
+<p>Post pruning can be done using various methods, such as reducing the number of leaf nodes or merging leaf nodes that do not add much predictive value. The goal is to simplify the tree by removing parts that may have been added due to noise in the training data, thus enhancing the model’s ability to generalize.</p>
+<p><em>Cost Complexity Pruning</em> is a specific type of post-pruning that involves evaluating the trade-off between the complexity of the tree and its performance on the training data. This method introduces a complexity parameter, often denoted as <span class="math inline">\(\alpha\)</span>, which penalizes the tree’s complexity by adding a cost term that increases with the number of leaf nodes.</p>
+<p>The pruning process involves finding the optimal value of <span class="math inline">\(\alpha\)</span> that balances model accuracy and simplicity. Trees are pruned by removing branches that contribute less to reducing the cost complexity criterion, thus resulting in a more balanced and generalizable model.</p>
+<section id="pre-pruning" class="level3" data-number="3.8.1"><h3 data-number="3.8.1" class="anchored" data-anchor-id="pre-pruning">
+<span class="header-section-number">3.8.1</span> Pre-pruning</h3>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reg_tree_es</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">train2</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"anova"</span>,</span>
+<span>  control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.control.html">rpart.control</a></span><span class="op">(</span>cp <span class="op">=</span> <span class="fl">0</span>, maxdepth <span class="op">=</span> <span class="fl">6</span>, minsplit <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">test2</span><span class="op">$</span><span class="va">pred2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">reg_tree_es</span>, <span class="va">test2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span><span class="op">(</span><span class="va">test2</span><span class="op">$</span><span class="va">diabetes</span>, <span class="va">test2</span><span class="op">$</span><span class="va">pred2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 64.45811</code></pre>
+</div>
+</div>
+</section><section id="post-pruning" class="level3" data-number="3.8.2"><h3 data-number="3.8.2" class="anchored" data-anchor-id="post-pruning">
+<span class="header-section-number">3.8.2</span> Post-pruning</h3>
+<p>Perform post-pruning based on the cost complexity parameter (cp):</p>
+<ol type="1">
+<li>Display the cp table:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rpart/man/printcp.html">printcp</a></span><span class="op">(</span><span class="va">reg_tree</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Regression tree:
+rpart(formula = diabetes ~ ., data = train2, method = "anova", 
+    control = rpart.control(cp = 0))
+
+Variables actually used in tree construction:
+ [1] age bmi bp  s1  s2  s3  s4  s5  s6  sex
+
+Root node error: 1796211/309 = 5813
+
+n= 309 
+
+           CP nsplit rel error  xerror     xstd
+1  0.32166162      0   1.00000 1.00764 0.059260
+2  0.08753872      1   0.67834 0.78533 0.059065
+3  0.04664947      2   0.59080 0.68853 0.053621
+4  0.03602490      3   0.54415 0.64953 0.052827
+5  0.02935661      4   0.50813 0.66863 0.054283
+6  0.01151163      5   0.47877 0.63606 0.049848
+7  0.01134868      6   0.46726 0.67302 0.051997
+8  0.00929592      7   0.45591 0.69290 0.053598
+9  0.00875487      8   0.44661 0.71005 0.053926
+10 0.00754993     10   0.42910 0.72492 0.054461
+11 0.00723926     11   0.42155 0.73781 0.054541
+12 0.00679852     12   0.41431 0.73513 0.054284
+13 0.00626758     13   0.40752 0.73514 0.054036
+14 0.00623322     14   0.40125 0.73203 0.053825
+15 0.00610729     15   0.39501 0.73122 0.053761
+16 0.00536099     16   0.38891 0.73651 0.054592
+17 0.00319580     18   0.37818 0.74955 0.053737
+18 0.00297863     19   0.37499 0.75707 0.055122
+19 0.00273966     20   0.37201 0.75744 0.055134
+20 0.00266859     21   0.36927 0.75585 0.055103
+21 0.00052756     22   0.36660 0.76201 0.055559
+22 0.00000000     23   0.36607 0.76255 0.055541</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Plot the cp values against the cross-validated error:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rpart/man/plotcp.html">plotcp</a></span><span class="op">(</span><span class="va">reg_tree</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ML-Regression_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Find the best cp value that minimizes the cross-validated error:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">bestcp</span> <span class="op">&lt;-</span> <span class="va">reg_tree</span><span class="op">$</span><span class="va">cptable</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="va">reg_tree</span><span class="op">$</span><span class="va">cptable</span><span class="op">[</span>, <span class="st">"xerror"</span><span class="op">]</span><span class="op">)</span>, <span class="st">"CP"</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li>Build the pruned tree and evaluate it:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">reg_tree_prune</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.html">rpart</a></span><span class="op">(</span><span class="va">diabetes</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">train2</span>, method <span class="op">=</span> <span class="st">"anova"</span>, control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rpart/man/rpart.control.html">rpart.control</a></span><span class="op">(</span>cp <span class="op">=</span> <span class="va">bestcp</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">test2</span><span class="op">$</span><span class="va">pred3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">reg_tree_prune</span>, <span class="va">test2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span><span class="op">(</span><span class="va">test2</span><span class="op">$</span><span class="va">diabetes</span>, <span class="va">test2</span><span class="op">$</span><span class="va">pred3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 64.29224</code></pre>
+</div>
+</div>
+</section></section><section id="export-the-tree" class="level2" data-number="3.9"><h2 data-number="3.9" class="anchored" data-anchor-id="export-the-tree">
+<span class="header-section-number">3.9</span> Export the Tree</h2>
+<p>Create a postscript file of the tree for generating a PDF:</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rpart/man/post.rpart.html">post</a></span><span class="op">(</span><span class="va">reg_tree_prune</span>,</span>
+<span>  file <span class="op">=</span> <span class="st">"reg_tree_prune.ps"</span>,</span>
+<span>  title <span class="op">=</span> <span class="st">"Regression Tree for Diabetes Dataset"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="neural-network-regression" class="level1" data-number="4"><h1 data-number="4">
+<span class="header-section-number">4</span> Neural Network Regression</h1>
+<p>Neural Network Regression is a type of machine learning model used to predict continuous outcomes using artificial neural networks (ANNs). Neural networks, inspired by the structure and function of the human brain, consist of interconnected layers of nodes, or neurons, that process input data to produce a desired output.</p>
+<p>The architecture of a neural network typically includes an input layer, one or more hidden layers, and an output layer. Each layer contains multiple neurons, and each neuron in a layer is connected to every neuron in the subsequent layer.</p>
+<p>The neurons process information by applying weights to the inputs, summing them up, and passing the result through an activation function. This process, known as forward propagation, continues until the output layer produces a prediction.</p>
+<p>In regression tasks, the output layer typically has a single neuron that provides the continuous numerical prediction.</p>
+<section id="install-and-load-required-packages-1" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="install-and-load-required-packages-1">
+<span class="header-section-number">4.1</span> Install and Load Required Packages</h2>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/h2oai/h2o-3">h2o</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mfrasco/Metrics">Metrics</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="initialize-h2o" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="initialize-h2o">
+<span class="header-section-number">4.2</span> Initialize H2O</h2>
+<p>Before building the model, initialize the H2O instance:</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/h2o/man/h2o.init.html">h2o.init</a></span><span class="op">(</span>nthreads <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, max_mem_size <span class="op">=</span> <span class="st">"2G"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+H2O is not running yet, starting it now...
+
+Note:  In case of errors look at the following log files:
+    C:\Users\drsau\AppData\Local\Temp\RtmpaQYEkv\file270421507648/h2o_drsau_started_from_r.out
+    C:\Users\drsau\AppData\Local\Temp\RtmpaQYEkv\file27044bd97eae/h2o_drsau_started_from_r.err
+
+
+Starting H2O JVM and connecting:  Connection successful!
+
+R is connected to the H2O cluster: 
+    H2O cluster uptime:         3 seconds 545 milliseconds 
+    H2O cluster timezone:       Asia/Singapore 
+    H2O data parsing timezone:  UTC 
+    H2O cluster version:        3.44.0.3 
+    H2O cluster version age:    6 months and 27 days 
+    H2O cluster name:           H2O_started_from_R_drsau_svc510 
+    H2O cluster total nodes:    1 
+    H2O cluster total memory:   1.76 GB 
+    H2O cluster total cores:    8 
+    H2O cluster allowed cores:  8 
+    H2O cluster healthy:        TRUE 
+    H2O Connection ip:          localhost 
+    H2O Connection port:        54321 
+    H2O Connection proxy:       NA 
+    H2O Internal Security:      FALSE 
+    R Version:                  R version 4.4.0 (2024-04-24 ucrt) </code></pre>
+</div>
+</div>
+</section><section id="load-the-dataset-2" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="load-the-dataset-2">
+<span class="header-section-number">4.3</span> Load the Dataset</h2>
+<p>Load the dataset into R and convert it to an H2O frame:</p>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">consultation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"Datasets/consultation_fee.csv"</span><span class="op">)</span></span>
+<span><span class="va">consultation.frame</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/h2o/man/as.h2o.html">as.h2o</a></span><span class="op">(</span><span class="va">consultation</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+</div>
+</section><section id="examine-the-data" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="examine-the-data">
+<span class="header-section-number">4.4</span> Examine the Data</h2>
+<p>Check the structure of the data:</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">consultation.frame</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Class 'H2OFrame' &lt;environment: 0x0000025c7a94d6a0&gt; 
+ - attr(*, "op")= chr "Parse"
+ - attr(*, "id")= chr "consultation_sid_9558_1"
+ - attr(*, "eval")= logi FALSE
+ - attr(*, "nrow")= int 5962
+ - attr(*, "ncol")= int 6
+ - attr(*, "types")=List of 6
+  ..$ : chr "string"
+  ..$ : chr "real"
+  ..$ : chr "int"
+  ..$ : chr "string"
+  ..$ : chr "string"
+  ..$ : chr "real"
+ - attr(*, "data")='data.frame':    10 obs. of  6 variables:
+  ..$ Qualification: chr  "BHMS, MD - Homeopathy" "BAMS, MD - Ayurveda Medicine" "MBBS, MS - Otorhinolaryngology" "BSc - Zoology, BAMS" ...
+  ..$ Experience   : num  24 12 9 12 20 8 42 10 14 23
+  ..$ Rating       : num  100 98 95 95 100 95 95 99 95 95
+  ..$ Place        : chr  "Kakkanad, Ernakulam" "Whitefield, Bangalore" "Mathikere - BEL, Bangalore" "Bannerghatta Road, Bangalore" ...
+  ..$ Profile      : chr  "Homeopath" "Ayurveda" "ENT Specialist" "Ayurveda" ...
+  ..$ Fees         : num  100 350 300 250 250 100 200 200 100 100</code></pre>
+</div>
+</div>
+</section><section id="normalize-the-data" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="normalize-the-data">
+<span class="header-section-number">4.5</span> Normalize the Data</h2>
+<p>Normalize the columns “Experience”, “Rating”, and “Fees” as they are in different ranges:</p>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">normalize</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">consultation.frame</span><span class="op">$</span><span class="va">Experience.norm</span> <span class="op">&lt;-</span> <span class="fu">normalize</span><span class="op">(</span><span class="va">consultation.frame</span><span class="op">$</span><span class="va">Experience</span><span class="op">)</span></span>
+<span><span class="va">consultation.frame</span><span class="op">$</span><span class="va">Rating.norm</span> <span class="op">&lt;-</span> <span class="fu">normalize</span><span class="op">(</span><span class="va">consultation.frame</span><span class="op">$</span><span class="va">Rating</span><span class="op">)</span></span>
+<span><span class="va">consultation.frame</span><span class="op">$</span><span class="va">Fees.norm</span> <span class="op">&lt;-</span> <span class="fu">normalize</span><span class="op">(</span><span class="va">consultation.frame</span><span class="op">$</span><span class="va">Fees</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="split-the-data-into-training-and-test-sets" class="level2" data-number="4.6"><h2 data-number="4.6" class="anchored" data-anchor-id="split-the-data-into-training-and-test-sets">
+<span class="header-section-number">4.6</span> Split the Data into Training and Test Sets</h2>
+<p>Split the data into training (70%) and test (30%) sets:</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/h2o/man/h2o.splitFrame.html">h2o.splitFrame</a></span><span class="op">(</span><span class="va">consultation.frame</span>, ratios <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">train3</span> <span class="op">&lt;-</span> <span class="va">split</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">test3</span> <span class="op">&lt;-</span> <span class="va">split</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="build-the-neural-network-model" class="level2" data-number="4.7"><h2 data-number="4.7" class="anchored" data-anchor-id="build-the-neural-network-model">
+<span class="header-section-number">4.7</span> Build the Neural Network Model</h2>
+<p>Build the neural network model with default parameters:</p>
+<div class="cell">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/h2o/man/h2o.deeplearning.html">h2o.deeplearning</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span>,</span>
+<span>  y <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>  training_frame <span class="op">=</span> <span class="va">train3</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  mini_batch_size <span class="op">=</span> <span class="fl">32</span>,</span>
+<span>  hidden <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |==================                                                    |  26%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+</div>
+</section><section id="plot-the-scoring-history" class="level2" data-number="4.8"><h2 data-number="4.8" class="anchored" data-anchor-id="plot-the-scoring-history">
+<span class="header-section-number">4.8</span> Plot the Scoring History</h2>
+<p>Visualize the scoring history of the model:</p>
+<div class="cell">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">nn</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="ML-Regression_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="make-predictions-and-evaluate-the-model" class="level2" data-number="4.9"><h2 data-number="4.9" class="anchored" data-anchor-id="make-predictions-and-evaluate-the-model">
+<span class="header-section-number">4.9</span> Make Predictions and Evaluate the Model</h2>
+<p>Perform predictions on the test data and evaluate the model’s performance using RMSE:</p>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pred1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/h2o/man/h2o.predict.html">h2o.predict</a></span><span class="op">(</span><span class="va">nn</span>, <span class="va">test3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span><span class="op">(</span><span class="va">test3</span><span class="op">$</span><span class="va">Fees.norm</span>, <span class="va">pred1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1976875</code></pre>
+</div>
+</div>
+</section><section id="implement-early-stopping" class="level2" data-number="4.10"><h2 data-number="4.10" class="anchored" data-anchor-id="implement-early-stopping">
+<span class="header-section-number">4.10</span> Implement Early Stopping</h2>
+<p>Add early stopping parameters to the model:</p>
+<div class="cell">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/h2o/man/h2o.deeplearning.html">h2o.deeplearning</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span>,</span>
+<span>  y <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>  training_frame <span class="op">=</span> <span class="va">train3</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  mini_batch_size <span class="op">=</span> <span class="fl">32</span>,</span>
+<span>  hidden <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  stopping_metric <span class="op">=</span> <span class="st">"rmse"</span>,</span>
+<span>  stopping_rounds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  stopping_tolerance <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  score_interval <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in .h2o.processResponseWarnings(res): Dropping bad and constant columns: [Qualification, Place, Profile].</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |===========================                                           |  38%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pred2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/h2o/man/h2o.predict.html">h2o.predict</a></span><span class="op">(</span><span class="va">nn</span>, <span class="va">test3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span><span class="op">(</span><span class="va">test3</span><span class="op">$</span><span class="va">Fees.norm</span>, <span class="va">pred2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1981344</code></pre>
+</div>
+</div>
+</section><section id="implement-dropout-regularization" class="level2" data-number="4.11"><h2 data-number="4.11" class="anchored" data-anchor-id="implement-dropout-regularization">
+<span class="header-section-number">4.11</span> Implement Dropout Regularization</h2>
+<p>Add dropout regularization to improve generalization:</p>
+<div class="cell">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">nn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/h2o/man/h2o.deeplearning.html">h2o.deeplearning</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">8</span><span class="op">)</span>,</span>
+<span>  y <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>  training_frame <span class="op">=</span> <span class="va">train3</span>,</span>
+<span>  epochs <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  mini_batch_size <span class="op">=</span> <span class="fl">32</span>,</span>
+<span>  hidden <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  stopping_metric <span class="op">=</span> <span class="st">"rmse"</span>,</span>
+<span>  stopping_rounds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  stopping_tolerance <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  score_interval <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  activation <span class="op">=</span> <span class="st">"RectifierWithDropout"</span>,</span>
+<span>  hidden_dropout_ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  input_dropout_ratio <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in .h2o.processResponseWarnings(res): Dropping bad and constant columns: [Qualification, Place, Profile].</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |=================================================                     |  70%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pred3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/h2o/man/h2o.predict.html">h2o.predict</a></span><span class="op">(</span><span class="va">nn</span>, <span class="va">test3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |======================================================================| 100%</code></pre>
+</div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span><span class="op">(</span><span class="va">test3</span><span class="op">$</span><span class="va">Fees.norm</span>, <span class="va">pred3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2003168</code></pre>
+</div>
+</div>
+</section></section></main><!-- /main column -->
+&nbsp;
+<hr>
+<p style="text-align: center;">A dedicated work by Dr Muhammad Saufi</p>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Add font awesome icons --><p style="text-align: center;">
+    <a href="https://www.facebook.com/drsaufimbbch/" class="fa fa-facebook"></a>
+    <a href="https://github.com/drsaufi" class="fa fa-github"></a>
+    <a href="mailto:drsaufimbbch@gmail.com" class="fa fa-envelope"></a>
+</p>
+
+&nbsp;
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
