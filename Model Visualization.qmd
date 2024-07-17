@@ -1,0 +1,79 @@
+---
+title: "Model Visualization"
+author: "Dr Saufi"
+date: 29 May 2024
+format: 
+    html:
+      toc: true
+      toc-title: Contents
+      toc-location: left
+      toc-depth: 3
+      toc-expand: 1
+      number-sections: true
+editor: visual
+---
+
+# Example Code Using the {jtools} Package
+
+## Loading Data and Fitting a Model
+
+First, we need to load the necessary data and fit a regression model using the lm function.
+
+```{r}
+# Load the necessary package
+library(jtools)
+
+# Example dataset from jtools
+data(movies)
+
+# Fit a linear model
+fit <- lm(metascore ~ imdb_rating + log(us_gross) + genre5, data = movies)
+
+```
+
+## Summarizing the Model
+
+We can summarize the model using the summ function to get a detailed output.
+
+```{r}
+# Summarize the model
+summ(fit)
+```
+## Visualizing Model Effects
+
+The effect_plot function allows us to visualize the effect of a predictor variable on the response variable.
+
+```{r}
+# Visualize the effect of 'imdb_rating' on 'metascore'
+effect_plot(fit, pred = imdb_rating, interval = TRUE, plot.points = TRUE)
+```
+
+# Example Code Using the {modelsummary} Package
+
+## Visualizing a Single Model
+
+The modelplot function from the modelsummary package can be used to create visualizations for a single model.
+
+```{r}
+# Load the necessary package
+library(modelsummary)
+
+# Create a plot for the model
+modelplot(fit)
+```
+
+## Visualizing Multiple Models
+
+If you have multiple models, you can visualize them together for comparison.
+
+```{r}
+# Fit another model for comparison
+fit2 <- lm(metascore ~ imdb_rating + log(us_gross), data = movies)
+
+# Create a list of models
+models <- list("Model 1" = fit, "Model 2" = fit2)
+
+# Visualize multiple models
+modelplot(models)
+```
+
