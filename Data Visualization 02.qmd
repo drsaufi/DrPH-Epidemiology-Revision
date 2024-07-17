@@ -1,0 +1,659 @@
+---
+title: "Data Visualization 02"
+author: "Dr Saufi"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-fold: true
+    code-summary: "Code"
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+editor: visual
+include-after-body: "footer.html"
+---
+
+# Overview of Graphics Packages in R
+
+There are several graphics packages in R designed for different purposes:
+
+## Popular General Graphics Packages
+
+1.  `graphics`: A base R package for basic plotting.
+2.  `ggplot2`: A user-contributed package by Hadley Wickham, based on the grammar of graphics.
+3.  `lattice`: Another user-contributed package for advanced plotting.
+
+## Specialized Graphics Packages
+
+1.  `survminer::ggsurvplot`: For survival analysis plots.
+2.  `sjPlot`: For data visualization tailored to social sciences.
+
+## Introduction to ggplot2
+
+`ggplot2` is highlighted for its elegance, ease of use, and versatility: - Implements the grammar of graphics concept, making the learning process faster and facilitating the creation of complex graphics. - It combines the best features of base and lattice graphics without their drawbacks.
+
+## Key Components of ggplot2
+
+-   Start with: `ggplot()`
+-   Specify data: `data = X`
+-   Define variables: `aes(x = , y = )`
+-   Choose graph type: `geom_histogram()`, `geom_point()`, etc.
+
+## Questions to Ask Before Making Graphs
+
+Before creating a graph, consider:
+
+-   Which variable(s) to plot?
+-   The type of variable(s) (factor or numerical)
+-   The number of variables to plot together (single, two, or three variables)
+
+## Preparation for Data Analysis
+
+### Set a New Project Directory
+
+Starting a new project in RStudio is recommended for clean and organized analysis:
+
+1.  Steps to create a new project
+2.  Go to File -\> Click New Project -\> New Directory -\> New Project -\> Create New Project
+
+### Read Data
+
+Common data formats include CSV, Excel, SPSS, Stata, and SAS files. Here’s an example of reading a CSV file:
+
+```{r}
+# Read a CSV file into R
+mydata <- read.csv('HousingData.csv')
+summary(mydata)
+```
+
+Packages for reading different data formats include `haven`:
+
+-   SAS: `read_sas()` and `read_xpt()`
+-   SPSS: `read_sav()` and `read_por()`
+-   Stata: `read_dta()`
+
+### Database Connections
+
+Data from databases like MySQL, SQLite, Postgresql, and MariaDB are becoming increasingly important.
+
+### Summary of ggplot2 Usage with Examples
+
+Here's a basic guide and examples of using `ggplot2`:
+
+#### Histogram
+
+```{r}
+library(ggplot2)
+ggplot(mydata) +
+  geom_histogram(aes(x = CRIM))
+
+# x = variable_name
+```
+
+#### Scatter Plot
+
+```{r}
+ggplot(mydata) +
+  geom_point(aes(x = CRIM, y = AGE))
+
+# x = variable1, y = variable2
+```
+
+#### Line Graph
+
+```{r}
+ggplot(mydata) +
+  geom_line(aes(x = CRIM, y = AGE, group = RAD))
+
+# x = time_variable, y = measurement_variable, group = category_variable
+```
+
+#### Faceting
+
+```{r}
+ggplot(mydata) +
+  geom_histogram(aes(x = CRIM)) +
+  facet_wrap(~ RAD)
+
+# x = variable_name, ~ = category_variable
+```
+
+# Hands-on 1: Packages
+
+## Load the Packages
+
+To create plots using ggplot2, we need to load the `tidyverse` package, which includes ggplot2 and other useful packages. Loading `tidyverse` provides access to various help pages, functions, and datasets included in the package suite.
+
+```{r}
+library(tidyverse)
+```
+
+## Open the Dataset
+
+Use the `gapminder` dataset from the `gapminder` package. The dataset offers historical data on global life expectancy, GDP per capita, and population.
+
+```{r}
+# Load the gapminder package
+library(gapminder)
+
+# View the first few rows of the dataset
+head(gapminder)
+```
+
+The `gapminder` dataset includes the following columns:
+
+-   `country`: Country name (factor)
+-   `continent`: Continent name (factor)
+-   `year`: Year of observation (integer)
+-   `lifeExp`: Life expectancy (numeric)
+-   `pop`: Population (integer)
+-   `gdpPercap`: GDP per capita (numeric)
+
+```{r}
+# Get a glimpse of the dataset structure
+glimpse(gapminder)
+```
+
+The output provides a summary of the number of observations, types of variables, and a preview of the data:
+
+-   1704 observations
+-   6 variables (2 factor, 2 integer, and 2 numeric variables)
+
+```{r}
+# Summarize the dataset
+summary(gapminder)
+```
+
+The summary function provides statistical insights into each variable:
+
+-   Frequencies for factor variables (`country`, `continent`)
+-   Minimum, 1st quartile, median, mean, 3rd quartile, and maximum values for numerical variables (`year`, `lifeExp`, `pop`, `gdpPercap`)
+
+# Hands-on 2: Scatterplots
+
+## Basic Scatterplot
+
+Start by creating a basic scatter plot to visualize the relationship between the year and life expectancy in the gapminder dataset.
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(gapminder)
+
+# Create a basic scatterplot
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = year, y = lifeExp))
+```
+
+**Explanation:**
+
+-   The `ggplot()` function initializes the plot and specifies the dataset (`gapminder`).
+-   The `geom_point()` function creates a scatter plot with points representing the data.
+
+**Observation:**
+
+-   The plot shows an increase in life expectancy over the years, indicating a positive trend.
+
+## Adding Another Variable
+
+Enhance the scatter plot by adding a third variable to differentiate data points by continent.
+
+```{r}
+# Create a scatterplot with continent colors
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = year, y = lifeExp, colour = continent))
+```
+
+**Explanation:**
+
+-   The `aes()` function inside `geom_point()` now includes `colour = continent`, which adds color differentiation for each continent.
+
+**Observation:**
+
+-   European countries generally have higher life expectancy.
+-   African countries tend to have lower life expectancy.
+-   Outliers with very low life expectancy are noticeable in Asia and Africa.
+
+#### Adding GDP as a Size Variable
+
+Modify the scatter plot to reflect GDP per capita (`gdpPercap`) as the size of the points.
+
+```{r}
+# Create a scatterplot with GDP per capita as the size of points
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = year, y = lifeExp, size = gdpPercap))
+```
+
+**Explanation:**
+
+-   The `size = gdpPercap` aesthetic scales the size of the points according to GDP per capita.
+
+**Observation:**
+
+-   Countries with higher GDP generally have longer life expectancy.
+
+#### Using Shape Instead of Color
+
+You can use different shapes to represent continents when color is not an option, such as in black-and-white printouts.
+
+```{r}
+# Create a scatterplot with different shapes for continents
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = year, y = lifeExp, shape = continent))
+```
+
+**Explanation:**
+
+-   The `shape = continent` aesthetic assigns different shapes to data points based on continent.
+
+#### Setting Color and Shape Outside `aes()`
+
+You can also set a uniform color or shape for all points by placing the arguments outside the `aes()` function.
+
+```{r}
+# Create a scatterplot with all points colored blue
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = year, y = lifeExp), colour = 'blue')
+```
+
+```{r}
+# Create a scatterplot with all points shaped as plus signs
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = year, y = lifeExp), shape = 3)
+```
+
+**Explanation:**
+
+-   Setting `colour = 'blue'` or `shape = 3` outside `aes()` applies these attributes uniformly to all points.
+-   The shape argument uses numbers to represent different symbols (`?pch` provides a list of shape codes).
+-   Typing `?pch` in the R console will show you a reference for all the available point shapes and their corresponding codes.
+
+# Hands-on 3: Subplots
+
+To create subplots, we can use the `facet_wrap()` function to split our plots based on a factor variable. This allows for easy comparison of data subsets across different categories.
+
+## Creating Subplots Based on Continents
+
+### Create Subplots with 3 Rows
+
+```{r}
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = year, y = lifeExp)) + 
+  facet_wrap(~ continent, nrow = 3)
+```
+
+**Explanation:**
+
+-   `facet_wrap(~ continent)` splits the plot into subplots for each continent.
+-   `nrow = 3` arranges the subplots into 3 rows.
+
+### Create Subplots with 2 Rows
+
+```{r}
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = year, y = lifeExp)) + 
+  facet_wrap(~ continent, nrow = 2)
+```
+
+**Explanation:**
+
+-   Changing `nrow` to 2 arranges the subplots into 2 rows instead of 3, adjusting the layout for better readability based on your preferences or the amount of data.
+
+## Customizing Subplots
+
+-   You can further customize subplots by adjusting the number of columns (`ncol`), adding titles, modifying axis labels, and more to suit your analysis needs.
+-   **Subplots facilitate comparison:** By breaking down the data into subplots based on the `continent` variable, it's easier to compare trends and patterns across different continents.
+-   **Life expectancy trends:** Each subplot shows how life expectancy changes over time within each continent, making it clear how trends differ geographically.
+-   By utilizing `facet_wrap()`, you can create organized and insightful visualizations that highlight differences and similarities across subsets of your data.
+
+# Hands-on 4: Scatterplot, Smooth Plot, and Combining Plots
+
+## Scatterplot and Smooth Plot
+
+In `ggplot2`, different geometric objects (`geom_X()`) represent different visualizations.
+
+### Scatterplot
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(gapminder)
+
+# Create a scatterplot
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = gdpPercap, y = lifeExp))
+```
+
+**Explanation:**
+
+-   `geom_point()` creates a scatter plot with GDP per capita on the x-axis and life expectancy on the y-axis.
+
+### Smooth Plot
+
+```{r}
+ggplot(data = gapminder) +
+  geom_smooth(mapping = aes(x = gdpPercap, y = lifeExp))
+```
+
+**Explanation:**
+
+-   `geom_smooth()` adds a smooth line to the plot, indicating trends in the data.
+
+We can generate the smooth plot based on continent using the `linetype()`. We use `log(gdpPercap)` to reduce the skewness of the data.
+
+```{r}
+ggplot(data = gapminder) +
+  geom_smooth(mapping = aes(x = log(gdpPercap), y = lifeExp, linetype = continent))
+```
+
+**Explanation:**
+
+-   `aes(x = log(gdpPercap), y = lifeExp, linetype = continent)` uses the logarithm of GDP per capita to reduce skewness and differentiates lines by continent.
+
+We can also generate the smooth plot using colour.
+
+```{r}
+ggplot(data = gapminder) +
+  geom_smooth(mapping = aes(x = log(gdpPercap), y = lifeExp, colour = continent))
+```
+
+**Explanation:**
+
+-   `colour = continent` differentiates lines by continent using color.
+
+## Combining Geoms
+
+We can overlay multiple geoms (geometric objects) in a single plot to visualize multiple aspects of the data simultaneously.
+
+```{r}
+ggplot(data = gapminder) +
+  geom_point(mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_smooth(mapping = aes(x = log(gdpPercap), y = lifeExp))
+```
+
+**Explanation:**
+
+-   This combines a scatterplot and a smooth plot, but it repeats the `mapping` for each geom.
+
+The codes above show duplication or repetition. To avoid this, we can pass the mapping to `ggplot()`.
+
+```{r}
+ggplot(data = gapminder, mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_point() +
+  geom_smooth()
+```
+
+**Explanation:**
+
+-   Passing the `mapping` to `ggplot()` applies it to all geoms, reducing code duplication.
+
+And we can expand this to make scatterplot with different colors for continents.
+
+```{r}
+ggplot(data = gapminder, mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_point(mapping = aes(colour = continent)) +
+  geom_smooth()
+```
+
+**Explanation:**
+
+-   This plot combines a scatterplot with points colored by continent and a smooth line.
+
+Or expand this to make the smooth plot shows different colour for continent.
+
+```{r}
+ggplot(data = gapminder, mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_point() +
+  geom_smooth(mapping = aes(colour = continent))
+```
+
+**Explanation:**
+
+-   This plot combines a scatterplot and a smooth plot, with the smooth lines colored by continent.
+
+Or combining both scatterplot and smooth plot.
+
+```{r}
+ggplot(data = gapminder, mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_point(mapping = aes(shape = continent)) +
+  geom_smooth(mapping = aes(colour = continent))
+```
+
+**Explanation:**
+
+-   This plot uses different shapes for continents in the scatterplot and different colors for continents in the smooth plot.
+
+## Summary
+
+-   **Scatterplot (`geom_point()`):** Visualizes individual data points.
+-   **Smooth Plot (`geom_smooth()`):** Adds trend lines to visualize the overall trend.
+-   **Combining Geoms:** Overlay different types of plots to provide more comprehensive visual analysis.
+-   **Aesthetics Mapping:** Use `aes()` to map data variables to visual properties like color, shape, and size.
+-   **Avoiding Duplication:** Pass common aesthetics mapping to `ggplot()` to avoid repetition and simplify code.
+
+# Hands-on 5: Bar Plot and Histogram
+
+## Bar Plot
+
+A bar plot is useful for displaying the distribution of categorical data. Here, bar plots are created to show the frequency and proportion of continents in the `gapminder` dataset.
+
+**Bar Plot Showing Frequency**
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(gapminder)
+
+# Create a bar plot showing frequency of each continent
+ggplot(data = gapminder) +
+  geom_bar(mapping = aes(x = continent))
+```
+
+**Explanation:**
+
+-   `geom_bar()` creates a bar plot with continents on the x-axis and the count (frequency) of records on the y-axis.
+
+**Bar Plot Showing Proportion**
+
+```{r}
+# Create a bar plot showing proportion of each continent
+ggplot(data = gapminder) +
+  geom_bar(mapping = aes(x = continent, y = ..prop.., group = 1))
+```
+
+**Explanation:**
+
+-   `y = ..prop..` scales the y-axis to show the proportion of records for each continent instead of the count.
+-   `group = 1` ensures that proportions are calculated for the entire dataset.
+
+## Histogram
+
+Histograms are used for visualizing the distribution of numerical data. Here, we create a histogram for life expectancy in the `gapminder` dataset.
+
+```{r}
+# Create a histogram for life expectancy
+ggplot(data = gapminder, aes(x = lifeExp)) + 
+  geom_histogram()
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+**Explanation:**
+
+-   `geom_histogram()` creates a histogram with life expectancy on the x-axis.
+-   By default, `geom_histogram()` uses 30 bins. You can adjust the `binwidth` parameter to get a more detailed or summarized view of the data distribution.
+
+## Summary
+
+-   **Bar Plot (`geom_bar()`):** Visualizes the distribution of categorical data. It can show frequencies or proportions.
+-   **Histogram (`geom_histogram()`):** Visualizes the distribution of numerical data by dividing the data into bins and counting the number of observations in each bin.
+-   **Proportional Bar Plot:** Use `..prop..` in the y aesthetic to display proportions instead of counts.
+
+# Hands-on 6: Meaningful and Beautiful Plots
+
+## Customizing Title
+
+Customizing plot titles can make your visualizations more informative.
+
+**Creating the Initial Plot**
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(gapminder)
+
+# Create a scatter plot with a smooth line
+mypop <- ggplot(data = gapminder, mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_point() +
+  geom_smooth(mapping = aes(colour = continent))
+mypop
+```
+
+**Adding a Title**
+
+```{r}
+mypop + 
+  ggtitle("Scatterplot showing the relationship of GDP in log and life expectancy")
+```
+
+**Adding a Title with Multiple Lines**
+
+```{r}
+mypop + 
+  ggtitle("Scatterplot showing the relationship of GDP in log and life expectancy:\nData from Gapminder")
+```
+
+## Adjusting Axes
+
+Adjusting axis tick marks and labels can enhance readability.
+
+**Specifying Tick Marks**
+
+-   min = 0
+-   max = 12
+-   interval = 1
+
+```{r}
+mypop + 
+  scale_x_continuous(breaks = seq(0, 12, 1))
+```
+
+**Labeling Axes** Add axis labels and a title with multiple lines.
+
+```{r}
+mypop + 
+  ggtitle("Scatterplot showing the relationship of GDP in log and life expectancy:\nData from Gapminder") + 
+  ylab("Life Expectancy") + 
+  xlab("Per Capita GDP (log scale)")
+```
+
+## Choosing Themes
+
+`ggplot2` provides several themes to change the overall appearance of plots:
+
+**Default Theme (Gray)**
+
+-   The default theme in ggplot2 is `theme_gray()`.
+
+**Black and White Theme**
+
+```{r}
+mypop + theme_bw()
+```
+
+**Classic Theme**
+
+```{r}
+mypop + theme_classic()
+```
+
+## Summary
+
+-   **Customizing Titles:** Adding informative titles and subtitles helps in understanding the context of the plot.
+-   **Adjusting Axes:** Customizing tick marks and axis labels makes the plot more readable.
+-   **Choosing Themes:** Different themes can enhance the aesthetic appeal of the plot and highlight different aspects of the data.
+
+# Hands-on 7: Saving Plots
+
+## Preferred Format for Saving
+
+The preferred format for saving plots in R is often PDF because it preserves the quality and scalability of the graphics. However, other formats like PNG and JPG are also commonly used.
+
+## Saving Plots Using ggplot2
+
+**Creating a Complete Plot**
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(gapminder)
+
+# Create the plot
+mypop <- ggplot(data = gapminder, mapping = aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_point() +
+  geom_smooth(mapping = aes(colour = continent)) +
+  ggtitle("Scatterplot showing the relationship of GDP in log and life expectancy:\nData from Gapminder") +
+  ylab("Life Expectancy") + 
+  xlab("Per Capita GDP (log scale)") +
+  scale_x_continuous(breaks = seq(0, 12, 1)) +
+  theme_classic()
+
+# Display the plot
+mypop
+```
+
+**Saving the Plot**
+
+-   You can save the current plot displayed on the screen to various file formats using `ggsave()`.
+
+```{r}
+# Save the plot as a PDF
+ggsave("my_pdf_plot.pdf")
+```
+
+```{r}
+# Save the plot as a PNG
+ggsave("my_png_plot.png")
+```
+
+```{r}
+# Save the plot as a JPG
+ggsave("my_jpg_plot.jpg")
+```
+
+**Customizing the Saved Plot**
+
+-   The dimensions and resolution of the saved plot can also be customized.
+
+```{r}
+# Save the plot as a customized PDF
+ggsave("my_pdf_plot2.pdf", width = 10, height = 6, units = "cm")
+```
+
+```{r}
+# Save the plot as a customized PNG
+ggsave("my_png_plot2.png", width = 10, height = 6, units = "cm")
+```
+
+```{r}
+# Save the plot as a customized JPG
+ggsave("my_jpg_plot2.jpg", width = 10, height = 6, units = "cm")
+```
+
+## Summary
+
+-   **Preferred Format:** PDF is often preferred for its quality and scalability, but PNG and JPG are also useful.
+-   **Saving Plots:** Use `ggsave()` to save plots in different formats.
+-   **Customization:** Customize the size and resolution of the saved plot by specifying the `width`, `height`, and `units` in the `ggsave()` function.
+
+# References
+
+-   Cookbook for R: A collection of R recipes for visualization and analysis. <http://www.cookbook-r.com/Graphs/>
+-   R Graph Gallery: A collection of charts made with the R programming language. <https://www.r-graph-gallery.com/>
