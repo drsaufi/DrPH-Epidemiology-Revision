@@ -1,0 +1,485 @@
+---
+title: "Machine Learning Classification"
+author: "DrPH Epidemiology 2023/2024"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+editor: visual
+---
+
+# Setting Up the Environment
+
+## Loading Packages
+
+```{r, warning=FALSE, message=FALSE}
+library(readxl)
+library(tidyverse)
+library(survival)
+library(ggplot2)
+library(gtsummary)
+library(survminer)
+library(SurvRegCensCov)
+```
+
+## Read Data
+
+```{r, warning=FALSE, message=FALSE}
+data <- read_csv("Datasets/Breast Cancer METABRIC.csv")
+glimpse(data)
+```
+## Data Wrangling
+
+```{r}
+data_2 <- data %>%
+  mutate_if(is.character, as.factor) %>%
+  dplyr::select("Type of Breast Surgery", Chemotherapy, "PR Status", `Overall Survival (Months)`, `Overall Survival Status`, `Tumor Stage`, `Age at Diagnosis`, `Cancer Type Detailed`, `Hormone Therapy`)
+colnames(data_2)[colnames(data_2) == "Overall Survival (Months)"] <- "Survival_Months"
+colnames(data_2)[colnames(data_2) == "Overall Survival Status"] <- "Survival_Status"
+colnames(data_2)[colnames(data_2) == "PR Status"] <- "PR_Status"
+colnames(data_2)[colnames(data_2) == "Type of Breast Surgery"] <- "Breast_surgery"
+colnames(data_2)[colnames(data_2) == "Tumor Stage"] <- "Tumor_Stage"
+colnames(data_2)[colnames(data_2) == "Age at Diagnosis"] <- "age"
+colnames(data_2)[colnames(data_2) == "Cancer Type Detailed"] <- "cancer_detail"
+colnames(data_2)[colnames(data_2) == "Hormone Therapy"] <- "hormone"
+glimpse(data_2)
+```
+```{r}
+KM <- survfit(
+  Surv(
+    time = Survival_Months,
+    event = Survival_Status == "Deceased"
+  ) ~ 1,
+  data = data_2
+)
+summary(KM)
+```
+## Plot
+
+```{r}
+ggsurvplot(KM)
+```
+
+# Kaplan Meier
+
+## Chemotherapy
+
+```{r}
+KM_bc <- survfit(
+  Surv(
+    time = Survival_Months,
+    event = Survival_Status == "Deceased"
+  ) ~ Chemotherapy,
+  data = data_2
+)
+summary(KM_bc)
+```
+
+```{r}
+ggsurvplot(KM_bc,
+  data = data_2,
+  risk.table = TRUE,
+  linetype = c(1, 4),
+  tables.height = 0.3,
+  pval = TRUE
+)
+```
+
+## PR Status
+
+```{r}
+KM_pr <- survfit(
+  Surv(
+    time = Survival_Months,
+    event = Survival_Status == "Deceased"
+  ) ~ PR_Status,
+  data = data_2
+)
+summary(KM_pr)
+```
+
+```{r}
+ggsurvplot(KM_pr,
+  data = data_2,
+  risk.table = TRUE,
+  linetype = c(1, 4),
+  tables.height = 0.3,
+  pval = TRUE
+)
+```
+## Surgery
+
+```{r}
+KM_surgery <- survfit(
+  Surv(
+    time = Survival_Months,
+    event = Survival_Status == "Deceased"
+  ) ~ Breast_surgery,
+  data = data_2
+)
+summary(KM_surgery)
+```
+
+```{r}
+ggsurvplot(KM_surgery,
+  data = data_2,
+  risk.table = TRUE,
+  linetype = c(1, 4),
+  tables.height = 0.3,
+  pval = TRUE
+)
+```
+
+## Tumor Stage
+
+```{r}
+KM_stage <- survfit(
+  Surv(
+    time = Survival_Months,
+    event = Survival_Status == "Deceased"
+  ) ~ Tumor_Stage,
+  data = data_2
+)
+summary(KM_stage)
+```
+
+```{r}
+ggsurvplot(KM_stage,
+  data = data_2,
+  risk.table = TRUE,
+  pval = TRUE
+)
+```
+
+## Stage and Type
+
+```{r}
+KM_stage_surgery <- survfit(
+  Surv(
+    time = Survival_Months,
+    event = Survival_Status == "Deceased"
+  ) ~ Tumor_Stage + Breast_surgery,
+  data = data_2
+)
+summary(KM_stage_surgery)
+```
+
+```{r}
+ggsurvplot(KM_stage_surgery,
+  data = data_2,
+  risk.table = TRUE,
+  pval = TRUE
+)
+```
+
+# Cox Proportional Hazard Model
+
+## Breast Surgery + Tumor Stage
+
+```{r}
+cox1 <-
+  coxph(
+    Surv(
+      time = Survival_Months,
+      event = Survival_Status == "Deceased"
+    ) ~ Breast_surgery + Tumor_Stage,
+    data = data_2
+  )
+summary(cox1)
+```
+
+## Breast Surgery + Tumor Stage + Age
+
+```{r}
+cox1_age <-
+  coxph(
+    Surv(
+      time = Survival_Months,
+      event = Survival_Status == "Deceased"
+    ) ~ Breast_surgery + Tumor_Stage, age,
+    data = data_2
+  )
+summary(cox1_age)
+```
+
+## Chemotherapy + Tumor Stage
+
+```{r}
+cox2 <-
+  coxph(
+    Surv(
+      time = Survival_Months,
+      event = Survival_Status == "Deceased"
+    ) ~ Chemotherapy + Tumor_Stage,
+    data = data_2
+  )
+summary(cox2)
+```
+
+## Breast Surgery + Tumor Stage
+
+```{r}
+cox3 <-
+  coxph(
+    Surv(
+      time = Survival_Months,
+      event = Survival_Status == "Deceased"
+    ) ~ Breast_surgery + Tumor_Stage,
+    data = data_2
+  )
+summary(cox3)
+```
+
+## Breast Surgery + PR Status
+
+```{r}
+cox4 <-
+  coxph(
+    Surv(
+      time = Survival_Months,
+      event = Survival_Status == "Deceased"
+    ) ~ Breast_surgery + PR_Status,
+    data = data_2
+  )
+summary(cox4)
+```
+
+## Breast Surgery + Hormone
+
+```{r}
+cox5 <-
+  coxph(
+    Surv(
+      time = Survival_Months,
+      event = Survival_Status == "Deceased"
+    ) ~ Breast_surgery + hormone,
+    data = data_2
+  )
+summary(cox5)
+```
+
+# Table Summary
+
+```{r}
+data_2 %>% tbl_summary(by = Breast_surgery)
+```
+
+# Parametric Model
+
+## Exponential Model
+In the exponential survival model, the hazard is assumed to be constant over time. To run the AFT models in R, we can use survival::survreg function.
+
+```{r}
+surv.mod <- Surv(
+  time = data_2$ Survival_Months,
+  event = data_2$ Survival_Status == "Deceased"
+)
+
+exp.mod <- survreg(surv.mod ~ Breast_surgery,
+  data = data_2,
+  dist = "exponential"
+)
+
+summary(exp.mod)
+```
+
+**Comment**: The estimated log time to die in subjects with mastectomy (in comparison to those without mastectomy) was -0.4406
+
+### 95% CI of Log Time
+Calculating the 95% CI of Log time estimated log odd +/- 1.96 (SE):
+
+```{r}
+-0.4406 - 1.96 * 0.0635
+-0.4406 + 1.96 * 0.0635
+```
+### Acceleration Factor (AF) or Time Ratio (TR)
+Calculating AFT or TR:
+
+```{r}
+exp(-0.4406)
+```
+
+Calculating 95% CI of AFT or TR:
+
+```{r}
+exp(-0.4406 - 1.96 * 0.0635)
+exp(-0.4406 + 1.96 * 0.0635)
+```
+
+**Interpretation**:
+
+1. The estimated median time to death (in months) for BCS is t50 (mastectomy = 0 ) = -exp(5.6606 + 0) x ln (0.5) = 199.1557
+
+```{r}
+-exp(5.6606 + 0) * log(0.5)
+```
+
+2. The estimated median time to death (in months) for Mastectomy is t50 (mastectomy = 1 ) = -exp(5.6606 - 0.4406) x ln (0.5) = 128.1866
+
+```{r}
+-exp(5.6606 - 0.4406) * log(0.5)
+```
+
+3. The estimated time ratio (TR) is TR (mastectomy = 1, mastectomy = 0 )= exp (-0.4406) = 0.6436501 which was 128.1866/199.1557 = 0.6436502
+
+```{r}
+128.1866 / 199.1557
+```
+4. The Acceleration Factor (AF) or Time Ratio (TR) is exponentiation of -0.4406 which is 0.6436501. This means that a patient underwent mastectomy accelerates the time to die by a factor of 0.6436501. This also means that subjects patient underwent mastectomy has a shorter time (by a factor of 0.6436501) to die with 95% confidence interval between 0.56 to 0.72. The survival time among those underwent mastectomy is shortened by 36 percent for a given covariate with confidence between 28 percent and 44 percent of BCS.
+
+### Extracting HR from Exponential Model
+Because the exponential regression model has proportional hazards, we can express the effect of covariates using hazard ratios too. Using the negative of the coefficient from the results, the estimated hazard ratio for mastectomy is:
+
+HR (Mastectomy = 1, Mastectomy = 0) = exp-(-0.4406)
+
+```{r}
+exp(0.4406)
+```
+
+The endpoints of a 95 percent confidence interval are the inverse of those of the time ratio, namely:
+
+```{r}
+exp(0.4406 + 1.96 * 0.0635)
+exp(0.4406 - 1.96 * 0.0635)
+```
+
+These results show that those underwent mastectomy are dying at a rate estimated to be 1.55 times that of BCS, and it is consistent with the data that the hazard ratio could be as low as 1.37 or as high as 1.75.
+
+### Estimated Survival Time
+Prediction for survival time 25th, 50th, 75th quartile for those underwent mastectomy and BCS
+
+#### Manual Calculation
+Use equation S(t) = [−ln(t)] x (exp(b0 + b1*x))
+
+t25​ =[−ln(0.25)] x (exp(5.6606 + (-0.4406*mastectomy))
+
+1. Calculate manually the failure time for 25th percentile mastectomy
+
+```{r}
+t25_mastectomy <- (-log(0.25) * exp(5.6606 - 0.4406))
+t25_mastectomy
+```
+
+25% of subjects underwent mastectomy will have survival days about 256 days
+
+2. Calculate manually the failure time for 25th percentile BCS
+
+```{r}
+t25_bcs <- -log(0.25) * exp(5.6606)
+t25_bcs
+```
+
+25% of subjects underwent BCS will have survival days about 398 days
+
+#### Prediction Model
+##### Mastectomy
+
+```{r}
+breast_surgery <- data.frame(Breast_surgery = c("Mastectomy"))
+
+quant.p <- c(0.25, 0.50, 0.75)
+
+days.p <- predict(exp.mod, newdata = breast_surgery, type = "quantile", p = quant.p)
+
+cbind(quant.p, days.p)
+```
+
+##### BCS
+
+```{r}
+breast_surgery_BCS <- data.frame(Breast_surgery = c("Breast Conserving"))
+
+quant.p <- c(0.25, 0.50, 0.75)
+
+days.p_BCS <- predict(exp.mod, newdata = breast_surgery_BCS, type = "quantile", p = quant.p)
+
+cbind(quant.p, days.p_BCS)
+```
+
+##### Final Result
+
+```{r}
+cbind(quant.p, days.p, days.p_BCS)
+```
+
+# Weibull Model
+
+```{r}
+wei.mod <- survreg(surv.mod ~ Breast_surgery, data = data_2, dist = "weibull")
+summary(wei.mod)
+```
+
+## 95% CI of Log Time
+
+```{r}
+-0.3557 - 1.96 * 0.0502
+-0.3557 + 1.96 * 0.0502
+```
+
+## Estimated Time Ratio
+
+```{r}
+exp(-0.3557)
+```
+
+The Acceleration Factor (AF) or Time Ratio (TR) is exponentiation of -0.3557 which is 0.7006829. This means that a patient underwent mastectomy accelerates the time to die by a factor of 0.7006829. This also means that subjects patient underwent mastectomy has a shorter time (by a factor of 0.7006829) to die. The survival time among those underwent mastectomy is shortened by 30 percent for a given covariate.
+
+## Time Ratio and Hazard Ratio
+
+```{r}
+ConvertWeibull(wei.mod, conf.level = 0.95)
+```
+
+This also means that subjects with mastectomy has a shorter time (by a factor of 0.7) to dead at 95% CI between 0.63 to 0.77. The interpretation of this confidence interval is that: those underwent mastectomy have survival times estimated to be between 63 percent and 77 percent of BCS with 95 percent confidence. Or, survival is shortened among those underwent mastectomy between 23 percent and 37 percent of BCS.
+
+## Estimated Survival Time
+Prediction for survival time 25th, 50th, 75th quartile:
+
+```{r}
+days.p_wb <- predict(wei.mod, newdata = breast_surgery, type = "quantile", p = quant.p)
+cbind(quant.p, days.p_wb)
+```
+
+This is failure time, so to interpret the survival time s(t) = 1- f(t), therefore
+
+1. 25% of subjects underwent mastectomy expected to survive for 229 months.
+
+2. 50% of subjects underwent mastectomy expected to survive for 133 months.
+
+3. 75% of subjects underwent mastectomy expected to survive for 67 months.
+
+## Plot the Predicted Survival Time
+
+```{r}
+plot(x = predict(wei.mod,
+  newdata = breast_surgery, type = "quantile",
+  p = (1:98) / 100
+), y = (1:98) / 100, type = "l")
+```
+
+The curve starts steep and then flattens out. The curve suggests an increasing hazard rate (as the survival time increases, the probability of surviving an additional unit of time decreases). The plot aligns with the typical characteristics of the Weibull distribution, which can accommodate both increasing and decreasing hazard rates.
+
+## Model Adequacy for Weibull Distribution
+Weibull model is fit if the groups’ lines are parallel and linear (not flat).
+
+```{r}
+WeibullDiag(
+  Surv(
+    time = data_2$ Survival_Months,
+    event = data_2$ Survival_Status == "Deceased"
+  ) ~ Breast_surgery,
+  data = data_2
+)
+```
+
+The plot shows that the lines are roughly parallel, indicating that the proportional hazards assumption of the Weibull model is likely satisfied. The lines in the plot appear to be reasonably linear, especially in the mid-range of the survival times. Some deviations are visible at the lower and higher survival times, but these are relatively minor.
