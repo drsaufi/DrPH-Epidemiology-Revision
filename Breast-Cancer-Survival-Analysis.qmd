@@ -35,7 +35,7 @@ library(SurvRegCensCov)
 ## Read Data
 
 ```{r, warning=FALSE, message=FALSE}
-data <- read_csv("Datasets/Breast Cancer METABRIC.csv")
+data <- read_csv("Datasets/METABRIC.csv")
 glimpse(data)
 ```
 ## Data Wrangling
