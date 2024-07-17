@@ -92,8 +92,10 @@ summary(PimaIndiansDiabetes)
 ```{r}
 pima <- PimaIndiansDiabetes
 
-pima1 <- pima[pima["glucose"] != 0 & pima["pressure"] != 0 &
-  pima["triceps"] != 0 & pima["mass"] != 0, ]
+pima1 <- pima[pima["glucose"] != 0 &
+  pima["pressure"] != 0 &
+  pima["triceps"] != 0 &
+  pima["mass"] != 0, ]
 ```
 
 Data now left with 532 samples. Split into 80% of training and another 20% for testing.
