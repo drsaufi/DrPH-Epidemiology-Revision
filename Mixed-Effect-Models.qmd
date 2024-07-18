@@ -15,7 +15,7 @@ format:
     theme:
       light: united
       dark: cyborg
-    css: styles.css
+    self-contained: true
 editor: visual
 include-after-body: "footer.html"
 ---
