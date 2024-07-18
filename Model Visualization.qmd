@@ -10,7 +10,14 @@ format:
       toc-depth: 3
       toc-expand: 1
       number-sections: true
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+    self-contained: true
 editor: visual
+include-after-body: "footer.html"
 ---
 
 # Example Code Using the {jtools} Package
@@ -39,6 +46,7 @@ We can summarize the model using the summ function to get a detailed output.
 # Summarize the model
 summ(fit)
 ```
+
 ## Visualizing Model Effects
 
 The effect_plot function allows us to visualize the effect of a predictor variable on the response variable.
@@ -76,4 +84,3 @@ models <- list("Model 1" = fit, "Model 2" = fit2)
 # Visualize multiple models
 modelplot(models)
 ```
-
