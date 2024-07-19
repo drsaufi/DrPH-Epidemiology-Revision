@@ -18,7 +18,6 @@ format:
     css: styles.css
     self-contained: true
 editor: visual
-include-after-body: "footer.html"
 ---
 
 ::: {.callout-note collapse="true"}
