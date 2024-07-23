@@ -31,7 +31,7 @@ In machine learning, a computer program is said to learn from experience (E), wi
 
 ## Different Tasks of Machine Learning
 
-![](Inputs/ML Regression.png){fig-align="center"}
+![](Inputs/ML%20Regression.png){fig-align="center"}
 
 ### Supervised Learning
 
@@ -153,8 +153,9 @@ print(rmse_value1)
 
 R-squared, also known as the coefficient of determination, represents the squared correlation between the observed outcome values and the predicted values by the model. It indicates how well the model explains the variability of the response data around its mean. The value of R-squared ranges from 0 to 1:
 
--   **Higher R2**: Indicates a better fit of the model, meaning it explains a higher proportion of the variance in the outcome variable.
--   **Lower R2**: Indicates a poorer fit, meaning it explains a lower proportion of the variance.
+-   Higher $R^2$: Indicates a better fit of the model, meaning it explains a higher proportion of the variance in the outcome variable.
+
+-   Lower $R^2$: Indicates a poorer fit, meaning it explains a lower proportion of the variance.
 
 $$
 R^2 = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}
@@ -166,7 +167,8 @@ $$
 -   $\sum (y_i - \hat{y}_i)^2$ is the sum of the squared residuals (SSR).
 -   $\sum (y_i - \bar{y})^2$ is the total sum of squares (SST).
 
-#### Observed Data Points
+#### Example of Calculation
+Below is a graph showing how the number lectures per day affects the number of hours spent at university per day. The equation of the regression line is drawn on the graph and it has equation $\hat{y} = 0.143 + 1.229x$. Calculate $R^2$.
 
 ![](Inputs/Graph.png){fig-align="center"}
 
