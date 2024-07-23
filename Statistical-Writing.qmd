@@ -1,0 +1,72 @@
+---
+title: "Statistical Writing"
+author: "Dr Muhammad Saufi"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+    self-contained: true
+editor: visual
+---
+
+# Main Points
+When writing about statistical analyses, it's essential to convey a clear, cohesive, and concise story. Your hypotheses should be stated clearly and connected to your analyses. Ensure your audience understands what you did and why, providing enough detail without overwhelming them with unnecessary information.
+
+# Methodology
+For commonly used techniques like ordinary least squares regression, a brief description suffices. However, for more complex or less familiar techniques, more detailed explanations are necessary. 
+
+It is crucial to describe the model-building process, especially how categorical variables are handled (e.g., reference category, coding scheme, specific hypotheses). 
+
+While most models have assumptions, you generally need only mention that these assumptions were assessed unless one or more assumptions were significantly violated, which would then require further discussion.
+
+# Results Section
+The results section typically consists of two parts: descriptive statistics and analyses. Descriptive statistics are important for introducing your variables to the audience. 
+
+Many journals now emphasize the inclusion of confidence intervals in the results section. Confidence intervals provide a range of values that would contain the true parameter 95% of the time if the experiment were run multiple times. 
+
+# Tables
+Tables are for communication, not data storage. They should be simple, purposeful, and integrated with the rest of the text. Tables must be organized and formatted to help readers find, see, understand, and remember the information. Data presented in tables should not be duplicated elsewhere in the text.
+
+# Cox’s Proportional Hazards Model
+When presenting results from the Cox's PH model, showing both unadjusted and adjusted hazard ratios side by side is good practice. This allows readers to see the effect of confounding variables. For instance, in some studies, adjusting for confounding variables can change the direction of the association between variables and outcomes.
+
+# Writing a Paper
+When writing a paper, especially one that involves statistical analyses, it is important to structure it clearly and methodically. The main sections typically include Methods, Results, Analysis, and Discussion.
+
+## Methods
+In the Methods section, begin by clearly stating the type of study you are conducting. It is crucial not to misrepresent your study type to give it more credibility. If your study has multiple goals, define and prioritize these goals upfront. 
+
+Describe the population under study in detail, as the interpretation of results depends heavily on the characteristics of this population. If your study involves control or comparison groups, explain how these groups are defined and selected. 
+
+Clearly define the variables you are studying, explaining how they are measured and their relevance to the study goals. Provide information on the sample size and the rationale behind your sample size decisions. Discuss any power calculations and the assumptions underlying these calculations.
+
+## Results
+The Results section is divided into two main parts: descriptive statistics and analytical results. Descriptive statistics introduce your variables to the audience, providing a summary of their main characteristics. This section helps set the stage for the more complex analyses that follow. 
+
+When presenting analytical results, focus on clarity and conciseness. Include confidence intervals where applicable, as they provide a range within which the true parameter value is likely to fall if the study were repeated multiple times. 
+
+## Analysis
+In the Analysis section, describe the statistical techniques used to analyze the data. For common techniques like ordinary least squares regression, a brief description suffices. However, for more complex or less familiar techniques, provide a detailed explanation. 
+
+It is important to explain how you handled categorical variables, detailing any coding schemes and reference categories used. Mention any assumptions of the models and how these were assessed. If any assumptions were violated, discuss how this affected your analysis and any steps taken to address the violations.
+
+## Discussion
+The Discussion section is where you interpret your findings and place them in the context of existing research. Consider the credibility of your effects, their generalizability to other populations, and their robustness under different conditions. 
+
+Compare your results with those of previous studies and discuss any discrepancies. Address the limitations of your study and suggest areas for future research. This section should tie together your study's hypotheses, methods, results, and conclusions, providing a comprehensive overview of your research.
+
+# Reporting Interaction
+Interaction in epidemiological models like logistic and Cox regression is typically multiplicative. Measures such as the Relative Excess Risk due to Interaction (RERI), Attributable Proportion (AP), and the Synergy Index (S) help interpret these interactions on both multiplicative and additive scales.
+
+# Digits and Precision
+Precision in reporting numbers is crucial. Guidelines suggest using an appropriate degree of precision, generally rounding to 2-3 effective digits for tables. For risk ratios, maintaining consistency in significant digits rather than decimal places can help convey the size and precision of the effect more accurately.

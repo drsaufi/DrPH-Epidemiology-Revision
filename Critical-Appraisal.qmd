@@ -1,0 +1,303 @@
+---
+title: "Critical Appraisal"
+author: "Dr Muhammad Saufi"
+date: last-modified
+format: 
+  html:
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 5
+    toc-expand: 1
+    number-sections: true
+    code-link: true
+    theme:
+      light: united
+      dark: cyborg
+    css: styles.css
+editor: visual
+---
+
+::: {.callout-note collapse="true"}
+# About This Document
+
+This document serves both learning and practical purposes. It is designed for educational use, aiming to enhance statistical analysis skills and provide clear, organized notes for future reference.
+:::
+
+# Coursework GET 512 Critical Appraisal
+
+![](Inputs/IMG_0001.png){fig-align="center"}
+
+![](Inputs/IMG_0002.png){fig-align="center"}
+
+![](Inputs/IMG_0003.png){fig-align="center"}
+
+![](Inputs/IMG_0004.png){fig-align="center"}
+
+![](Inputs/IMG_0005.png){fig-align="center"}
+
+# Methodology
+
+## Cohort Study Design
+
+1.  Cohort Recruitment:
+
+    -   The cohort should be representative of a defined population. Look for details on how the participants were selected and whether the selection process minimized selection bias.
+
+    -   Example: If studying the effects of air pollution on respiratory health, a cohort could be a group of residents living in urban areas with varying levels of pollution.
+
+    -   Example: The Nurses’ Health Study recruited female nurses aged 30-55 years to study the effects of lifestyle on health outcomes. The recruitment process ensured a diverse sample representative of the nursing population.
+
+2.  Follow-Up of Subjects:
+
+    -   Detailed follow-up plans should be included, specifying the duration and frequency of follow-up. This helps ensure that the outcomes can be accurately attributed to the exposures.
+
+    -   Example: A cohort study on smoking and lung cancer may follow participants for 20 years with annual health check-ups to monitor lung health and smoking status.
+
+    -   Example: The Framingham Heart Study follows participants every two years to collect detailed health data, ensuring comprehensive follow-up to study cardiovascular outcomes.
+
+3.  Measurement of Exposure:
+
+    -   Exposures should be measured accurately and consistently. Methods used for measurement should be validated and reliable.
+
+    -   Example: In a study on diet and heart disease, dietary intake could be measured using validated food frequency questionnaires administered every six months.
+
+    -   Example: In a study on air pollution, exposure levels were measured using air quality monitoring stations placed in participants’ neighborhoods, providing objective and reliable exposure data.
+
+4.  Measurement of Outcome:
+
+    -   Outcomes should be clearly defined and measured using validated methods. Consistency in measurement across all participants is crucial.
+
+    -   Example: For a study on exercise and diabetes, the outcome could be the incidence of diabetes diagnosed using standard blood glucose tests at regular intervals.
+
+    -   Example: In a study on osteoporosis, bone mineral density was measured using dual-energy X-ray absorptiometry (DEXA) scans, a validated method for assessing bone health.
+
+5.  Confounding Factors:
+
+    -   Identify potential confounders and describe how they are accounted for in the design or analysis. This can include stratification, matching, or statistical adjustments.
+
+    -   Example: In a study on alcohol consumption and liver disease, confounders like age, gender, and BMI should be considered and adjusted for in the analysis.
+
+    -   Example: In a study on hormone replacement therapy (HRT) and breast cancer, researchers adjusted for age, BMI, and family history of cancer to control for potential confounders.
+
+6.  Potential Biases:
+
+    -   Selection Bias: Arises if the cohort is not representative of the population.
+    -   Information Bias: Occurs if there are errors in measuring exposure or outcome.
+    -   Attrition Bias: Results from loss to follow-up, which can affect the validity of the findings.
+
+## Case-Control Study Design
+
+1.  Case Recruitment:
+
+    -   Cases should be clearly defined and representative of a defined population. Look for precise diagnostic criteria and an established, reliable system for selecting cases.
+
+    -   Example: In a study investigating the link between asbestos exposure and lung cancer, cases could be individuals diagnosed with lung cancer based on histological examination within a defined geographic region.
+
+    -   Example: A study on dietary factors and breast cancer defined cases as women aged 40-70 years newly diagnosed with breast cancer based on histopathological reports from hospitals in a specific region.
+
+2.  Control Selection:
+
+    -   Controls should be selected from the same population as the cases, representing individuals who do not have the outcome of interest. Controls should be similar to cases in characteristics like age, sex, and other potential confounders.
+
+    -   Example: For the asbestos study, controls could be selected from the same geographic region, matched by age and sex, and screened to ensure they do not have lung cancer.
+
+    -   Example: For the breast cancer study, controls were women of the same age range without breast cancer, selected from the same geographic region and matched on socioeconomic status.
+
+3.  Measurement of Exposure:
+
+    -   Exposure should be measured accurately and consistently across cases and controls. Use validated tools and consider whether the measurements were subjective or objective.
+
+    -   Example: Exposure to asbestos could be assessed through detailed occupational histories, verified by employment records.
+
+    -   Example: In a study on pesticide exposure and Parkinson’s disease, exposure was measured using detailed interviews about occupational and residential history, supplemented by environmental monitoring data.
+
+4.  Confounding Factors:
+
+    -   Identify potential confounders and describe how they were controlled for in the design or analysis, such as matching, restriction, or statistical adjustment.
+
+    -   Example: In the asbestos study, potential confounders like smoking history should be identified and controlled for using logistic regression models.
+
+    -   Example: In a study on physical activity and coronary artery disease, researchers adjusted for confounders such as age, BMI, and hypertension in their logistic regression analysis.
+
+5.  Potential Biases:
+
+    -   Selection Bias: Arises if cases and controls are not representative of the same population.
+
+    -   Information Bias: Occurs if there are errors in measuring exposure or outcome, such as recall bias in self-reported data.
+
+    -   Examples: If cases are more likely to recall their exposure to asbestos accurately compared to controls, it could lead to differential misclassification bias. In a study on UV exposure and skin cancer, researchers used standardized questionnaires to reduce recall bias and validated self-reported data with medical records.
+
+## Cross-Sectional Study Design
+
+1.  Clearly Focused Question:
+
+    -   The study should address a clearly defined question or issue. Look for specificity in terms of the population studied, the outcome measured, and the time frame.
+
+    -   Example: Investigating the prevalence of hypertension among adults aged 40-60 years in a specific city.
+
+2.  Appropriate Study Design:
+
+    -   Ensure that a cross-sectional design is appropriate for answering the research question, typically used to assess the prevalence of an outcome or explore associations at a single point in time.
+
+    -   Example: A survey to determine the prevalence of smoking and its association with respiratory symptoms among factory workers.
+
+3.  Selection of Subjects:
+
+    -   The method of selecting subjects should be clearly described and free from selection bias. The sample should be representative of the population to which the findings will be generalized.
+
+    -   Example: Random sampling from a population registry to select participants for a study on dietary habits and obesity.
+
+4.  Sample Size and Power Considerations:
+
+    -   Ensure the sample size is adequate, often based on pre-study considerations of statistical power to detect meaningful differences or associations.
+
+    -   Example: Calculating the required sample size to achieve 80% power to detect a significant association between physical activity and depression.
+
+5.  Response Rate:
+
+    -   Assess whether a satisfactory response rate was achieved and consider the potential for response bias.
+
+    -   Example: A response rate of over 70% in a survey on workplace stress and job satisfaction would be considered satisfactory.
+
+6.  Validity and Reliability of Measurements:
+
+    -   The measurements (e.g., questionnaires, instruments) used should be valid (measure what they intend to measure) and reliable (produce consistent results).
+
+    -   Example: Using a validated questionnaire to assess mental health status, such as the General Health Questionnaire (GHQ).
+
+7.  Statistical Significance:
+
+    -   The study should assess statistical significance of the results and report p-values where applicable.
+
+    -   Example: Reporting a p-value of \<0.05 for the association between alcohol consumption and liver enzyme levels.
+
+8.  Confidence Intervals:
+
+    -   Confidence intervals should be provided for the main results to indicate the precision of the estimates.
+
+    -   Example: Reporting a 95% confidence interval for the prevalence of hypertension.
+
+9.  Confounding Factors:
+
+    -   Identify and account for potential confounding factors in the design or analysis. Consider whether the study adjusted for these factors.
+
+    -   Example: Adjusting for age, sex, and socioeconomic status in a study on dietary intake and cholesterol levels.
+
+10. Applicability of Results:
+
+    -   Consider whether the results can be applied to other settings or populations, particularly to the target population of interest.
+
+    -   Example: Assessing if the findings on the association between sedentary behavior and cardiovascular risk factors can be applied to a similar population in another region.
+
+# Sampling Methods
+
+1.  Clarity and Justification:
+
+    -   The study should clearly describe how the sample was selected and justify the choice of sampling method.
+
+    -   Look for details on the population from which the sample was drawn and the steps taken to ensure the sample represents this population.
+
+2.  Representativeness:
+
+    -   Assess whether the sample is representative of the target population. A representative sample ensures that the findings can be generalized to the broader population.
+
+    -   Check for potential biases that could affect representativeness, such as selection bias or non-response bias.
+
+3.  Sample Size:
+
+    -   The study should provide a rationale for the sample size, often based on power calculations to ensure that the study has enough participants to detect a significant effect if one exists.
+
+    -   Evaluate whether the sample size is adequate for the study’s objectives.
+
+4.  Sampling Frame:
+
+    -   Ensure that the sampling frame (the list or database from which the sample is drawn) is appropriate and comprehensive.
+
+    -   A good sampling frame should include all members of the target population and be free from significant errors or omissions.
+
+5.  Sampling Technique:
+
+    -   Identify the specific sampling method used and consider its appropriateness for the research question and study design.
+
+    -   Evaluate whether the sampling method could introduce bias or affect the validity of the findings.
+
+## Types of Sampling Methods
+
+### Random Sampling
+
+-   Description: Every member of the population has an equal chance of being selected. This method includes simple random sampling, stratified random sampling, and cluster sampling.
+
+-   Implications: Random sampling minimizes selection bias and enhances the generalizability of the findings. It is considered the gold standard in sampling techniques.
+
+### Systematic Sampling
+
+-   Description: Every nth member of the population is selected after a random start. This method is simpler than random sampling but requires a list of the population.
+
+-   Implications: Systematic sampling can be as good as random sampling if the list is randomized. However, if there is a pattern in the population list, it can introduce bias.
+
+### Stratified Sampling
+
+-   Description: The population is divided into strata (subgroups) based on specific characteristics, and random samples are taken from each stratum.
+
+-   Implications: Stratified sampling ensures representation from each subgroup, improving the accuracy of subgroup estimates and overall representativeness.
+
+### Cluster Sampling
+
+-   Description: The population is divided into clusters (usually based on geography or institutions), and entire clusters are randomly selected. Within selected clusters, all members or random samples are surveyed.
+
+-   Implications: Cluster sampling is cost-effective and practical for large populations. However, it can increase sampling error if clusters are not homogeneous.
+
+### Convenience Sampling
+
+-   Description: Participants are selected based on availability and willingness to take part. It is a non-probability sampling method.
+
+-   Implications: Convenience sampling is prone to selection bias and limits the generalizability of the findings. It is often used in exploratory research where representativeness is less critical.
+
+### Purposive Sampling
+
+-   Description: Participants are selected based on specific characteristics or criteria set by the researcher. This method is non-random and subjective.
+
+-   Implications: Purposive sampling allows for targeted data collection from specific groups of interest but may introduce researcher bias and limit generalizability.
+
+### Snowball Sampling
+
+-   Description: Existing study subjects recruit future subjects from among their acquaintances. This method is often used for hard-to-reach populations.
+
+-   Implications: Snowball sampling is useful for accessing hidden populations but can introduce bias as the sample is not random and relies on social networks.
+
+# Results
+
+## Treatment Effect
+
+-   Assessment of Odds Ratio (OR): Look at the strength of the association between exposure and outcome, typically measured by the odds ratio. Consider whether the results were adjusted for confounding factors and if the adjustment significantly changed the OR.
+
+-   Example: An OR of 3.0 for lung cancer in individuals exposed to asbestos compared to those not exposed, adjusted for smoking, indicates a strong association.
+
+## Precision
+
+-   Evaluate the precision of the estimates by looking at the confidence intervals and p-values. Narrow confidence intervals indicate more precise estimates.
+
+-   Example: A relative risk of 1.5 with a 95% confidence interval of 1.2 to 1.8 is more precise than a relative risk of 1.5 with a 95% confidence interval of 1.0 to 2.0.
+
+-   Example: An OR of 3.0 with a 95% confidence interval of 2.1 to 4.2 suggests a precise estimate, whereas an OR with a wide confidence interval (e.g., 1.2 to 7.5) indicates less precision.
+
+## Believability
+
+-   Assess whether the results are believable by considering the study's design and methodology. Evaluate if the study minimized biases and controlled for confounding factors. Use criteria such as the Bradford Hill criteria for causation (e.g., strength, consistency, temporality, biological plausibility).
+
+-   Example: If a study on physical activity and cardiovascular health controlled for diet, smoking, and socioeconomic status, the results are more believable.
+
+-   Example: If the asbestos study's results align with other research showing a link between asbestos and lung cancer, and if the study was well-conducted with minimal bias, the results are more credible.
+
+-   Evaluate if the study used valid and reliable methods for measuring the outcomes and exposures. Consider the potential impact of bias and confounding factors on the results.
+
+-   Example: A study using a validated dietary assessment tool to measure nutrient intake is more believable than one using a non-validated tool.
+
+## Comparison with Other Evidence
+
+-   Compare the study's findings with other similar studies. Consistency across studies strengthens the evidence.
+
+-   Example: If multiple cohort studies find that high fruit and vegetable intake reduces cancer risk, the evidence is stronger than if only one study found this association.
+
+-   Example: If several cross-sectional studies show a strong association between physical inactivity and obesity, the evidence is more robust.
